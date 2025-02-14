@@ -4,19 +4,19 @@ semi: true
 singleQuote: true
 
 importOrder:
-  - '^react$'
-  - '<THIRD_PARTY_MODULES>'
-  - '(\.css)$' # Любой импорт с .css на конце
-  - '^@/app'
-  - '^@/shared'
-  - '^@/.*/shared'
-  - '^@/.*/entities'
-  - '^@/.*/server-actions'
-  - '^@/.*/widgets'
-  - '^@/.*/features'
-  - '^@/.*/pages'
-  - '^\.\.\/' # Любой импорт с ../ в начале
-  - '^\.\/' # Любой импорт с ./ в начале
+    - '^react$'
+    - '<THIRD_PARTY_MODULES>'
+    - '(\.css)$' # Любой импорт с .css на конце
+    - '^@/app'
+    - '^@/shared'
+    - '^@/.*/shared'
+    - '^@/.*/entities'
+    - '^@/.*/server-actions'
+    - '^@/.*/widgets'
+    - '^@/.*/features'
+    - '^@/.*/pages'
+    - '^\.\.\/' # Любой импорт с ../ в начале
+    - '^\.\/' # Любой импорт с ./ в начале
 
 importOrderSeparation: true
 importOrderSortSpecifiers: true

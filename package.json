@@ -1,32 +1,32 @@
 {
-  "name": "ui-builder",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "gen:component": "plop component",
-    "prettier": "prettier --write ./**/*.{ts,tsx,js,jsx,json,md,yml,css} --log-level error --no-error-on-unmatched-pattern",
-    "typescript": "tsc --noEmit"
-  },
-  "dependencies": {
-    "next": "15.1.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.7",
-    "husky": "^9.1.7",
-    "plop": "^4.0.1",
-    "prettier": "^3.5.1",
-    "typescript": "^5"
-  }
+    "name": "ui-builder",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "gen:component": "plop component",
+        "prettier": "prettier --write ./**/*.{ts,tsx,js,jsx,json,md,yml,css} --log-level error --no-error-on-unmatched-pattern",
+        "typescript": "tsc --noEmit"
+    },
+    "dependencies": {
+        "next": "15.1.7",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3",
+        "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "15.1.7",
+        "husky": "^9.1.7",
+        "plop": "^4.0.1",
+        "prettier": "^3.5.1",
+        "typescript": "^5"
+    }
 }

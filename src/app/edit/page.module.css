@@ -1,0 +1,9 @@
+.root {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(180deg, #919aba, #5c6b9c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

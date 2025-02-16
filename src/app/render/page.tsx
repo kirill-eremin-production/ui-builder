@@ -1,11 +1,25 @@
-import { PageCanvas } from '@/components/PageCanvas';
+'use server';
 
 import styles from './page.module.css';
 
-export default function Render() {
+import { PageConfig } from '@/shared/types/PageConfig';
+
+import { Renderer } from '@/Renderer';
+
+export default async function Render() {
+    const config: PageConfig = {
+        ui: {
+            el1: {
+                id: 'el1',
+                type: 'Container',
+                text: 'Hello, world!',
+            },
+        },
+    };
+
     return (
         <div className={styles.root}>
-            <PageCanvas width={1024} />
+            <Renderer config={config} />
         </div>
     );
 }

@@ -40,7 +40,7 @@ module.exports = (plop) => {
                 // Add a new file
                 type: 'add',
                 // Path for the new file
-                path: 'plop-gen/components/{{pascalCase name}}/index.ts',
+                path: 'plop-gen/components/{{pascalCase name}}/index.tsx',
                 templateFile: 'plop-templates/component/index.js.hbs',
             },
         ],

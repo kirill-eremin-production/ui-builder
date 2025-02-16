@@ -1,9 +1,10 @@
 .root {
+    width: fit-content;
     background-color: white;
     border: 2px solid var(--main-border-color);
     height: 100%;
     padding: 2px;
-    background-image: url('./assets/dot.svg');
+    background-image: url('assets/dot.svg');
     background-position-x: 1px;
     background-position-y: 2px;
     background-size: 16px;

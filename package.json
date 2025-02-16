@@ -16,6 +16,7 @@
         "tests:clear": "rm -rf ./test-results ./playwright-report"
     },
     "dependencies": {
+        "jotai": "^2.12.0",
         "next": "15.1.7",
         "react": "^19.0.0",
         "react-dom": "^19.0.0"

@@ -12,6 +12,7 @@ import { SettingsMenu } from '@/Constructor/widgets/SettingsMenu';
 import { Layout } from '@/Constructor/components/Layout';
 import { widgetTypeToAddOnCanvasAtom } from '@/Constructor/state/selection';
 import { PageCanvas } from '@/Renderer/components/PageCanvas';
+import { pageUnitSizeAtom } from '@/Renderer/state/page';
 import { uiComponentsAtom } from '@/Renderer/state/ui';
 
 export type RootProps = object;
@@ -19,6 +20,7 @@ export type RootProps = object;
 export const RootComponent: FC<RootProps> = () => {
     const setWidgetTypeToAddOnCanvas = useSetAtom(widgetTypeToAddOnCanvasAtom);
     const uiComponents = useAtomValue(uiComponentsAtom);
+    const pageUnitSize = useAtomValue(pageUnitSizeAtom);
 
     useEffect(() => {
         const onMouseUpHandler = () => {
@@ -39,6 +41,7 @@ export const RootComponent: FC<RootProps> = () => {
                 <div className={styles.canvas}>
                     <PageCanvas
                         config={{
+                            unitSize: pageUnitSize,
                             ui: uiComponents,
                         }}
                         width={1024}

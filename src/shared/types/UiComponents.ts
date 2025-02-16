@@ -4,6 +4,17 @@ export type UiComponentCommonProps = {
     id: string;
     name?: string;
     description?: string;
+
+    // Перемещаем ли элемент по холсту
+    isMoving: boolean;
+
+    // Положение элемента на холсте (px)
+    x: number;
+    y: number;
+
+    // Размеры элемента на холсте (px)
+    width: number;
+    height: number;
 };
 
 export type ContainerComponent = UiComponentCommonProps & {

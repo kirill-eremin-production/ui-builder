@@ -34,12 +34,18 @@ test('На canvas можно добавить элемент Container', async (
         mainPageCanvasBox.x + mainPageCanvasBox.width / 2,
         mainPageCanvasBox.y + mainPageCanvasBox.height / 2
     );
-    // Отпускаем левую кнопку мыши
-    await page.mouse.up({ button: 'left' });
 
     await page
         .getByTestId('pageCanvas__widget_container')
         .waitFor({ state: 'attached', timeout: 500 });
+
+    await expect(page).toHaveScreenshot();
+
+    // Перемещаем мышь в центр canvas
+    await page.mouse.move(mainPageCanvasBox.x + 400, mainPageCanvasBox.y + 320);
+
+    // Отпускаем левую кнопку мыши
+    await page.mouse.up({ button: 'left' });
 
     await expect(page).toHaveScreenshot();
 });

@@ -10,7 +10,10 @@ export const Container: FC<ContainerProps> = () => {
     const setWidgetTypeToAddOnCanvas = useSetAtom(widgetTypeToAddOnCanvasAtom);
 
     return (
-        <button onMouseDown={() => setWidgetTypeToAddOnCanvas('Container')}>
+        <button
+            data-testid="button_addToCanvas__widget_container"
+            onMouseDown={() => setWidgetTypeToAddOnCanvas('Container')}
+        >
             Container
         </button>
     );

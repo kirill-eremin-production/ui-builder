@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('На странице отображается canvas', async ({ page }) => {
+test('Пустая страница отображается правильно', async ({ page }) => {
     await page.goto('/render');
     await expect(page).toHaveScreenshot();
 });

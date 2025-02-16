@@ -11,6 +11,7 @@
         "prettier": "prettier --write ./**/*.{ts,tsx,js,jsx,json,md,yml,css} --log-level error --no-error-on-unmatched-pattern",
         "typescript": "tsc --noEmit",
         "tests:run": "npx playwright test",
+        "tests:run:ui": "npx playwright test --ui",
         "tests:run:update": "npx playwright test --update-snapshots",
         "tests:report": "npx playwright show-report",
         "tests:clear": "rm -rf ./test-results ./playwright-report"

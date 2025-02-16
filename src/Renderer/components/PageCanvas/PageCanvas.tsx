@@ -60,6 +60,7 @@ export const PageCanvas = forwardRef<
     return (
         <div ref={ref} className={styles.root}>
             <div
+                data-testid="mainPageCanvas"
                 className={styles.content}
                 style={rootStyle}
                 onMouseUp={onMouseUp}

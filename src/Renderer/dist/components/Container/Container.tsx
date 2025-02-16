@@ -11,7 +11,7 @@ export const Container: FC<PropsWithChildren<ContainerProps>> = ({
     children,
 }) => {
     return (
-        <div className={styles.root}>
+        <div data-testid="pageCanvas__widget_container" className={styles.root}>
             {text && <div>{text}</div>}
 
             {children}

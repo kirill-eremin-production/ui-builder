@@ -46,22 +46,36 @@ export const PageCanvas = forwardRef<
         event.preventDefault();
         event.stopPropagation();
         const canvasBox = event.currentTarget.getBoundingClientRect();
+        const canvasScroll = event.currentTarget.scrollTop;
 
         if (newWidgetId.current) {
             const newWidget = uiComponents[newWidgetId.current];
             const newWidgetWidth = newWidget.width;
             const newWidgetHeight = newWidget.height;
 
-            const x =
+            let x =
                 Math.round(
                     (event.clientX - newWidgetWidth / 2 - canvasBox.left) /
                         pageUnitSize
                 ) * pageUnitSize;
-            const y =
+            let y =
                 Math.round(
-                    (event.clientY - newWidgetHeight / 2 - canvasBox.top) /
+                    (event.clientY - newWidgetHeight / 2 - canvasBox.top + canvasScroll) /
                         pageUnitSize
                 ) * pageUnitSize;
+
+            if (x < 0) {
+                x = 0;
+            }
+
+            if (y < 0) {
+                y = 0;
+            }
+
+            if (x + newWidgetWidth > width) {
+                x = width - newWidgetWidth;
+            }
+
             newWidgetPosition.current = { x, y };
 
             setUiComponents((prevState) => ({

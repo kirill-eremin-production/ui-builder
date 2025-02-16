@@ -16,6 +16,7 @@ export const UiNode: FC<UiNodeProps> = ({ ui }) => {
                 if (node.type === 'Container') {
                     return (
                         <WidgetBox
+                            id={node.id}
                             isMoving={node.isMoving}
                             x={node.x}
                             y={node.y}

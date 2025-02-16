@@ -14,7 +14,10 @@ import { PageConfig } from '@/shared/types/PageConfig';
 
 import { UiNode } from '@/Renderer/widgets/UiNode';
 
-import { widgetTypeToAddOnCanvasAtom } from '@/Constructor/state/selection';
+import {
+    selectedWidgetIdsAtom,
+    widgetTypeToAddOnCanvasAtom,
+} from '@/Constructor/state/selection';
 import { pageUnitSizeAtom } from '@/Renderer/state/page';
 import { uiComponentsAtom } from '@/Renderer/state/ui';
 
@@ -34,8 +37,10 @@ export const PageCanvas = forwardRef<
     );
     const [uiComponents, setUiComponents] = useAtom(uiComponentsAtom);
     const pageUnitSize = useAtomValue(pageUnitSizeAtom);
+    const [selectedWidgetIds, setSelectedWidgetIds] = useAtom(
+        selectedWidgetIdsAtom
+    );
 
-    const newWidgetId = useRef<string>('');
     const newWidgetPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
     const rootStyle: CSSProperties = {
@@ -48,8 +53,8 @@ export const PageCanvas = forwardRef<
         const canvasBox = event.currentTarget.getBoundingClientRect();
         const canvasScroll = event.currentTarget.scrollTop;
 
-        if (newWidgetId.current) {
-            const newWidget = uiComponents[newWidgetId.current];
+        if (selectedWidgetIds.length) {
+            const newWidget = uiComponents[selectedWidgetIds[0]];
             const newWidgetWidth = newWidget.width;
             const newWidgetHeight = newWidget.height;
 
@@ -83,23 +88,24 @@ export const PageCanvas = forwardRef<
 
             setUiComponents((prevState) => ({
                 ...prevState,
-                [newWidgetId.current]: {
-                    ...prevState[newWidgetId.current],
+                [selectedWidgetIds[0]]: {
+                    ...prevState[selectedWidgetIds[0]],
                     x: newWidgetPosition.current.x,
                     y: newWidgetPosition.current.y,
                 },
             }));
         }
 
-        if (!widgetTypeToAddOnCanvas || newWidgetId.current) {
+        if (!widgetTypeToAddOnCanvas || selectedWidgetIds.length) {
             return;
         }
 
-        newWidgetId.current = String(new Date().getTime());
+        const newWidgetId = String(new Date().getTime());
+        setSelectedWidgetIds([newWidgetId]);
         setUiComponents((prevState) => ({
             ...prevState,
-            [newWidgetId.current]: {
-                id: newWidgetId.current,
+            [newWidgetId]: {
+                id: newWidgetId,
                 type: widgetTypeToAddOnCanvas,
                 text: 'Container',
                 isMoving: true,
@@ -115,33 +121,38 @@ export const PageCanvas = forwardRef<
         event.preventDefault();
         event.stopPropagation();
 
-        if (!newWidgetId.current) {
+        if (!selectedWidgetIds.length) {
+            return;
+        }
+
+        if (!widgetTypeToAddOnCanvas && selectedWidgetIds.length) {
+            setSelectedWidgetIds([]);
             return;
         }
 
         setUiComponents((prevState) => {
             const newState = { ...prevState };
-            delete newState[newWidgetId.current];
+            delete newState[selectedWidgetIds[0]];
 
             return newState;
         });
 
-        newWidgetId.current = '';
+        setSelectedWidgetIds([]);
     };
 
     const onMouseUp: MouseEventHandler<HTMLDivElement> = (event) => {
         event.preventDefault();
         event.stopPropagation();
 
-        if (!widgetTypeToAddOnCanvas || !newWidgetId.current) {
+        if (!selectedWidgetIds.length) {
             return;
         }
 
         setUiComponents((prevState) => ({
             ...prevState,
-            [newWidgetId.current]: {
-                id: newWidgetId.current,
-                type: widgetTypeToAddOnCanvas,
+            [selectedWidgetIds[0]]: {
+                id: selectedWidgetIds[0],
+                type: prevState[selectedWidgetIds[0]].type,
                 text: 'Container',
                 isMoving: false,
                 x: newWidgetPosition.current.x,
@@ -151,7 +162,7 @@ export const PageCanvas = forwardRef<
             },
         }));
 
-        newWidgetId.current = '';
+        setSelectedWidgetIds([]);
         setWidgetTypeToAddOnCanvas(null);
     };
 

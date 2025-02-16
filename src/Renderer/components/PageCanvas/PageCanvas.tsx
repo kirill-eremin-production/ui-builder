@@ -60,7 +60,10 @@ export const PageCanvas = forwardRef<
                 ) * pageUnitSize;
             let y =
                 Math.round(
-                    (event.clientY - newWidgetHeight / 2 - canvasBox.top + canvasScroll) /
+                    (event.clientY -
+                        newWidgetHeight / 2 -
+                        canvasBox.top +
+                        canvasScroll) /
                         pageUnitSize
                 ) * pageUnitSize;
 

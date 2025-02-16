@@ -1,3 +1,3 @@
 import { atom } from 'jotai';
 
-export const pageUnitSizeAtom = atom<number>(16);
+export const pageUnitSizeAtom = atom<number>(4);

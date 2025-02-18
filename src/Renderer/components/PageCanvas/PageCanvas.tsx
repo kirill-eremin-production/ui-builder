@@ -16,6 +16,7 @@ import { UiNode } from '@/Renderer/widgets/UiNode';
 
 import {
     selectedWidgetIdsAtom,
+    widgetResizeDataAtom,
     widgetTypeToAddOnCanvasAtom,
 } from '@/Constructor/state/selection';
 import { pageUnitSizeAtom } from '@/Renderer/state/page';
@@ -40,6 +41,8 @@ export const PageCanvas = forwardRef<
     const [selectedWidgetIds, setSelectedWidgetIds] = useAtom(
         selectedWidgetIdsAtom
     );
+    const [widgetResizeData, setWidgetResizeData] =
+        useAtom(widgetResizeDataAtom);
 
     const newWidgetPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -52,6 +55,85 @@ export const PageCanvas = forwardRef<
         event.stopPropagation();
         const canvasBox = event.currentTarget.getBoundingClientRect();
         const canvasScroll = event.currentTarget.scrollTop;
+
+        const minWidth = 8;
+        const minHeight = 8;
+
+        if (widgetResizeData) {
+            const currentMousePosition = { x: event.screenX, y: event.screenY };
+            let dx =
+                currentMousePosition.x -
+                widgetResizeData.initialMousePosition.x;
+            let dy =
+                currentMousePosition.y -
+                widgetResizeData.initialMousePosition.y;
+
+            dx = Math.round(dx / pageUnitSize) * pageUnitSize;
+            dy = Math.round(dy / pageUnitSize) * pageUnitSize;
+
+            let newWidgetWidth = widgetResizeData.initialWidth;
+            let newWidgetX = widgetResizeData.initialX;
+
+            let newWidgetHeight = widgetResizeData.initialHeight;
+            let newWidgetY = widgetResizeData.initialY;
+
+            if (
+                widgetResizeData.direction === 'top' ||
+                widgetResizeData.direction === 'top-right' ||
+                widgetResizeData.direction === 'left-top'
+            ) {
+                newWidgetHeight = newWidgetHeight - dy;
+                newWidgetY = newWidgetY + dy;
+                if (newWidgetHeight <= minHeight) {
+                    newWidgetY =
+                        widgetResizeData.initialY +
+                        widgetResizeData.initialHeight -
+                        minHeight;
+                }
+            }
+            if (
+                widgetResizeData.direction === 'bottom' ||
+                widgetResizeData.direction === 'bottom-left' ||
+                widgetResizeData.direction === 'right-bottom'
+            ) {
+                newWidgetHeight = newWidgetHeight + dy;
+            }
+
+            if (
+                widgetResizeData.direction === 'right' ||
+                widgetResizeData.direction === 'right-bottom' ||
+                widgetResizeData.direction === 'top-right'
+            ) {
+                newWidgetWidth = newWidgetWidth + dx;
+            }
+            if (
+                widgetResizeData.direction === 'left' ||
+                widgetResizeData.direction === 'left-top' ||
+                widgetResizeData.direction === 'bottom-left'
+            ) {
+                newWidgetX = newWidgetX + dx;
+                newWidgetWidth = newWidgetWidth - dx;
+                if (newWidgetWidth <= minWidth) {
+                    newWidgetX =
+                        widgetResizeData.initialX +
+                        widgetResizeData.initialWidth -
+                        minWidth;
+                }
+            }
+
+            setUiComponents((prevState) => ({
+                ...prevState,
+                [widgetResizeData.widgetId]: {
+                    ...prevState[widgetResizeData.widgetId],
+                    width: newWidgetWidth <= 8 ? 8 : newWidgetWidth,
+                    height: newWidgetHeight <= 8 ? 8 : newWidgetHeight,
+                    x: newWidgetX < 0 ? 0 : newWidgetX,
+                    y: newWidgetY < 0 ? 0 : newWidgetY,
+                },
+            }));
+
+            return;
+        }
 
         if (selectedWidgetIds.length) {
             const newWidget = uiComponents[selectedWidgetIds[0]];
@@ -143,6 +225,7 @@ export const PageCanvas = forwardRef<
     const onMouseUp: MouseEventHandler<HTMLDivElement> = (event) => {
         event.preventDefault();
         event.stopPropagation();
+        setWidgetResizeData(null);
 
         if (!selectedWidgetIds.length) {
             return;
@@ -157,8 +240,8 @@ export const PageCanvas = forwardRef<
                 isMoving: false,
                 x: newWidgetPosition.current.x,
                 y: newWidgetPosition.current.y,
-                width: 320,
-                height: 160,
+                width: prevState[selectedWidgetIds[0]].width,
+                height: prevState[selectedWidgetIds[0]].height,
             },
         }));
 

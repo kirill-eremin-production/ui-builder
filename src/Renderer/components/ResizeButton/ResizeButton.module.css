@@ -1,0 +1,55 @@
+.root {
+    --size: 16px;
+    --half-size: calc(var(--size) / 2);
+    --minus-half-size: calc(-1 * var(--size) / 2);
+
+    all: unset;
+    background-color: var(--widget-box-background-color);
+    width: var(--size);
+    height: var(--size);
+    border: 2px dotted var(--widget-box-background-color);
+    border-radius: 50%;
+    position: absolute;
+    box-sizing: border-box;
+}
+
+.direction_top {
+    top: var(--minus-half-size);
+    left: calc(50% + var(--minus-half-size));
+    cursor: ns-resize;
+}
+.direction_top-right {
+    top: var(--minus-half-size);
+    right: var(--minus-half-size);
+    cursor: ne-resize;
+}
+.direction_right {
+    top: calc(50% + var(--minus-half-size));
+    right: var(--minus-half-size);
+    cursor: ew-resize;
+}
+.direction_right-bottom {
+    bottom: var(--minus-half-size);
+    right: var(--minus-half-size);
+    cursor: se-resize;
+}
+.direction_bottom {
+    bottom: var(--minus-half-size);
+    left: calc(50% + var(--minus-half-size));
+    cursor: ns-resize;
+}
+.direction_bottom-left {
+    left: var(--minus-half-size);
+    bottom: var(--minus-half-size);
+    cursor: sw-resize;
+}
+.direction_left {
+    top: calc(50% + var(--minus-half-size));
+    left: var(--minus-half-size);
+    cursor: ew-resize;
+}
+.direction_left-top {
+    left: var(--minus-half-size);
+    top: var(--minus-half-size);
+    cursor: nw-resize;
+}

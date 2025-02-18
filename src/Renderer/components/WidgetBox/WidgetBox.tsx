@@ -11,7 +11,13 @@ import { useSetAtom } from 'jotai';
 
 import styles from './WidgetBox.module.css';
 
-import { selectedWidgetIdsAtom } from '@/Constructor/state/selection';
+import { Direction } from '@/shared/types/Direction';
+
+import {
+    selectedWidgetIdsAtom,
+    widgetResizeDataAtom,
+} from '@/Constructor/state/selection';
+import { ResizeButton } from '@/Renderer/components/ResizeButton';
 
 export type WidgetBoxProps = {
     id: string;
@@ -33,6 +39,7 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
         height: `${height}px`,
     };
     const setSelectedWidgetIds = useSetAtom(selectedWidgetIdsAtom);
+    const setWidgetIdToResize = useSetAtom(widgetResizeDataAtom);
 
     const onMouseDown: MouseEventHandler = (event) => {
         event.stopPropagation();
@@ -41,6 +48,22 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
         setSelectedWidgetIds([id]);
     };
 
+    const getOnResizeButtonMouseDown =
+        (direction: Direction): MouseEventHandler<HTMLButtonElement> =>
+        (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            setWidgetIdToResize({
+                widgetId: id,
+                direction,
+                initialMousePosition: { x: event.screenX, y: event.screenY },
+                initialWidth: width,
+                initialHeight: height,
+                initialX: x,
+                initialY: y,
+            });
+        };
+
     return (
         <div
             onMouseDown={onMouseDown}
@@ -48,6 +71,48 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
             ref={ref}
             className={styles.root}
         >
+            <div className={styles.resizeButtons}>
+                <ResizeButton
+                    onMouseDown={getOnResizeButtonMouseDown('top')}
+                    widgetId={id}
+                    direction="top"
+                />
+                <ResizeButton
+                    onMouseDown={getOnResizeButtonMouseDown('top-right')}
+                    widgetId={id}
+                    direction="top-right"
+                />
+                <ResizeButton
+                    onMouseDown={getOnResizeButtonMouseDown('right')}
+                    widgetId={id}
+                    direction="right"
+                />
+                <ResizeButton
+                    onMouseDown={getOnResizeButtonMouseDown('right-bottom')}
+                    widgetId={id}
+                    direction="right-bottom"
+                />
+                <ResizeButton
+                    onMouseDown={getOnResizeButtonMouseDown('bottom')}
+                    widgetId={id}
+                    direction="bottom"
+                />
+                <ResizeButton
+                    onMouseDown={getOnResizeButtonMouseDown('bottom-left')}
+                    widgetId={id}
+                    direction="bottom-left"
+                />
+                <ResizeButton
+                    onMouseDown={getOnResizeButtonMouseDown('left')}
+                    widgetId={id}
+                    direction="left"
+                />
+                <ResizeButton
+                    onMouseDown={getOnResizeButtonMouseDown('left-top')}
+                    widgetId={id}
+                    direction="left-top"
+                />
+            </div>
             {children}
         </div>
     );

@@ -71,6 +71,7 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
             ref={ref}
             className={styles.root}
         >
+            <div className={styles.background} />
             <div className={styles.resizeButtons}>
                 <ResizeButton
                     onMouseDown={getOnResizeButtonMouseDown('top')}
@@ -113,7 +114,11 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
                     direction="left-top"
                 />
             </div>
-            {children}
+
+            <div className={styles.widgetContent}>
+                {children}
+            </div>
+
         </div>
     );
 });

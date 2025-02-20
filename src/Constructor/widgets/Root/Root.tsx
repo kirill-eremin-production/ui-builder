@@ -3,21 +3,33 @@
 import { FC, useEffect } from 'react';
 
 import { useAtomValue, useSetAtom } from 'jotai';
+import { useHydrateAtoms } from 'jotai/utils';
 
 import styles from './Root.module.css';
+
+import { PageConfig } from '@/shared/types/PageConfig';
 
 import { ComponentsMenu } from '@/Constructor/widgets/ComponentsMenu';
 import { SettingsMenu } from '@/Constructor/widgets/SettingsMenu';
 
 import { Layout } from '@/Constructor/components/Layout';
+import { pageIdAtom } from '@/Constructor/state/page-config';
 import { widgetTypeToAddOnCanvasAtom } from '@/Constructor/state/selection';
 import { PageCanvas } from '@/Renderer/components/PageCanvas';
 import { pageUnitSizeAtom } from '@/Renderer/state/page';
 import { uiComponentsAtom } from '@/Renderer/state/ui';
 
-export type RootProps = object;
+export type RootProps = {
+    initialPageConfig?: PageConfig;
+};
 
-export const RootComponent: FC<RootProps> = () => {
+export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
+    useHydrateAtoms([
+        [pageIdAtom, initialPageConfig?.id || null],
+        [uiComponentsAtom, initialPageConfig?.ui || {}],
+        [pageUnitSizeAtom, initialPageConfig?.unitSize || 4],
+    ]);
+
     const setWidgetTypeToAddOnCanvas = useSetAtom(widgetTypeToAddOnCanvasAtom);
     const uiComponents = useAtomValue(uiComponentsAtom);
     const pageUnitSize = useAtomValue(pageUnitSizeAtom);

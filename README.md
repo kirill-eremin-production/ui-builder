@@ -42,7 +42,7 @@ docker stop ui-builder-app-container && \
 docker rm ui-builder-app-container && \
 docker rmi keremin/ui-builder && \
 
-cd ~/k-ai && \
+cd ~/ui-builder && \
 
 # Удаляем сборку и node_modules \
 rm -rf ./build && rm -rf node_modules && \

@@ -6,6 +6,8 @@
     --shadow-color: rgba(0, 0, 0, 0.3);
 
     --widget-box-background-color: rgba(100, 100, 200, 0.5);
+
+    --color-brand: rgb(100, 100, 100);
 }
 
 /*
@@ -27,7 +29,6 @@ body {
 body {
     color: var(--foreground);
     background: var(--background);
-    font-family: Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -36,6 +37,7 @@ body {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: Ubuntu, sans-serif;
 }
 
 a {
@@ -47,4 +49,18 @@ a {
     html {
         color-scheme: dark;
     }
+}
+
+/* Стилизация вертикального скролла */
+*::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--color-brand);
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
 }

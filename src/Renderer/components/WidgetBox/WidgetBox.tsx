@@ -57,7 +57,7 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
         event.preventDefault();
 
         setWidgetDataToMove({
-            initialMousePosition: { x: event.screenX, y: event.screenY },
+            initialMousePosition: { x: event.clientX, y: event.clientY },
             initialX: x,
             initialY: y,
         });
@@ -78,7 +78,7 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
             setWidgetIdToResize({
                 widgetId: id,
                 direction,
-                initialMousePosition: { x: event.screenX, y: event.screenY },
+                initialMousePosition: { x: event.clientX, y: event.clientY },
                 initialWidth: width,
                 initialHeight: height,
                 initialX: x,

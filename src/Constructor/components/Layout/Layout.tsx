@@ -15,9 +15,9 @@ export const Layout: FC<LayoutProps> = ({
 }) => {
     return (
         <div className={styles.root}>
-            <div>{firstColumn}</div>
-            <div>{secondColumn}</div>
-            <div>{thirdColumn}</div>
+            <div className={styles.item}>{firstColumn}</div>
+            <div className={styles.item}>{secondColumn}</div>
+            <div className={styles.item}>{thirdColumn}</div>
         </div>
     );
 };

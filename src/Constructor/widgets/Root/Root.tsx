@@ -13,7 +13,12 @@ import { ComponentsMenu } from '@/Constructor/widgets/ComponentsMenu';
 import { SettingsMenu } from '@/Constructor/widgets/SettingsMenu';
 
 import { Layout } from '@/Constructor/components/Layout';
-import { pageIdAtom } from '@/Constructor/state/page-config';
+import {
+    pageIdAtom,
+    pageMinHeightAtom,
+    pageNameAtom,
+    pageWidthAtom,
+} from '@/Constructor/state/page-config';
 import { widgetTypeToAddOnCanvasAtom } from '@/Constructor/state/selection';
 import { PageCanvas } from '@/Renderer/components/PageCanvas';
 import { pageUnitSizeAtom } from '@/Renderer/state/page';
@@ -25,14 +30,20 @@ export type RootProps = {
 
 export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
     useHydrateAtoms([
-        [pageIdAtom, initialPageConfig?.id || null],
+        [pageIdAtom, initialPageConfig?.id || ''],
         [uiComponentsAtom, initialPageConfig?.ui || {}],
         [pageUnitSizeAtom, initialPageConfig?.unitSize || 4],
+        [pageWidthAtom, initialPageConfig?.width || 1024],
+        [pageMinHeightAtom, initialPageConfig?.minHeight || 1024],
+        [pageNameAtom, initialPageConfig?.name || ''],
     ]);
 
     const setWidgetTypeToAddOnCanvas = useSetAtom(widgetTypeToAddOnCanvasAtom);
     const uiComponents = useAtomValue(uiComponentsAtom);
     const pageUnitSize = useAtomValue(pageUnitSizeAtom);
+    const pageWidth = useAtomValue(pageWidthAtom);
+    const pageMinHeight = useAtomValue(pageMinHeightAtom);
+    const pageName = useAtomValue(pageNameAtom);
 
     useEffect(() => {
         const onMouseUpHandler = () => {
@@ -53,10 +64,14 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
                 <div className={styles.canvas}>
                     <PageCanvas
                         config={{
+                            width: pageWidth,
+                            minHeight: pageMinHeight,
+                            name: pageName,
                             unitSize: pageUnitSize,
                             ui: uiComponents,
                         }}
-                        width={1024}
+                        width={pageWidth}
+                        minHeight={pageMinHeight}
                     />
                 </div>
             }

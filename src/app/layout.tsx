@@ -1,3 +1,5 @@
+import '@fontsource/ubuntu';
+
 import { Provider } from 'jotai';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';

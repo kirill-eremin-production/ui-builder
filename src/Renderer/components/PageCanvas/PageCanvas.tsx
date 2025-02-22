@@ -28,6 +28,8 @@ import { uiComponentsAtom } from '@/Renderer/state/ui';
 export type PageCanvasProps = {
     // Ширина страницы
     width: number;
+    // Минимальная ширина страницы
+    minHeight: number;
 
     config: PageConfig;
 };
@@ -35,7 +37,7 @@ export type PageCanvasProps = {
 export const PageCanvas = forwardRef<
     HTMLDivElement,
     HTMLAttributes<HTMLDivElement> & PageCanvasProps
->(({ width, config }, ref) => {
+>(({ width, minHeight, config }, ref) => {
     const [widgetTypeToAddOnCanvas, setWidgetTypeToAddOnCanvas] = useAtom(
         widgetTypeToAddOnCanvasAtom
     );
@@ -55,8 +57,15 @@ export const PageCanvas = forwardRef<
         undefined
     );
 
+    const widgetYEndPositions = Object.entries(uiComponents).map(
+        ([key, widget]) => {
+            return widget.y + widget.height;
+        }
+    );
+
     const rootStyle: CSSProperties = {
         width: `${width}px`,
+        height: `${Math.max(...widgetYEndPositions, minHeight)}px`,
     };
 
     const onMouseMove: MouseEventHandler<HTMLDivElement> = (event) => {
@@ -69,7 +78,7 @@ export const PageCanvas = forwardRef<
         const minHeight = 8;
 
         if (widgetResizeData) {
-            const currentMousePosition = { x: event.screenX, y: event.screenY };
+            const currentMousePosition = { x: event.clientX, y: event.clientY };
             let dx =
                 currentMousePosition.x -
                 widgetResizeData.initialMousePosition.x;
@@ -191,8 +200,8 @@ export const PageCanvas = forwardRef<
         if (selectedWidgetIds.length && widgetDataToMove) {
             const widget = uiComponents[selectedWidgetIds[0]];
 
-            const dx = event.screenX - widgetDataToMove.initialMousePosition.x;
-            const dy = event.screenY - widgetDataToMove.initialMousePosition.y;
+            const dx = event.clientX - widgetDataToMove.initialMousePosition.x;
+            const dy = event.clientY - widgetDataToMove.initialMousePosition.y;
 
             let x =
                 Math.round((widgetDataToMove.initialX + dx) / pageUnitSize) *

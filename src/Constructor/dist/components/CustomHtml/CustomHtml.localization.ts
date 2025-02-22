@@ -1,11 +1,11 @@
 import { Phrase } from '@/shared/localization';
 
 const _text = {
-    widgets: {
-        en: 'Widgets',
-        ru: 'Виджета',
+    customHTML: {
+        en: 'Custom HTML',
+        ru: 'Кастомный HTML',
         meta: {
-            explanation: 'Заголовок для панели добавления виджетов',
+            explanation: 'Название виджета',
         },
     },
 } as const;

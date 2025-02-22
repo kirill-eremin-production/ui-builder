@@ -4,4 +4,7 @@
     height: 100%;
     box-shadow: 2px 0 4px var(--shadow-color);
     border-inline-end: 1px solid var(--main-border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }

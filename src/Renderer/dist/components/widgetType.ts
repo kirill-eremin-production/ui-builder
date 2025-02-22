@@ -1,1 +1,1 @@
-export type WidgetType = 'Container';
+export type WidgetType = 'Container' | 'CustomHTML';

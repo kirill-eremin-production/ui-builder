@@ -245,7 +245,6 @@ export const PageCanvas = forwardRef<
             [newWidgetId]: {
                 id: newWidgetId,
                 type: widgetTypeToAddOnCanvas,
-                text: 'Container',
                 isMoving: true,
                 x: newWidgetPosition?.current?.x || 0,
                 y: newWidgetPosition?.current?.y || 0,
@@ -297,9 +296,8 @@ export const PageCanvas = forwardRef<
         setUiComponents((prevState) => ({
             ...prevState,
             [selectedWidgetIds[0]]: {
+                ...prevState[selectedWidgetIds[0]],
                 id: selectedWidgetIds[0],
-                type: prevState[selectedWidgetIds[0]].type,
-                text: 'Container',
                 isMoving: false,
                 x:
                     newWidgetPosition?.current?.x ||

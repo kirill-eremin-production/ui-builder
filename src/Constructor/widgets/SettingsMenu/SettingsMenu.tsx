@@ -10,6 +10,7 @@ import { PageConfig } from '@/shared/types/PageConfig';
 import { useUpdateSearchParams } from '@/shared/utils/update-query-params';
 
 import { PageSettings } from '@/Constructor/widgets/Settings/PageSettings';
+import { WidgetSettings } from '@/Constructor/widgets/WidgetSettings';
 
 import { pageIdAtom } from '@/Constructor/state/page-config';
 import { pageUnitSizeAtom } from '@/Renderer/state/page';
@@ -18,13 +19,10 @@ import { uiComponentsAtom } from '@/Renderer/state/ui';
 export type SettingsMenuProps = object;
 
 export const SettingsMenu: FC<SettingsMenuProps> = () => {
-
-
     return (
         <div className={styles.root}>
-
-
             <PageSettings />
+            <WidgetSettings />
         </div>
     );
 };

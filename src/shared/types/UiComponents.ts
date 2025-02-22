@@ -1,3 +1,4 @@
+import { CustomHtmlProps } from '@/Renderer/dist/components/CustomHtml';
 import { WidgetType } from '@/Renderer/dist/components/widgetType';
 
 export type UiComponentCommonProps = {
@@ -18,11 +19,16 @@ export type UiComponentCommonProps = {
 };
 
 export type ContainerComponent = UiComponentCommonProps & {
-    type: WidgetType;
-    text: string;
+    type: 'Container';
+    text?: string;
     children?: UiComponents;
 };
 
-export type UiComponent = ContainerComponent;
+export type CustomHTMLComponent = UiComponentCommonProps & {
+    type: 'CustomHTML';
+    params: CustomHtmlProps;
+};
+
+export type UiComponent = ContainerComponent | CustomHTMLComponent;
 
 export type UiComponents = Record<string, UiComponent>;

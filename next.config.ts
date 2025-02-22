@@ -1,23 +1,14 @@
 import type { NextConfig } from 'next';
 
-const cspHeader = `
-    frame-ancestors autofill.yandex.ru;
-`;
-
 const nextConfig: NextConfig = {
-    /* config options here */
-    async headers() {
-        return [
-            {
-                source: '/(.*)',
-                headers: [
-                    {
-                        key: 'Content-Security-Policy',
-                        value: cspHeader.replace(/\n/g, ''),
-                    },
-                ],
-            },
-        ];
+    distDir: 'build',
+    experimental: {
+        serverActions: {
+            allowedOrigins: JSON.parse(
+                process.env.ALLOWED_ORIGINS || '["ui.keremin.ru"]'
+            ),
+            bodySizeLimit: '1PB',
+        },
     },
     eslint: { ignoreDuringBuilds: true },
 };

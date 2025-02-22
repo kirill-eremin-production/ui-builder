@@ -26,7 +26,7 @@ RUN npm ci --omit=dev && npm install -g pm2
 # Копируем собранное приложение
 COPY ./build ./build
 # Копируем конфигурацию NextJS
-COPY ./next.config.mjs ./next.config.mjs
+COPY ./next.config.ts ./next.config.ts
 
 # Копируем скрипт запуска приложения
 COPY ./deploy/start.sh ./start.sh

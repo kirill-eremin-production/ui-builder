@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "next dev --experimental-https",
         "build": "next build",
-        "start": "next start",
+        "start": "next start -p 60125",
         "lint": "next lint",
         "gen:component": "plop component",
         "prettier": "prettier --write ./**/*.{ts,tsx,js,jsx,json,md,yml,css} --log-level error --no-error-on-unmatched-pattern",

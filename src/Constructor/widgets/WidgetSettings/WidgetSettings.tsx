@@ -35,6 +35,7 @@ export const WidgetSettings: FC<WidgetSettingsProps> = (props) => {
                 [selectedWidgetIdToEdit]: {
                     ...prevState[selectedWidgetIdToEdit],
                     params: {
+                        // @ts-expect-error
                         ...prevState[selectedWidgetIdToEdit].params,
                         ...params,
                     },

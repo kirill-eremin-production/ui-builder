@@ -14,7 +14,7 @@ export async function checkSessions() {
     const session = await getSession();
 
     if (!session.isLoggedIn) {
-        return redirect('https://local.ui.keremin.ru:3000');
+        return redirect(`https://${process.env.host}`);
     }
 
     return session;

@@ -254,6 +254,7 @@ export const PageCanvas = forwardRef<
                 y: newWidgetPosition?.current?.y || 0,
                 width: 320,
                 height: 160,
+                params: {},
             },
         }));
     };

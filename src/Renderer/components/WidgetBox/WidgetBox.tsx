@@ -30,12 +30,13 @@ export type WidgetBoxProps = {
     y: number;
     width: number;
     height: number;
+    isRenderMode?: boolean;
 };
 
 export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
     HTMLDivElement,
     HTMLAttributes<HTMLDivElement> & WidgetBoxProps
->(({ id, children, x, y, width, height }, ref) => {
+>(({ id, children, x, y, width, height, isRenderMode }, ref) => {
     const css: CSSProperties = {
         left: `${x}px`,
         top: `${y}px`,
@@ -85,6 +86,14 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
                 initialY: y,
             });
         };
+
+    if (isRenderMode) {
+        return (
+            <div style={css} ref={ref} className={cn(styles.renderModeRoot)}>
+                <div className={styles.widgetContent}>{children}</div>
+            </div>
+        );
+    }
 
     return (
         <div

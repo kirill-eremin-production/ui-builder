@@ -32,12 +32,14 @@ export type PageCanvasProps = {
     minHeight: number;
 
     config: PageConfig;
+
+    isRenderMode?: boolean;
 };
 
 export const PageCanvas = forwardRef<
     HTMLDivElement,
     HTMLAttributes<HTMLDivElement> & PageCanvasProps
->(({ width, minHeight, config }, ref) => {
+>(({ width, minHeight, config, isRenderMode }, ref) => {
     const [widgetTypeToAddOnCanvas, setWidgetTypeToAddOnCanvas] = useAtom(
         widgetTypeToAddOnCanvasAtom
     );
@@ -63,9 +65,11 @@ export const PageCanvas = forwardRef<
         }
     );
 
+    const heightValue = Math.max(...widgetYEndPositions, minHeight);
+
     const rootStyle: CSSProperties = {
         width: `${width}px`,
-        height: `${Math.max(...widgetYEndPositions, minHeight)}px`,
+        height: heightValue ? `${heightValue}px` : undefined,
     };
 
     const onMouseMove: MouseEventHandler<HTMLDivElement> = (event) => {
@@ -314,6 +318,18 @@ export const PageCanvas = forwardRef<
         setSelectedWidgetIds([]);
         setWidgetTypeToAddOnCanvas(null);
     };
+
+    if (isRenderMode) {
+        return (
+            <div
+                data-testid="mainPageCanvas"
+                className={styles.content}
+                style={rootStyle}
+            >
+                <UiNode isRenderMode={isRenderMode} ui={config.ui} />
+            </div>
+        );
+    }
 
     return (
         <div ref={ref} className={styles.root}>

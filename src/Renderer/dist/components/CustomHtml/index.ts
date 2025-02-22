@@ -1,2 +1,2 @@
-export { CustomHtml } from './CustomHtml'
-export type { CustomHtmlProps } from './CustomHtml'
+export { CustomHtml } from './CustomHtml';
+export type { CustomHtmlProps } from './CustomHtml';

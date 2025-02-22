@@ -1,2 +1,2 @@
-export { WidgetSettings } from './WidgetSettings'
-export type { WidgetSettingsProps } from './WidgetSettings'
+export { WidgetSettings } from './WidgetSettings';
+export type { WidgetSettingsProps } from './WidgetSettings';

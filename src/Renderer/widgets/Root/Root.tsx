@@ -11,5 +11,12 @@ export type RootProps = {
 };
 
 export const Root: FC<RootProps> = ({ config }) => {
-    return <PageCanvas config={config} width={1024} />;
+    return (
+        <PageCanvas
+            isRenderMode
+            minHeight={config.minHeight}
+            config={config}
+            width={config.width}
+        />
+    );
 };

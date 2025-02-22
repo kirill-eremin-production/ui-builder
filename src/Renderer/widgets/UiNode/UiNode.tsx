@@ -7,10 +7,11 @@ import { Container } from '@/Renderer/dist/components/Container';
 import { CustomHtml } from '@/Renderer/dist/components/CustomHtml';
 
 export type UiNodeProps = {
+    isRenderMode?: boolean;
     ui: UiComponents;
 };
 
-export const UiNode: FC<UiNodeProps> = ({ ui }) => {
+export const UiNode: FC<UiNodeProps> = ({ ui, isRenderMode }) => {
     return (
         <div>
             {Object.entries(ui).map(([key, node]) => {
@@ -23,11 +24,15 @@ export const UiNode: FC<UiNodeProps> = ({ ui }) => {
                         width={node.width}
                         height={node.height}
                         key={key}
+                        isRenderMode={isRenderMode}
                     >
                         {node.type === 'Container' && (
                             <Container key={key} text={node.text}>
                                 {node.children ? (
-                                    <UiNode ui={node.children} />
+                                    <UiNode
+                                        isRenderMode={true}
+                                        ui={node.children}
+                                    />
                                 ) : null}
                             </Container>
                         )}

@@ -56,7 +56,7 @@ nvm use && npm i && npm run build && \
 # Собираем образ \
 docker build . -t keremin/ui-builder && \
 # Запускаем контейнер \
-docker run -p 443:443 -v /etc/letsencrypt/live/ui.keremin.ru:/usr/src/app/ssl -v /etc/letsencrypt/archive:/usr/src/archive -v /root/ui-builder-store:/usr/src/app/ui-builder-store --env-file ./env --name ui-builder-app-container -d keremin/ui-builder
+docker run -p 60000:443 -v /etc/letsencrypt/live/ui.keremin.ru:/usr/src/app/ssl -v /etc/letsencrypt/archive:/usr/src/archive -v /root/ui-builder-store:/usr/src/app/ui-builder-store --env-file ./env --name ui-builder-app-container -d keremin/ui-builder
 ```
 
 # Как перезапустить приложение

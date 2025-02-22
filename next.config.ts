@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     experimental: {
         serverActions: {
             allowedOrigins: JSON.parse(
-                process.env.ALLOWED_ORIGINS || '["ui.keremin.ru"]'
+                process.env.ALLOWED_ORIGINS || '["ui.keremin.ru:60000"]'
             ),
             bodySizeLimit: '1PB',
         },

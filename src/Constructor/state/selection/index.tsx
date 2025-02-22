@@ -16,4 +16,17 @@ export const widgetResizeDataAtom = atom<{
     initialY: number;
 } | null>(null);
 
+export const widgetDataToMoveAtom = atom<{
+    initialX: number;
+    initialY: number;
+    initialMousePosition: { x: number; y: number };
+} | null>(null);
+
+// Признак, который говорит о том, что в данный момент происходит изменение виджета на холсте
+export const isCanvasWidgetEditingAtom = atom<boolean>(false);
+
+// Для перемещения
 export const selectedWidgetIdsAtom = atom<string[]>([]);
+
+// Для редактирования
+export const selectedWidgetIdToEditAtom = atom<string | null>(null);

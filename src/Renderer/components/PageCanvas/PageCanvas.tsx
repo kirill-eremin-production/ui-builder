@@ -6,7 +6,7 @@ import {
     useRef,
 } from 'react';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import styles from './PageCanvas.module.css';
 
@@ -15,7 +15,10 @@ import { PageConfig } from '@/shared/types/PageConfig';
 import { UiNode } from '@/Renderer/widgets/UiNode';
 
 import {
+    isCanvasWidgetEditingAtom,
+    selectedWidgetIdToEditAtom,
     selectedWidgetIdsAtom,
+    widgetDataToMoveAtom,
     widgetResizeDataAtom,
     widgetTypeToAddOnCanvasAtom,
 } from '@/Constructor/state/selection';
@@ -41,10 +44,16 @@ export const PageCanvas = forwardRef<
     const [selectedWidgetIds, setSelectedWidgetIds] = useAtom(
         selectedWidgetIdsAtom
     );
+    const setSelectedWidgetIdToEdit = useSetAtom(selectedWidgetIdToEditAtom);
+    const setIsCanvasWidgetEditing = useSetAtom(isCanvasWidgetEditingAtom);
     const [widgetResizeData, setWidgetResizeData] =
         useAtom(widgetResizeDataAtom);
+    const [widgetDataToMove, setWidgetDataToMove] =
+        useAtom(widgetDataToMoveAtom);
 
-    const newWidgetPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+    const newWidgetPosition = useRef<{ x: number; y: number } | undefined>(
+        undefined
+    );
 
     const rootStyle: CSSProperties = {
         width: `${width}px`,
@@ -135,7 +144,8 @@ export const PageCanvas = forwardRef<
             return;
         }
 
-        if (selectedWidgetIds.length) {
+        // Логика положения для новых виджетов
+        if (selectedWidgetIds.length && !widgetDataToMove) {
             const newWidget = uiComponents[selectedWidgetIds[0]];
             const newWidgetWidth = newWidget.width;
             const newWidgetHeight = newWidget.height;
@@ -172,8 +182,45 @@ export const PageCanvas = forwardRef<
                 ...prevState,
                 [selectedWidgetIds[0]]: {
                     ...prevState[selectedWidgetIds[0]],
-                    x: newWidgetPosition.current.x,
-                    y: newWidgetPosition.current.y,
+                    x: x,
+                    y: y,
+                },
+            }));
+        }
+
+        if (selectedWidgetIds.length && widgetDataToMove) {
+            const widget = uiComponents[selectedWidgetIds[0]];
+
+            const dx = event.screenX - widgetDataToMove.initialMousePosition.x;
+            const dy = event.screenY - widgetDataToMove.initialMousePosition.y;
+
+            let x =
+                Math.round((widgetDataToMove.initialX + dx) / pageUnitSize) *
+                pageUnitSize;
+            let y =
+                Math.round((widgetDataToMove.initialY + dy) / pageUnitSize) *
+                pageUnitSize;
+
+            if (x < 0) {
+                x = 0;
+            }
+
+            if (y < 0) {
+                y = 0;
+            }
+
+            if (x + widget.width > width) {
+                x = width - widget.width;
+            }
+
+            newWidgetPosition.current = { x, y };
+
+            setUiComponents((prevState) => ({
+                ...prevState,
+                [selectedWidgetIds[0]]: {
+                    ...prevState[selectedWidgetIds[0]],
+                    x: x,
+                    y: y,
                 },
             }));
         }
@@ -191,8 +238,8 @@ export const PageCanvas = forwardRef<
                 type: widgetTypeToAddOnCanvas,
                 text: 'Container',
                 isMoving: true,
-                x: newWidgetPosition.current.x,
-                y: newWidgetPosition.current.y,
+                x: newWidgetPosition?.current?.x || 0,
+                y: newWidgetPosition?.current?.y || 0,
                 width: 320,
                 height: 160,
             },
@@ -226,8 +273,15 @@ export const PageCanvas = forwardRef<
         event.preventDefault();
         event.stopPropagation();
         setWidgetResizeData(null);
+        setIsCanvasWidgetEditing(false);
+        setWidgetDataToMove(null);
+
+        if (event.currentTarget === event.target) {
+            setSelectedWidgetIdToEdit(null);
+        }
 
         if (!selectedWidgetIds.length) {
+            newWidgetPosition.current = undefined;
             return;
         }
 
@@ -238,13 +292,18 @@ export const PageCanvas = forwardRef<
                 type: prevState[selectedWidgetIds[0]].type,
                 text: 'Container',
                 isMoving: false,
-                x: newWidgetPosition.current.x,
-                y: newWidgetPosition.current.y,
+                x:
+                    newWidgetPosition?.current?.x ||
+                    prevState[selectedWidgetIds[0]].x,
+                y:
+                    newWidgetPosition?.current?.y ||
+                    prevState[selectedWidgetIds[0]].y,
                 width: prevState[selectedWidgetIds[0]].width,
                 height: prevState[selectedWidgetIds[0]].height,
             },
         }));
 
+        newWidgetPosition.current = undefined;
         setSelectedWidgetIds([]);
         setWidgetTypeToAddOnCanvas(null);
     };

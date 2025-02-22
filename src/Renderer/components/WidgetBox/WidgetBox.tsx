@@ -7,14 +7,18 @@ import {
     forwardRef,
 } from 'react';
 
-import { useSetAtom } from 'jotai';
+import cn from 'classnames';
+import { useAtom, useSetAtom } from 'jotai';
 
 import styles from './WidgetBox.module.css';
 
 import { Direction } from '@/shared/types/Direction';
 
 import {
+    isCanvasWidgetEditingAtom,
+    selectedWidgetIdToEditAtom,
     selectedWidgetIdsAtom,
+    widgetDataToMoveAtom,
     widgetResizeDataAtom,
 } from '@/Constructor/state/selection';
 import { ResizeButton } from '@/Renderer/components/ResizeButton';
@@ -40,12 +44,27 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
     };
     const setSelectedWidgetIds = useSetAtom(selectedWidgetIdsAtom);
     const setWidgetIdToResize = useSetAtom(widgetResizeDataAtom);
+    const setWidgetDataToMove = useSetAtom(widgetDataToMoveAtom);
+    const [widgetIdToEdit, setWidgetIdToEdit] = useAtom(
+        selectedWidgetIdToEditAtom
+    );
+    const [isCanvasWidgetEditing, setIsCanvasWidgetEditing] = useAtom(
+        isCanvasWidgetEditingAtom
+    );
 
     const onMouseDown: MouseEventHandler = (event) => {
         event.stopPropagation();
         event.preventDefault();
 
+        setWidgetDataToMove({
+            initialMousePosition: { x: event.screenX, y: event.screenY },
+            initialX: x,
+            initialY: y,
+        });
+
+        setIsCanvasWidgetEditing(true);
         setSelectedWidgetIds([id]);
+        setWidgetIdToEdit(id);
     };
 
     const getOnResizeButtonMouseDown =
@@ -53,6 +72,9 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
         (event) => {
             event.preventDefault();
             event.stopPropagation();
+            setIsCanvasWidgetEditing(true);
+            setSelectedWidgetIds([id]);
+            setWidgetIdToEdit(id);
             setWidgetIdToResize({
                 widgetId: id,
                 direction,
@@ -69,7 +91,10 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
             onMouseDown={onMouseDown}
             style={css}
             ref={ref}
-            className={styles.root}
+            className={cn(styles.root, {
+                [styles.selected]: widgetIdToEdit === id,
+                [styles.disableHoverStyles]: isCanvasWidgetEditing,
+            })}
         >
             <div className={styles.background} />
             <div className={styles.resizeButtons}>
@@ -115,10 +140,7 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
                 />
             </div>
 
-            <div className={styles.widgetContent}>
-                {children}
-            </div>
-
+            <div className={styles.widgetContent}>{children}</div>
         </div>
     );
 });

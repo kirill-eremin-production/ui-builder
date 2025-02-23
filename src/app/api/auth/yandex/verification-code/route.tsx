@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
             session.image = userData.default_avatar_id;
             await session.save();
 
-            // return Response.redirect(`https://${process.env.host}`);
+            return Response.redirect(`https://${process.env.host}`);
         }
     } catch (error) {
         console.log(error);

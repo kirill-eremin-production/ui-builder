@@ -21,8 +21,10 @@ export const sessionOptions: SessionOptions = {
     cookieOptions: {
         // secure only works in `https` environments
         // if your localhost is not on `https`, then use: `secure: process.env.NODE_ENV === "production"`
-        secure: false,
+        secure: true,
         httpOnly: true,
         path: '/',
+        sameSite: 'lax',
+        domain: process.env.host,
     },
 };

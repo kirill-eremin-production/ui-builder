@@ -46,9 +46,9 @@ export async function GET(req: NextRequest) {
             session.name = userData.real_name;
             session.email = userData.default_email;
             session.image = userData.default_avatar_id;
-            await session.save();
+            return await session.save();
 
-            return Response.redirect(`https://${process.env.host}`);
+            // return Response.redirect(`https://${process.env.host}`);
         }
     } catch (error) {
         console.log(error);

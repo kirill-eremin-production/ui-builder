@@ -23,7 +23,5 @@ export const sessionOptions: SessionOptions = {
         // if your localhost is not on `https`, then use: `secure: process.env.NODE_ENV === "production"`
         secure: false,
         httpOnly: true,
-        path: '/',
-        sameSite: 'lax',
     },
 };

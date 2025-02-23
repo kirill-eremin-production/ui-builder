@@ -25,6 +25,6 @@ export const sessionOptions: SessionOptions = {
         httpOnly: true,
         path: '/',
         sameSite: 'lax',
-        domain: process.env.host,
+        domain: (process.env.host || '').replace(':60000', ''),
     },
 };

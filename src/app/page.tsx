@@ -22,7 +22,9 @@ export default async function Home() {
         <div className={styles.page}>
             <div className={styles.row}>
                 Authorized: {session.name}
-                <Link href="/api/auth/yandex/logout">Logout</Link>
+                <Link prefetch={false} href="/api/auth/yandex/logout">
+                    Logout
+                </Link>
             </div>
 
             <hr />

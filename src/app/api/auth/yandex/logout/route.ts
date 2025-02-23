@@ -8,7 +8,6 @@ export async function GET() {
         await cookies(),
         sessionOptions
     );
-    console.log('>>> session destroy');
     session.destroy();
 
     return Response.redirect(`https://${process.env.host}`);

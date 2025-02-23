@@ -1,7 +1,14 @@
-import { getSession } from '@/app/actions/sessions';
+import { getIronSession } from 'iron-session';
+import { cookies } from 'next/headers';
+
+import { SessionData, sessionOptions } from '@/app/actions/utils/sessions/lib';
 
 export async function GET() {
-    const session = await getSession();
+    const session = await getIronSession<SessionData>(
+        await cookies(),
+        sessionOptions
+    );
+    console.log('>>> session destroy');
     session.destroy();
 
     return Response.redirect(`https://${process.env.host}`);

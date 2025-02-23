@@ -11,6 +11,7 @@ export async function getSession() {
 }
 
 export async function checkSessions() {
+    'use server';
     const session = await getSession();
 
     if (!session.isLoggedIn) {

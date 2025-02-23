@@ -68,6 +68,7 @@ export const PageCanvas = forwardRef<
     const heightValue = Math.max(...widgetYEndPositions, minHeight);
 
     const rootStyle: CSSProperties = {
+        minWidth: `${width}px`,
         width: `${width}px`,
         height: heightValue ? `${heightValue}px` : undefined,
     };

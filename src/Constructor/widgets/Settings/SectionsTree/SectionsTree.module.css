@@ -1,8 +1,4 @@
-.root {
+.sectionsList {
     display: flex;
     flex-direction: column;
-}
-
-.link {
-    color: #0e70c0;
 }

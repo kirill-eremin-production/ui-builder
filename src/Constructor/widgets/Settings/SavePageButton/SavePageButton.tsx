@@ -42,6 +42,10 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
         unitSize: pageUnitSize,
     };
 
+    const [pageConfigToDiffCheck, setPageConfigToDiffCheck] = useState(
+        JSON.stringify(pageConfig)
+    );
+
     const onButtonClick = async () => {
         setIsLoading(true);
         const { pageId } = await writePageServerAction({
@@ -50,13 +54,30 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
         });
         updateQueryParams({ pageId });
         setIsLoading(false);
+        setPageConfigToDiffCheck(JSON.stringify(pageConfig));
     };
     return (
-        <div>
+        <div className={styles.root}>
             {isLoading ? (
                 'Loading...'
             ) : (
-                <button onClick={onButtonClick}>{text.savePage.en}</button>
+                <div>
+                    <button onClick={onButtonClick}>{text.savePage.en}</button>
+                    {pageConfigToDiffCheck !== JSON.stringify(pageConfig) ? (
+                        <div>changed</div>
+                    ) : (
+                        <div>saved</div>
+                    )}
+                </div>
+            )}
+            {currentPageId && (
+                <a
+                    className={styles.link}
+                    target="_blank"
+                    href={`/r/${currentPageId}`}
+                >
+                    view published version
+                </a>
             )}
         </div>
     );

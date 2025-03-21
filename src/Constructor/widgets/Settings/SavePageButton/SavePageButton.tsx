@@ -1,7 +1,7 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { ArrowUpRightFromSquare } from '@gravity-ui/icons';
-import { Button, Icon, Label } from '@gravity-ui/uikit';
+import { Button, Card, Icon, Label, Modal, Text } from '@gravity-ui/uikit';
 
 import { useAtom, useAtomValue } from 'jotai/index';
 
@@ -37,6 +37,8 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
     const pageMinHeight = useAtomValue(pageMinHeightAtom);
     const pageName = useAtomValue(pageNameAtom);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const pageConfig: PageConfig = {
         width: pageWidth,
         minHeight: pageMinHeight,
@@ -60,6 +62,23 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
         setPageConfigToDiffCheck(JSON.stringify(pageConfig));
     };
 
+    useEffect(() => {
+        const onKeyDownHandler = (event: KeyboardEvent) => {
+            // Отключаем стандартное браузерное действия для ctrl + s - будем сохранять страницу
+            if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+                event.preventDefault();
+                event.stopPropagation();
+                onButtonClick();
+            }
+        };
+
+        window.addEventListener('keydown', onKeyDownHandler);
+
+        return () => {
+            window.removeEventListener('keydown', onKeyDownHandler);
+        };
+    }, [onButtonClick]);
+
     const isSaved = pageConfigToDiffCheck === JSON.stringify(pageConfig);
 
     return (
@@ -74,9 +93,21 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
                 </Button>
             )}
 
-            <Label theme={isSaved ? 'success' : 'danger'} size="m">
+            <Label
+                onClick={() => setIsModalOpen(true)}
+                theme={isSaved ? 'success' : 'danger'}
+                size="m"
+            >
                 {isSaved ? text.saved.en : text.modified.en}
             </Label>
+
+            <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <Card className={styles.modalContent} view="clear">
+                    <Text variant="caption-2" className={styles.json}>
+                        {JSON.stringify(pageConfig, null, 4)}
+                    </Text>
+                </Card>
+            </Modal>
 
             <Button
                 loading={isLoading}

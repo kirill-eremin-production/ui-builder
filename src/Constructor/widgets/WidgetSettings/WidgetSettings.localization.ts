@@ -1,11 +1,11 @@
 import { Phrase } from '@/shared/localization';
 
 const _text = {
-    example: {
-        en: 'Example',
-        ru: 'Пример',
+    sectionParamsTitle: {
+        en: 'Section params',
+        ru: 'Параметры секции',
         meta: {
-            explanation: 'Пример',
+            explanation: 'Заголовок панели',
         },
     },
 } as const;

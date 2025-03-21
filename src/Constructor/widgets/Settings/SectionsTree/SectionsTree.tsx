@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import { TrashBin } from '@gravity-ui/icons';
 import { Button, Icon, Text } from '@gravity-ui/uikit';
@@ -42,7 +42,7 @@ export const SectionsTree: FC<SectionsTreeProps> = (props) => {
                                         setSelectedWidgetIdToEdit(sectionId)
                                     }
                                 >
-                                    {sectionConfig.type}
+                                    {sectionConfig.name || sectionConfig.type}
                                 </Button>
                                 <Button
                                     view="outlined-danger"

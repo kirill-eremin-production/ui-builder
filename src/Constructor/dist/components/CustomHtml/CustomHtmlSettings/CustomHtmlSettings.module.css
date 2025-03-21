@@ -1,5 +1,14 @@
 .content {
     width: 100%;
-    min-height: 500px;
-    padding: 4px;
+}
+
+.content textarea {
+    font-family: monospace !important;
+}
+
+.root {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-block-start: 4px;
 }

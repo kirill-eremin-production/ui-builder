@@ -9,3 +9,15 @@
 .link {
     color: #0e70c0;
 }
+
+.json {
+    text-wrap: wrap;
+    white-space: pre;
+    font-family: monospace;
+}
+
+.modalContent {
+    max-width: 800px;
+    overflow: auto;
+    padding: 8px;
+}

@@ -1,5 +1,7 @@
 import { FC, ReactNode } from 'react';
 
+import { Text } from '@gravity-ui/uikit';
+
 import { useAtom } from 'jotai';
 
 import styles from './WidgetSettings.module.css';
@@ -28,7 +30,7 @@ export const WidgetSettings: FC<WidgetSettingsProps> = (props) => {
 
     const selectedWidgetToEdit = uiComponents[selectedWidgetIdToEdit];
 
-    const onSettingsChange = (params: any) => {
+    const onSectionParamsChange = (params: any) => {
         setUiComponents((prevState) => {
             return {
                 ...prevState,
@@ -44,12 +46,26 @@ export const WidgetSettings: FC<WidgetSettingsProps> = (props) => {
         });
     };
 
+    const onCommonParamsChange = (params: any) => {
+        setUiComponents((prevState) => {
+            return {
+                ...prevState,
+                [selectedWidgetIdToEdit]: {
+                    ...prevState[selectedWidgetIdToEdit],
+                    ...params,
+                },
+            };
+        });
+    };
+
     return (
-        <div key={selectedWidgetIdToEdit}>
+        <div className={styles.root} key={selectedWidgetIdToEdit}>
+            <Text variant="header-1">{text.sectionParamsTitle.en}</Text>
             {mapWidgetTypeToSettingsComponent[selectedWidgetToEdit.type]
                 ? mapWidgetTypeToSettingsComponent[selectedWidgetToEdit.type]({
                       widgetData: selectedWidgetToEdit,
-                      onChange: onSettingsChange,
+                      onSectionParamsChange,
+                      onCommonParamsChange,
                   })
                 : null}
         </div>

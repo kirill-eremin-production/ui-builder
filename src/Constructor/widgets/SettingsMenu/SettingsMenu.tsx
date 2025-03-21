@@ -22,7 +22,6 @@ export type SettingsMenuProps = object;
 export const SettingsMenu: FC<SettingsMenuProps> = () => {
     return (
         <div className={styles.root}>
-            <SectionsTree />
             <PageSettings />
             <WidgetSettings />
         </div>

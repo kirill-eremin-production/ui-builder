@@ -1,2 +1,2 @@
-export { SectionsTree } from './SectionsTree'
-export type { SectionsTreeProps } from './SectionsTree'
+export { SectionsTree } from './SectionsTree';
+export type { SectionsTreeProps } from './SectionsTree';

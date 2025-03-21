@@ -1,5 +1,7 @@
 import { FC, useState } from 'react';
 
+import { Button } from '@gravity-ui/uikit';
+
 import { useAtom, useAtomValue } from 'jotai/index';
 
 import styles from './SavePageButton.module.css';
@@ -62,7 +64,7 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
                 'Loading...'
             ) : (
                 <div>
-                    <button onClick={onButtonClick}>{text.savePage.en}</button>
+                    <Button onClick={onButtonClick}>{text.savePage.en}</Button>
                     {pageConfigToDiffCheck !== JSON.stringify(pageConfig) ? (
                         <div>changed</div>
                     ) : (

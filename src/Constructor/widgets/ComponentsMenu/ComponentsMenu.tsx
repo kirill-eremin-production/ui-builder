@@ -2,6 +2,8 @@ import { FC } from 'react';
 
 import styles from './ComponentsMenu.module.css';
 
+import { SectionsTree } from '@/Constructor/widgets/Settings/SectionsTree';
+
 import { Container } from '@/Constructor/dist/components/Container';
 import { CustomHtml } from '@/Constructor/dist/components/CustomHtml';
 
@@ -12,6 +14,8 @@ export type ComponentsMenuProps = object;
 export const ComponentsMenu: FC<ComponentsMenuProps> = () => {
     return (
         <div className={styles.root}>
+            <SectionsTree />
+
             <h2>{text.widgets.en}</h2>
             <Container />
             <CustomHtml />

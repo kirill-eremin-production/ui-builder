@@ -1,4 +1,21 @@
 .sectionsList {
     display: flex;
     flex-direction: column;
+    gap: 4px;
+    padding: 4px;
+    border-bottom: 1px solid var(--main-border-color);
+    min-height: 200px;
+    max-height: 300px;
+    overflow: auto;
+}
+
+.header {
+    padding: 4px;
+    border-bottom: 1px solid var(--main-border-color);
+}
+
+.element {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
 }

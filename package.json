@@ -27,6 +27,7 @@
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3",
+        "@gravity-ui/uikit": "^7.6.0",
         "@playwright/test": "^1.50.1",
         "@trivago/prettier-plugin-sort-imports": "^5.2.2",
         "@types/node": "^20",

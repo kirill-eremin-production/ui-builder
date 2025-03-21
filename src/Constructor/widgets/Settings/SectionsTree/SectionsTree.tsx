@@ -1,5 +1,8 @@
 import { FC } from 'react';
 
+import { TrashBin } from '@gravity-ui/icons';
+import { Button, Icon, Text } from '@gravity-ui/uikit';
+
 import { useAtom } from 'jotai';
 
 import styles from './SectionsTree.module.css';
@@ -20,13 +23,18 @@ export const SectionsTree: FC<SectionsTreeProps> = (props) => {
 
     return (
         <div>
-            Sections tree
+            <div className={styles.header}>
+                <Text variant="header-1">{text.sectionTreeTitle.en}</Text>
+            </div>
+
             <div className={styles.sectionsList}>
                 {Object.entries(uiComponents).map(
                     ([sectionId, sectionConfig]) => {
                         return (
-                            <div key={sectionId}>
-                                <button
+                            <div className={styles.element} key={sectionId}>
+                                <Button
+                                    view="outlined"
+                                    width="max"
                                     disabled={
                                         sectionId === selectedWidgetIdToEdit
                                     }
@@ -35,13 +43,14 @@ export const SectionsTree: FC<SectionsTreeProps> = (props) => {
                                     }
                                 >
                                     {sectionConfig.type}
-                                </button>
-                                <button
+                                </Button>
+                                <Button
+                                    view="outlined-danger"
                                     onClick={() => removeUiComponent(sectionId)}
                                     key={sectionId}
                                 >
-                                    Delete
-                                </button>
+                                    <Icon data={TrashBin} />
+                                </Button>
                             </div>
                         );
                     }

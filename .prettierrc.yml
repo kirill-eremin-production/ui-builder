@@ -5,6 +5,7 @@ singleQuote: true
 
 importOrder:
     - '^react$'
+    - '^@gravity-ui'
     - '<THIRD_PARTY_MODULES>'
     - '(\.css)$' # Любой импорт с .css на конце
     - '^@/app'

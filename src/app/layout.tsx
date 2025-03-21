@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'UI Builder',
+    title: 'Constructor / UI Builder',
     description: 'Home page',
 };
 

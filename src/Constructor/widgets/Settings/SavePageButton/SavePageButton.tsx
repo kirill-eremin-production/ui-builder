@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 
-import { Button } from '@gravity-ui/uikit';
+import { ArrowUpRightFromSquare } from '@gravity-ui/icons';
+import { Button, Icon, Label } from '@gravity-ui/uikit';
 
 import { useAtom, useAtomValue } from 'jotai/index';
 
@@ -58,29 +59,33 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
         setIsLoading(false);
         setPageConfigToDiffCheck(JSON.stringify(pageConfig));
     };
+
+    const isSaved = pageConfigToDiffCheck === JSON.stringify(pageConfig);
+
     return (
         <div className={styles.root}>
-            {isLoading ? (
-                'Loading...'
-            ) : (
-                <div>
-                    <Button onClick={onButtonClick}>{text.savePage.en}</Button>
-                    {pageConfigToDiffCheck !== JSON.stringify(pageConfig) ? (
-                        <div>changed</div>
-                    ) : (
-                        <div>saved</div>
-                    )}
-                </div>
-            )}
             {currentPageId && (
-                <a
-                    className={styles.link}
-                    target="_blank"
+                <Button
+                    view="normal"
                     href={`/r/${currentPageId}`}
+                    target="_blank"
                 >
-                    view published version
-                </a>
+                    <Icon data={ArrowUpRightFromSquare} />
+                </Button>
             )}
+
+            <Label theme={isSaved ? 'success' : 'danger'} size="m">
+                {isSaved ? text.saved.en : text.modified.en}
+            </Label>
+
+            <Button
+                loading={isLoading}
+                view="action"
+                disabled={isSaved}
+                onClick={onButtonClick}
+            >
+                {text.savePage.en}
+            </Button>
         </div>
     );
 };

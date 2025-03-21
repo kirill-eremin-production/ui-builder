@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { Text, TextInput } from '@gravity-ui/uikit';
+
 import { useAtom } from 'jotai';
 
 import styles from './PageSettings.module.css';
@@ -25,49 +27,41 @@ export const PageSettings: FC<PageSettingsProps> = (props) => {
 
     return (
         <div className={styles.root}>
-            <h2>{text.pageSettingsTitle.en}</h2>
-
-            <label>
-                {text.pageId.en}
-                <input
-                    type="text"
-                    value={pageId}
-                    onChange={(event) => setPageId(event.currentTarget.value)}
-                />
-            </label>
-
-            <label>
-                {text.pageName.en}
-                <input
-                    type="text"
-                    value={pageName}
-                    onChange={(event) => setPageName(event.currentTarget.value)}
-                />
-            </label>
-
-            <label>
-                {text.pageWidth.en}
-                <input
-                    type="number"
-                    value={pageWidth || ''}
-                    onChange={(event) =>
-                        setPageWidth(Number(event.currentTarget.value) || 0)
-                    }
-                />
-            </label>
-
-            <label>
-                {text.minPageHeight.en}
-                <input
-                    type="string"
-                    value={pageMinHeight === 0 ? '100%' : pageMinHeight}
-                    onChange={(event) =>
-                        setPageMinHeight(Number(event.currentTarget.value) || 0)
-                    }
-                />
-            </label>
-
             <SavePageButton />
+
+            <Text variant="header-1">{text.pageSettingsTitle.en}</Text>
+
+            <TextInput
+                label={text.pageId.en}
+                type="text"
+                value={pageId}
+                onChange={(event) => setPageId(event.currentTarget.value)}
+            />
+
+            <TextInput
+                label={text.pageName.en}
+                type="text"
+                value={pageName}
+                onChange={(event) => setPageName(event.currentTarget.value)}
+            />
+
+            <TextInput
+                label={text.pageWidth.en}
+                type="number"
+                value={String(pageWidth) || ''}
+                onChange={(event) =>
+                    setPageWidth(Number(event.currentTarget.value) || 0)
+                }
+            />
+
+            <TextInput
+                label={text.minPageHeight.en}
+                type="text"
+                value={pageMinHeight === 0 ? '100%' : String(pageMinHeight)}
+                onChange={(event) =>
+                    setPageMinHeight(Number(event.currentTarget.value) || 0)
+                }
+            />
         </div>
     );
 };

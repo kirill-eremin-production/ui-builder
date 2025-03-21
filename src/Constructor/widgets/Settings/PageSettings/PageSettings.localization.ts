@@ -2,7 +2,7 @@ import { Phrase } from '@/shared/localization';
 
 const _text = {
     pageId: {
-        en: 'Page id',
+        en: 'PageId',
         ru: 'Id страницы',
         meta: {
             explanation: 'Label для поля ввода id страницы',

@@ -1,3 +1,5 @@
 import { atom } from 'jotai';
 
-export const pageUnitSizeAtom = atom<number>(4);
+import { DefaultPageUnitSize } from '@/shared/constants/defaultPageParams';
+
+export const pageUnitSizeAtom = atom<number>(DefaultPageUnitSize);

@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 
-import styles from './page.module.css';
-
 import { getPagesListAction } from '@/app/actions/pages/list';
 import { getSession } from '@/app/actions/sessions';
+
+import { ConstructorHomePage } from '@/pages/ConstructorHomePage';
 
 export default async function Home() {
     const session = await getSession();
@@ -18,27 +18,5 @@ export default async function Home() {
         page.replaceAll('.json', '')
     );
 
-    return (
-        <div className={styles.page}>
-            <div className={styles.row}>
-                Authorized: {session.name}
-                <Link prefetch={false} href="/api/auth/yandex/logout">
-                    Logout
-                </Link>
-            </div>
-
-            <hr />
-
-            <div className={styles.list}>
-                <Link href="./edit">Edit</Link>
-
-                {pages.map((page) => (
-                    <div key={page} className={styles.row}>
-                        <Link href={`/r/${page}`}>{page}</Link>
-                        <Link href={`/edit?pageId=${page}`}>Edit</Link>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
+    return <ConstructorHomePage userName={session.name} pages={pages} />;
 }

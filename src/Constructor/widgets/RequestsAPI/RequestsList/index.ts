@@ -1,2 +1,2 @@
-export { RequestsList } from './RequestsList'
-export type { RequestsListProps } from './RequestsList'
+export { RequestsList } from './RequestsList';
+export type { RequestsListProps } from './RequestsList';

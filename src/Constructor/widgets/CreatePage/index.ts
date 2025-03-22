@@ -1,2 +1,2 @@
-export { CreatePage } from './CreatePage'
-export type { CreatePageProps } from './CreatePage'
+export { CreatePage } from './CreatePage';
+export type { CreatePageProps } from './CreatePage';

@@ -2,8 +2,6 @@
 
 import { FC, useEffect } from 'react';
 
-import { ThemeProvider } from '@gravity-ui/uikit';
-
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useHydrateAtoms } from 'jotai/utils';
 
@@ -83,9 +81,5 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
 };
 
 export const Root: FC<RootProps> = (props) => {
-    return (
-        <ThemeProvider theme="light">
-            <RootComponent {...props} />
-        </ThemeProvider>
-    );
+    return <RootComponent {...props} />;
 };

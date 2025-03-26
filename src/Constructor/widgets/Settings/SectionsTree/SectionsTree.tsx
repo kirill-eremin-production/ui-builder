@@ -1,14 +1,14 @@
 import { FC, useEffect } from 'react';
 
 import { TrashBin } from '@gravity-ui/icons';
-import { Button, Icon, Text } from '@gravity-ui/uikit';
 
 import { useAtom } from 'jotai';
 
 import styles from './SectionsTree.module.css';
 
+import { Button, Icon, Text } from '@/shared/components';
+
 import { selectedWidgetIdToEditAtom } from '@/Constructor/state/selection';
-import { uiComponentsAtom } from '@/Renderer/state/ui';
 import { useUiComponents } from '@/Renderer/state/ui/hooks/use-ui-components';
 
 import { text } from './SectionsTree.localization';
@@ -24,7 +24,7 @@ export const SectionsTree: FC<SectionsTreeProps> = (props) => {
     return (
         <div>
             <div className={styles.header}>
-                <Text variant="header-1">{text.sectionTreeTitle.en}</Text>
+                <Text variant="title">{text.sectionTreeTitle.en}</Text>
             </div>
 
             <div className={styles.sectionsList}>
@@ -34,7 +34,6 @@ export const SectionsTree: FC<SectionsTreeProps> = (props) => {
                             <div className={styles.element} key={sectionId}>
                                 <Button
                                     view="outlined"
-                                    width="max"
                                     disabled={
                                         sectionId === selectedWidgetIdToEdit
                                     }
@@ -49,7 +48,9 @@ export const SectionsTree: FC<SectionsTreeProps> = (props) => {
                                     onClick={() => removeUiComponent(sectionId)}
                                     key={sectionId}
                                 >
-                                    <Icon data={TrashBin} />
+                                    <Icon size="s">
+                                        <TrashBin />
+                                    </Icon>
                                 </Button>
                             </div>
                         );

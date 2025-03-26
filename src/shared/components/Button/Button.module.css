@@ -1,0 +1,123 @@
+.root {
+    background: none;
+    outline: none;
+    border: none;
+    border-radius: var(--border-radius-50);
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: var(--text-color-main);
+    box-sizing: border-box;
+}
+
+.noPaddings {
+    padding: 0.5rem 0rem;
+}
+
+.root:active {
+    transform: scale(0.95);
+}
+
+.withoutAnimation:active {
+    transform: none;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.default {
+    background: var(--background-secondary);
+}
+
+.action {
+    background: var(--color-brand);
+    color: var(--text-color-contrast);
+}
+
+.success {
+    background: var(--success);
+    color: var(--text-color-contrast);
+}
+
+.outlined,
+.outlinedDanger {
+    background: transparent;
+    color: var(--color-brand);
+    border-color: var(--color-brand);
+    border: 1px solid;
+    padding: calc(0.5rem - 1px) 1rem;
+}
+
+.outlined path {
+    color: var(--color-brand);
+}
+
+.outlinedSuccess {
+    color: var(--success);
+    border-color: var(--success);
+}
+
+.outlinedSuccess path {
+    color: var(--success);
+}
+
+.outlinedDanger {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.outlinedDanger path {
+    color: var(--danger);
+}
+
+.flat {
+    background: transparent;
+}
+
+.flatDanger {
+    background: transparent;
+}
+
+.flatDanger path {
+    color: var(--danger);
+}
+
+.flatSuccess {
+    background: transparent;
+}
+
+.flatSuccess path {
+    color: var(--success);
+}
+
+.flatAction {
+    background: transparent;
+}
+
+.flatAction path {
+    color: var(--color-brand);
+}
+
+.danger {
+    background: var(--danger);
+}
+
+.iconButton {
+    height: 2rem;
+    width: 2rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.withEllipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.textAlign_left {
+    text-align: left;
+}

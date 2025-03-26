@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
-import { Text, TextInput } from '@gravity-ui/uikit';
-
 import { useAtom } from 'jotai';
 
 import styles from './PageSettings.module.css';
+
+import { Text, TextInput } from '@/shared/components';
 
 import { SavePageButton } from '@/Constructor/widgets/Settings/SavePageButton';
 
@@ -29,25 +29,22 @@ export const PageSettings: FC<PageSettingsProps> = (props) => {
         <div className={styles.root}>
             <SavePageButton />
 
-            <Text variant="header-1">{text.pageSettingsTitle.en}</Text>
+            <Text variant="title">{text.pageSettingsTitle.en}</Text>
 
             <TextInput
                 label={text.pageId.en}
-                type="text"
                 value={pageId}
                 onChange={(event) => setPageId(event.currentTarget.value)}
             />
 
             <TextInput
                 label={text.pageName.en}
-                type="text"
                 value={pageName}
                 onChange={(event) => setPageName(event.currentTarget.value)}
             />
 
             <TextInput
                 label={text.pageWidth.en}
-                type="number"
                 value={String(pageWidth) || ''}
                 onChange={(event) =>
                     setPageWidth(Number(event.currentTarget.value) || 0)
@@ -56,7 +53,6 @@ export const PageSettings: FC<PageSettingsProps> = (props) => {
 
             <TextInput
                 label={text.minPageHeight.en}
-                type="text"
                 value={pageMinHeight === 0 ? '100%' : String(pageMinHeight)}
                 onChange={(event) =>
                     setPageMinHeight(Number(event.currentTarget.value) || 0)

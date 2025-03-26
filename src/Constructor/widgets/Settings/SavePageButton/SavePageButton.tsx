@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 
 import { ArrowUpRightFromSquare } from '@gravity-ui/icons';
-import { Button, Card, Icon, Label, Modal, Text } from '@gravity-ui/uikit';
 
-import { useAtom, useAtomValue } from 'jotai/index';
+import { useAtomValue } from 'jotai/index';
 
 import styles from './SavePageButton.module.css';
 
 import { writePageServerAction } from '@/app/actions/pages/save';
 
+import { Button, Icon, Modal, Text } from '@/shared/components';
 import { PageConfig } from '@/shared/types/PageConfig';
 import { useUpdateSearchParams } from '@/shared/utils/update-query-params';
 
@@ -85,37 +85,37 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
         <div className={styles.root}>
             {currentPageId && (
                 <Button
-                    view="normal"
+                    view="default"
                     href={`/r/${currentPageId}`}
                     target="_blank"
                 >
-                    <Icon data={ArrowUpRightFromSquare} />
+                    <Icon size="s">
+                        <ArrowUpRightFromSquare />
+                    </Icon>
                 </Button>
             )}
 
-            <Label
+            <Button
                 onClick={() => setIsModalOpen(true)}
-                theme={isSaved ? 'success' : 'danger'}
-                size="m"
+                view={isSaved ? 'success' : 'danger'}
             >
                 {isSaved ? text.saved.en : text.modified.en}
-            </Label>
+            </Button>
 
-            <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <Card className={styles.modalContent} view="clear">
-                    <Text variant="caption-2" className={styles.json}>
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <div className={styles.modalContent}>
+                    <Text variant="body">
                         {JSON.stringify(pageConfig, null, 4)}
                     </Text>
-                </Card>
+                </div>
             </Modal>
 
             <Button
-                loading={isLoading}
                 view="action"
-                disabled={isSaved}
+                disabled={isSaved || isLoading}
                 onClick={onButtonClick}
             >
-                {text.savePage.en}
+                {text.savePage.en || 'loading...'}
             </Button>
         </div>
     );

@@ -1,9 +1,8 @@
 import { FC } from 'react';
 
-import { TextArea, TextInput } from '@gravity-ui/uikit';
-
 import styles from './CustomHtmlSettings.module.css';
 
+import { TextArea, TextInput } from '@/shared/components';
 import { CustomHTMLComponent } from '@/shared/types/UiComponents';
 
 import { CustomHtmlProps } from '@/Renderer/dist/components/CustomHtml';
@@ -55,7 +54,6 @@ export const CustomHtmlSettings: FC<CustomHtmlSettingsProps> = ({
                             widgetData?.params?.content,
                     })
                 }
-                className={styles.content}
                 defaultValue={widgetData?.params?.content}
                 placeholder="content"
                 minRows={20}

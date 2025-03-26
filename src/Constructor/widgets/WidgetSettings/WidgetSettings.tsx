@@ -1,10 +1,10 @@
-import { FC, ReactNode } from 'react';
-
-import { Text } from '@gravity-ui/uikit';
+import { FC } from 'react';
 
 import { useAtom } from 'jotai';
 
 import styles from './WidgetSettings.module.css';
+
+import { Text } from '@/shared/components';
 
 import { CustomHtmlSettings } from '@/Constructor/dist/components/CustomHtml/CustomHtmlSettings';
 import { selectedWidgetIdToEditAtom } from '@/Constructor/state/selection';
@@ -60,7 +60,7 @@ export const WidgetSettings: FC<WidgetSettingsProps> = (props) => {
 
     return (
         <div className={styles.root} key={selectedWidgetIdToEdit}>
-            <Text variant="header-1">{text.sectionParamsTitle.en}</Text>
+            <Text variant="title">{text.sectionParamsTitle.en}</Text>
             {mapWidgetTypeToSettingsComponent[selectedWidgetToEdit.type]
                 ? mapWidgetTypeToSettingsComponent[selectedWidgetToEdit.type]({
                       widgetData: selectedWidgetToEdit,

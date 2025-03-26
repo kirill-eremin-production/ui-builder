@@ -1,11 +1,10 @@
-import '@gravity-ui/uikit/styles/fonts.css';
-import '@gravity-ui/uikit/styles/styles.css';
-
+import cn from 'classnames';
 import { Provider } from 'jotai';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import './globals.css';
+import './variables.css';
 
 import '@fontsource/ubuntu';
 
@@ -36,8 +35,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable}`}>
+            <body className={cn('theme_light')}>
                 <Provider>{children}</Provider>
+                <div id="modal-root"></div>
             </body>
         </html>
     );

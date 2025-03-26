@@ -1,12 +1,12 @@
 import { FC, FormEventHandler, useEffect, useState } from 'react';
 
 import { Plus } from '@gravity-ui/icons';
-import { Button, Icon, Modal, Text, TextInput } from '@gravity-ui/uikit';
 
 import styles from './CreatePage.module.css';
 
 import { writePageServerAction } from '@/app/actions/pages/save';
 
+import { Button, Icon, Modal, Text, TextInput } from '@/shared/components';
 import {
     DefaultPageHeight,
     DefaultPageName,
@@ -67,27 +67,30 @@ export const CreatePage: FC = () => {
     return (
         <div>
             <Button view="action" onClick={() => setIsModalOpen(true)}>
-                <Icon data={Plus} />
+                <Icon size="s">
+                    <Plus />
+                </Icon>
                 {text.page.en}
             </Button>
 
-            <Modal open={isModalOpen} onOpenChange={setIsModalOpen}>
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <form onSubmit={onFormSubmit} className={styles.form}>
-                    <Text variant="header-1">{text.newPageFormTitle.en}</Text>
+                    <Text variant="title">{text.newPageFormTitle.en}</Text>
                     <TextInput
                         value={pageId}
-                        onUpdate={setPageId}
+                        onChange={(event) =>
+                            setPageId(event.currentTarget.value)
+                        }
                         name="pageId"
                         label={text.pageIdLabel.en}
-                        note={pageRenderUrl}
                     />
                     <div className={styles.formControls}>
-                        {error && (
-                            <Text variant="caption-1" color="danger">
-                                {error}
-                            </Text>
-                        )}
-                        <Button loading={isLoading} view="action" type="submit">
+                        {error && <Text variant="body">{error}</Text>}
+                        <Button
+                            disabled={isLoading}
+                            view="action"
+                            type="submit"
+                        >
                             {text.submitButtonText.en}
                         </Button>
                     </div>

@@ -3,20 +3,22 @@
 import Link from 'next/link';
 
 import { getPagesListAction } from '@/app/actions/pages/list';
-import { getSession } from '@/app/actions/sessions';
+import { preventUnauthorized } from '@/app/actions/shared/guards/auth-guard/utils';
 
 import { ConstructorHomePage } from '@/pages/ConstructorHomePage';
 
 export default async function Home() {
-    const session = await getSession();
+    const authorizationCheck = await preventUnauthorized({
+        redirectUnauthorized: false,
+    });
 
-    if (!session?.isLoggedIn) {
-        return <Link href="/api/auth/yandex">Login</Link>;
+    if (authorizationCheck?.code) {
+        return <Link href="/auth">Login</Link>;
     }
 
     const pages = (await getPagesListAction()).map((page) =>
         page.replaceAll('.json', '')
     );
 
-    return <ConstructorHomePage userName={session.name} pages={pages} />;
+    return <ConstructorHomePage pages={pages} />;
 }

@@ -47,6 +47,6 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 
-ui-builder-store
+ui-builder.store
 certificates
 env

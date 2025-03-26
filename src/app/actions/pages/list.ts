@@ -2,10 +2,12 @@
 
 import fs from 'node:fs';
 
+import { paths } from '@/app/actions/shared/constants';
+
 export async function getPagesListAction(): Promise<string[]> {
     let pages: string[] = [];
     try {
-        pages = await fs.promises.readdir('./ui-builder-store/pages/', {
+        pages = await fs.promises.readdir(paths.pages, {
             recursive: true,
         });
 

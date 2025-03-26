@@ -2,6 +2,8 @@
 
 import fs from 'node:fs';
 
+import { paths } from '@/app/actions/shared/constants';
+
 import { PageConfig } from '@/shared/types/PageConfig';
 
 export type ReadPageParams = {
@@ -14,7 +16,7 @@ export async function readPageServerAction({
     let pageConfig;
     try {
         const page = await fs.promises.readFile(
-            `./ui-builder-store/pages/${pageId}.json`,
+            `${paths.pages}/${pageId}.json`,
             { encoding: 'utf-8' }
         );
 

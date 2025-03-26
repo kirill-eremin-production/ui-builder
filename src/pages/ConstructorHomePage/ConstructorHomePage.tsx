@@ -11,23 +11,17 @@ import { CreatePage } from '@/Constructor/widgets/CreatePage';
 import { text } from './ConstructorHomePage.localization';
 
 export type ConstructorHomePageProps = {
-    userName: string;
     pages: string[];
 };
 
 export const ConstructorHomePage: FC<ConstructorHomePageProps> = ({
-    userName,
     pages,
 }) => {
     return (
         <div className={styles.page}>
             <div className={styles.row}>
-                Authorized: {userName}
-                <Link
-                    target="_blank"
-                    prefetch={false}
-                    href="/api/auth/yandex/logout"
-                >
+                Authorized.
+                <Link prefetch={false} href="/api/auth/logout">
                     Logout
                 </Link>
             </div>

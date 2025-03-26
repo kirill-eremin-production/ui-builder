@@ -1,0 +1,30 @@
+.root {
+    background-color: var(--background-darkest);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.currentSession {
+    border: 1px solid var(--color-brand);
+}
+
+.time {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    color: var(--text-color-secondary);
+    gap: 2px;
+}
+
+.timeIcon {
+    width: var(--text-size-secondary);
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0.5rem 0;
+    gap: 0.5rem;
+}

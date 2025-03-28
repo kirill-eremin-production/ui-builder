@@ -19,6 +19,7 @@ import {
     pageNameAtom,
     pageWidthAtom,
 } from '@/Constructor/state/page-config';
+import { requestsApiAtom } from '@/Constructor/state/requests';
 import { widgetTypeToAddOnCanvasAtom } from '@/Constructor/state/selection';
 import { PageCanvas } from '@/Renderer/components/PageCanvas';
 import { pageUnitSizeAtom } from '@/Renderer/state/page';
@@ -36,6 +37,7 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
         [pageWidthAtom, initialPageConfig?.width || 1024],
         [pageMinHeightAtom, initialPageConfig?.minHeight || 1024],
         [pageNameAtom, initialPageConfig?.name || ''],
+        [requestsApiAtom, initialPageConfig?.requests || {}],
     ]);
 
     const setWidgetTypeToAddOnCanvas = useSetAtom(widgetTypeToAddOnCanvasAtom);
@@ -44,6 +46,7 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
     const pageWidth = useAtomValue(pageWidthAtom);
     const pageMinHeight = useAtomValue(pageMinHeightAtom);
     const pageName = useAtomValue(pageNameAtom);
+    const requestsApi = useAtomValue(requestsApiAtom);
 
     useEffect(() => {
         const onMouseUpHandler = () => {
@@ -69,6 +72,7 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
                             name: pageName,
                             unitSize: pageUnitSize,
                             ui: uiComponents,
+                            requests: requestsApi,
                         }}
                         width={pageWidth}
                         minHeight={pageMinHeight}

@@ -18,6 +18,7 @@ import {
     pageNameAtom,
     pageWidthAtom,
 } from '@/Constructor/state/page-config';
+import { useApiRequests } from '@/Constructor/state/requests/hooks/use-api-requests';
 import { pageUnitSizeAtom } from '@/Renderer/state/page';
 import { uiComponentsAtom } from '@/Renderer/state/ui';
 
@@ -32,6 +33,7 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
     const uiComponents = useAtomValue(uiComponentsAtom);
     const pageUnitSize = useAtomValue(pageUnitSizeAtom);
     const currentPageId = useAtomValue(pageIdAtom);
+    const { apiRequests } = useApiRequests();
 
     const pageWidth = useAtomValue(pageWidthAtom);
     const pageMinHeight = useAtomValue(pageMinHeightAtom);
@@ -45,6 +47,7 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
         name: pageName,
         ui: uiComponents,
         unitSize: pageUnitSize,
+        requests: apiRequests,
     };
 
     const [pageConfigToDiffCheck, setPageConfigToDiffCheck] = useState(
@@ -53,6 +56,8 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
 
     const onButtonClick = async () => {
         setIsLoading(true);
+        console.log(pageConfig);
+
         const { pageId } = await writePageServerAction({
             page: pageConfig,
             id: currentPageId || undefined,
@@ -112,7 +117,7 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
 
             <Button
                 view="action"
-                disabled={isSaved || isLoading}
+                disabled={isLoading}
                 onClick={onButtonClick}
             >
                 {text.savePage.en || 'loading...'}

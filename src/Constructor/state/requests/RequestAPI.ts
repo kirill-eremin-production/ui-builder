@@ -1,6 +1,6 @@
 import { RequestAPI } from '@/shared/types/RequestsAPI';
 
-class ApiRequest implements RequestAPI {
+export class ApiRequest implements RequestAPI {
     id: string;
     name: string;
     description?: string;
@@ -26,7 +26,12 @@ class ApiRequest implements RequestAPI {
         response?: object;
     };
 
-    constructor(request: RequestAPI) {
+    constructor(request: {
+        id: string;
+        name: string;
+        description?: string;
+        settings: RequestAPI['settings'];
+    }) {
         this.id = request.id;
         this.name = request.name;
         this.description = request.description;
@@ -85,6 +90,8 @@ class ApiRequest implements RequestAPI {
                 eval(this.settings.jsFinally);
             }
         }
+
+        return this.state.response;
     }
 
     // Метод для выполнения HTTP-запроса
@@ -115,5 +122,28 @@ class ApiRequest implements RequestAPI {
     private clearError() {
         this.state.isError = false;
         this.state.error = undefined;
+    }
+
+    // Метод для сериализации объекта ApiRequest
+    serialize() {
+        return {
+            id: this.id,
+            name: this.name,
+            description: this.description,
+            settings: {
+                method: this.settings.method,
+                url: this.settings.url,
+                queryParams: this.settings.queryParams,
+                headers: this.settings.headers,
+                body: this.settings.body,
+                retryCount: this.settings.retryCount,
+                isServerAction: this.settings.isServerAction,
+                runOnPageLoad: this.settings.runOnPageLoad,
+                jsBefore: this.settings.jsBefore,
+                jsFinally: this.settings.jsFinally,
+                jsOnError: this.settings.jsOnError,
+                jsOnSuccess: this.settings.jsOnSuccess,
+            },
+        };
     }
 }

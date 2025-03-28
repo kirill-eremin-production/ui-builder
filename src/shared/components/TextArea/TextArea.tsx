@@ -18,14 +18,18 @@ type NativeTextAreaProps = DetailedHTMLProps<
     HTMLTextAreaElement
 >;
 
-export type TextAreaProps = { label: ReactNode; onSubmit: () => void } & Omit<
+export type TextAreaProps = { label: ReactNode; onSubmit?: () => void } & Omit<
     NativeTextAreaProps,
     'id' | 'className' | 'type' | 'ref' | 'onKeyDown'
 >;
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     ({ label, onSubmit = () => {}, onChange = () => {}, ...props }, ref) => {
-        const [value, setValue] = useState('');
+        const [value, setValue] = useState(props.value || '');
+
+        useEffect(() => {
+            setValue(props.value || '');
+        }, [props.value]);
 
         const id = `${useId()}_name_${props.name}`;
 

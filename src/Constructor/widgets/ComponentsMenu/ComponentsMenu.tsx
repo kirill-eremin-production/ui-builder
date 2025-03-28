@@ -2,6 +2,7 @@ import { FC } from 'react';
 
 import styles from './ComponentsMenu.module.css';
 
+import { RequestsList } from '@/Constructor/widgets/RequestsAPI/RequestsList';
 import { SectionsTree } from '@/Constructor/widgets/Settings/SectionsTree';
 
 import { Container } from '@/Constructor/dist/components/Container';
@@ -19,6 +20,8 @@ export const ComponentsMenu: FC<ComponentsMenuProps> = () => {
             <h2>{text.widgets.en}</h2>
             <Container />
             <CustomHtml />
+
+            <RequestsList />
         </div>
     );
 };

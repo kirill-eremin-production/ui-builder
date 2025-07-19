@@ -65,3 +65,76 @@
     --text-size-secondary: 0.8rem;
     --text-size-tiny: 0.625rem;
 }
+
+.theme_dark {
+    /** Colors */
+    --color-brand: rgb(255, 190, 92); /* Сохраняем яркий бренд-цвет */
+
+    /* Backgrounds */
+    --background-darkest: rgb(15, 15, 15); /* Самый темный фон */
+    --background-main: rgb(25, 25, 25); /* Основной темный фон */
+    --background-dark: rgb(35, 35, 35); /* Темно-серый фон */
+    --background-dark-transparent: rgba(
+        35,
+        35,
+        35,
+        0.5
+    ); /* Полупрозрачный темно-серый */
+    --background-secondary: rgb(
+        55,
+        55,
+        55
+    ); /* Серый для второстепенных элементов */
+    --danger: rgb(229, 50, 93); /* Сохраняем красный для опасности */
+    --success: rgb(77, 176, 155); /* Сохраняем зеленый для успеха */
+
+    /** Borders */
+    --border-radius-50: 0.5rem;
+    --border-radius-100: 1rem;
+    --border-main-color: var(--background-secondary);
+    --border-active-color: var(--color-brand);
+    --shadow-color: rgba(
+        0,
+        0,
+        0,
+        0.3
+    ); /* Более выраженная тень для темной темы */
+
+    /** Input */
+    --input-background-color: rgb(35, 35, 35); /* Темный фон для инпутов */
+
+    /* chat */
+    --chat-incoming-message-content-color: rgb(
+        45,
+        45,
+        45
+    ); /* Темно-серый для входящих сообщений */
+    --chat-outgoing-message-content-color: rgb(
+        60,
+        45,
+        30
+    ); /* Темный фон с теплым оттенком для исходящих сообщений */
+
+    /** Text */
+    --text-color-main: rgb(225, 225, 225); /* Светло-серый текст */
+    --text-color-accent: var(--color-brand);
+    --text-color-contrast: rgb(255, 255, 255); /* Белый текст для контраста */
+    --text-color-secondary: rgba(
+        225,
+        225,
+        225,
+        0.7
+    ); /* Полупрозрачный светло-серый для второстепенного текста */
+    --text-color-tiny: rgba(
+        225,
+        225,
+        225,
+        0.5
+    ); /* Полупрозрачный светло-серый для мелкого текста */
+    --text-color-link: var(--color-brand);
+    --text-size-title: 2rem;
+    --text-size-caption: 1.5rem;
+    --text-size-body: 1rem;
+    --text-size-secondary: 0.8rem;
+    --text-size-tiny: 0.625rem;
+}

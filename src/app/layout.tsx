@@ -8,6 +8,8 @@ import './variables.css';
 
 import '@fontsource/ubuntu';
 
+import { ThemeProvider } from '../shared/state/theme';
+
 const geistSans = Geist({
     variable: '--font-geist-sans',
     subsets: ['latin'],
@@ -35,8 +37,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={cn('theme_light')}>
-                <Provider>{children}</Provider>
+            <body className={cn()}>
+                <Provider>
+                    <ThemeProvider>{children}</ThemeProvider>
+                </Provider>
                 <div id="modal-root"></div>
             </body>
         </html>

@@ -115,11 +115,7 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
                 </div>
             </Modal>
 
-            <Button
-                view="action"
-                disabled={isLoading}
-                onClick={onButtonClick}
-            >
+            <Button view="action" disabled={isLoading} onClick={onButtonClick}>
                 {text.savePage.en || 'loading...'}
             </Button>
         </div>

@@ -20,6 +20,7 @@
         "@fontsource/ubuntu": "^5.1.1",
         "@gravity-ui/icons": "^2.13.0",
         "classnames": "^2.5.1",
+        "dotenv": "^17.2.0",
         "jotai": "^2.12.0",
         "next": "^15",
         "react": "^19.0.0",

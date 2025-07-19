@@ -1,4 +1,4 @@
-import { env } from '@/app/actions/shared/constants';
+import { env } from '@/shared/env';
 
 export async function sendTelegramMessage(text: string) {
     return await fetch(

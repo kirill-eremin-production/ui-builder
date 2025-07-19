@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-import { env } from '@/app/actions/shared/constants';
+import { env } from '@/shared/env';
 
 export async function GET() {
     (await cookies()).set({

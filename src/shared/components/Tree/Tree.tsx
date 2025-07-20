@@ -1,7 +1,15 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 
+import { FilePlus, FolderPlus } from '@gravity-ui/icons';
+
 import styles from './Tree.module.css';
 
+import Button from '../Button/Button';
+import { Icon } from '../Icon/Icon';
+import { Text } from '../Text/Text';
+import TextInput from '../TextInput/TextInput';
+
+import { text } from './Tree.localization';
 import { TreeNode as TreeNodeComponent } from './TreeNode';
 import { VirtualizedList } from './VirtualizedList';
 import {
@@ -26,6 +34,8 @@ export const Tree: React.FC<TreeProps> = ({
     onNodeCollapse,
     onDragStart,
     onDragEnd,
+    onAddFile,
+    onAddFolder,
     selectedNodeId,
     expandedNodeIds = [],
     searchQuery: externalSearchQuery,
@@ -259,15 +269,41 @@ export const Tree: React.FC<TreeProps> = ({
             tabIndex={0}
             onClick={hideContextMenu}
         >
+            <div className={styles.title}>
+                <div>
+                    <Text isUppercase variant="caption">
+                        {text.title.en}
+                    </Text>
+                </div>
+
+                <div className={styles.titleEndContent}>
+                    {onAddFolder && (
+                        <Button view="default" isIcon onClick={onAddFolder}>
+                            <Icon size="s">
+                                <FolderPlus />
+                            </Icon>
+                        </Button>
+                    )}
+
+                    {onAddFile && (
+                        <Button view="default" isIcon onClick={onAddFile}>
+                            <Icon size="s">
+                                <FilePlus />
+                            </Icon>
+                        </Button>
+                    )}
+                </div>
+            </div>
+
             {enableSearch && !externalSearchQuery && (
                 <div className={styles.searchContainer}>
-                    <input
-                        type="text"
-                        className={styles.searchInput}
-                        placeholder="Поиск файлов и папок..."
+                    <TextInput
+                        label=""
                         value={searchQuery}
+                        placeholder="Поиск файлов и папок..."
                         onChange={handleSearchChange}
                     />
+
                     {searchQuery && (
                         <button
                             className={styles.searchClearButton}

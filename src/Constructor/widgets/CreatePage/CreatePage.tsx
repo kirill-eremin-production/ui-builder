@@ -6,15 +6,15 @@ import {
     useState,
 } from 'react';
 
-import { Plus } from '@gravity-ui/icons';
+import { useRouter } from 'next/navigation';
 
 import styles from './CreatePage.module.css';
 
 import { writePageServerAction } from '@/app/actions/pages/save';
 
-import { Button, Icon, Modal, Text, TextInput } from '@/shared/components';
+import { Button, Modal, Text, TextInput } from '@/shared/components';
 import { Navigation } from '@/shared/components/Navigation';
-import Preview from '@/shared/components/Preview/Preview';
+import { Preview } from '@/shared/components/Preview/Preview';
 import { ResizableDiv } from '@/shared/components/ResizableDiv';
 import { Tree } from '@/shared/components/Tree';
 import { TreeNode } from '@/shared/components/Tree/types';
@@ -32,13 +32,14 @@ export interface CreatePageProps extends PropsWithChildren {
     pages?: string[];
 }
 
-export const CreatePage: FC<CreatePageProps> = ({ children, pages = [] }) => {
+export const CreatePage: FC<CreatePageProps> = ({ pages = [] }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [pageId, _setPageId] = useState('');
     const [pageRenderUrl, _setPageRenderUrl] = useState('');
     const [selectedPage, setSelectedPage] = useState<string | null>(null);
+    const router = useRouter();
 
     const setPageId = (value: string) => {
         const modifiedValue = value.trim();
@@ -101,6 +102,7 @@ export const CreatePage: FC<CreatePageProps> = ({ children, pages = [] }) => {
                     data={treeData}
                     onNodeSelect={handleNodeSelect}
                     selectedNodeId={selectedPage || undefined}
+                    onAddFile={() => setIsModalOpen(true)}
                 />
             </ResizableDiv>
 
@@ -109,6 +111,11 @@ export const CreatePage: FC<CreatePageProps> = ({ children, pages = [] }) => {
                     <Preview
                         url={`/r/${selectedPage}`}
                         className={styles.preview}
+                        onClose={() => setSelectedPage(null)}
+                        onEdit={() =>
+                            router.push(`/edit?pageId=${selectedPage}`)
+                        }
+                        onOpen={() => router.push(`/r/${selectedPage}`)}
                     />
                 ) : (
                     <div className={styles.placeholder}>
@@ -117,15 +124,6 @@ export const CreatePage: FC<CreatePageProps> = ({ children, pages = [] }) => {
                         </Text>
                     </div>
                 )}
-
-                <Button view="action" onClick={() => setIsModalOpen(true)}>
-                    <Icon size="s">
-                        <Plus />
-                    </Icon>
-                    {text.page.en}
-                </Button>
-
-                {children}
 
                 <Modal
                     isOpen={isModalOpen}

@@ -1,15 +1,29 @@
 import { FC, useCallback, useState } from 'react';
 
+import { ArrowUpRightFromSquare, Pencil, Xmark } from '@gravity-ui/icons';
+
 import cn from 'classnames';
 
 import styles from './Preview.module.css';
 
+import Button from '../Button/Button';
+import { Icon } from '../Icon/Icon';
+
 export interface PreviewProps {
     url: string;
     className?: string;
+    onClose?: () => void;
+    onEdit?: () => void;
+    onOpen?: () => void;
 }
 
-const Preview: FC<PreviewProps> = ({ url, className }) => {
+export const Preview: FC<PreviewProps> = ({
+    url,
+    className,
+    onClose,
+    onEdit,
+    onOpen,
+}) => {
     const [key, setKey] = useState(0);
 
     const handleRefresh = useCallback(() => {
@@ -21,22 +35,29 @@ const Preview: FC<PreviewProps> = ({ url, className }) => {
         <div className={cn(styles.root, className)}>
             <div className={styles.browserHeader}>
                 <div className={styles.windowControls}>
-                    <button
-                        className={cn(styles.windowControl, styles.close)}
-                        aria-label="Закрыть"
-                        type="button"
-                    />
-                    <button
-                        className={cn(styles.windowControl, styles.minimize)}
-                        aria-label="Свернуть"
-                        type="button"
-                    />
-                    <button
-                        className={cn(styles.windowControl, styles.maximize)}
-                        aria-label="Развернуть"
-                        type="button"
-                    />
+                    {onClose && (
+                        <Button isIcon view="danger" onClick={onClose}>
+                            <Icon size="s">
+                                <Xmark />
+                            </Icon>
+                        </Button>
+                    )}
+                    {onEdit && (
+                        <Button isIcon view="action" onClick={onEdit}>
+                            <Icon size="s">
+                                <Pencil />
+                            </Icon>
+                        </Button>
+                    )}
+                    {onOpen && (
+                        <Button isIcon view="success" onClick={onOpen}>
+                            <Icon size="s">
+                                <ArrowUpRightFromSquare />
+                            </Icon>
+                        </Button>
+                    )}
                 </div>
+
                 <div className={styles.addressBar}>
                     <button
                         className={styles.refreshButton}
@@ -57,9 +78,11 @@ const Preview: FC<PreviewProps> = ({ url, className }) => {
                             />
                         </svg>
                     </button>
+
                     <div className={styles.urlDisplay}>{url}</div>
                 </div>
             </div>
+
             <div className={styles.browserContent}>
                 <iframe
                     key={key}
@@ -72,5 +95,3 @@ const Preview: FC<PreviewProps> = ({ url, className }) => {
         </div>
     );
 };
-
-export default Preview;

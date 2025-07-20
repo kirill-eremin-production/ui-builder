@@ -83,6 +83,10 @@ export interface TreeProps {
     onDragStart?: (node: TreeNode) => void;
     /** Обработчик окончания перетаскивания */
     onDragEnd?: (node: TreeNode, targetNode?: TreeNode) => void;
+    /** Обработчик добавления нового файла */
+    onAddFile?: () => void;
+    /** Обработчик добавления новой директории */
+    onAddFolder?: () => void;
     /** ID выбранного узла */
     selectedNodeId?: string;
     /** Массив ID раскрытых узлов */

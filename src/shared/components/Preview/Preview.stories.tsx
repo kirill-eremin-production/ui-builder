@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import Preview from './Preview';
+import { Preview } from './Preview';
 
 const meta: Meta<typeof Preview> = {
     title: 'Shared/Preview',

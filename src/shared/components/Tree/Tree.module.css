@@ -5,9 +5,23 @@
     line-height: 1.4;
     color: var(--text-color-main);
     background: var(--background-main);
-    border: 0.0625rem solid var(--border-main-color);
-    border-radius: 0.25rem;
     overflow: hidden;
+}
+
+.title {
+    padding: 1rem 1rem 0rem 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.titleEndContent {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
 }
 
 .treeContainer {
@@ -17,9 +31,7 @@
 }
 
 .searchContainer {
-    padding: 0.5rem;
-    border-bottom: 0.0625rem solid var(--border-main-color);
-    background: var(--background-dark);
+    padding: 1rem;
     position: relative;
 }
 
@@ -95,7 +107,7 @@
 .nodeContent {
     display: flex;
     align-items: center;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 1rem;
     min-height: 1.5rem;
     position: relative;
 }

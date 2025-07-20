@@ -5,6 +5,39 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ResizableDiv } from '../ResizableDiv';
 
 import { WithCallbacksComponent } from './WithCallbacks';
+import { WithLeftResizerComponent } from './WithLeftResizer';
+
+const rightDecorators: Meta<typeof ResizableDiv>['decorators'] = [
+    (Story) => (
+        <div
+            style={{
+                height: '100vh',
+                display: 'flex',
+            }}
+        >
+            <Story />
+            <div
+                style={{
+                    flex: 1,
+                    padding: '20px',
+                    backgroundColor: 'var(--background-main)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--text-color-secondary)',
+                }}
+            >
+                <div style={{ textAlign: 'center' }}>
+                    <h3 style={{ margin: '0 0 10px 0' }}>Основная область</h3>
+                    <p style={{ margin: 0 }}>
+                        Эта область автоматически подстраивается под размер
+                        левой панели
+                    </p>
+                </div>
+            </div>
+        </div>
+    ),
+];
 
 const meta: Meta<typeof ResizableDiv> = {
     title: 'Shared/ResizableDiv',
@@ -14,7 +47,7 @@ const meta: Meta<typeof ResizableDiv> = {
         docs: {
             description: {
                 component:
-                    'Компонент ResizableDiv предоставляет контейнер с возможностью изменения ширины путем перетаскивания элемента управления на правой границе. Поддерживает мышь, клавиатуру и accessibility.',
+                    'Компонент ResizableDiv предоставляет контейнер с возможностью изменения ширины путем перетаскивания элемента управления на левой или правой границе. Поддерживает мышь, клавиатуру и accessibility.',
             },
         },
     },
@@ -36,6 +69,11 @@ const meta: Meta<typeof ResizableDiv> = {
             description: 'Шаг изменения размера при использовании клавиатуры',
             control: { type: 'range', min: 0.5, max: 5, step: 0.5 },
         },
+        resizerPosition: {
+            description: 'Позиция ресайзера: слева или справа',
+            control: { type: 'select' },
+            options: ['left', 'right'],
+        },
         disabled: {
             description: 'Отключить возможность изменения размера',
             control: 'boolean',
@@ -44,39 +82,6 @@ const meta: Meta<typeof ResizableDiv> = {
         onResizeStart: { action: 'resizeStart' },
         onResizeEnd: { action: 'resizeEnd' },
     },
-    decorators: [
-        (Story) => (
-            <div
-                style={{
-                    height: '100vh',
-                    display: 'flex',
-                }}
-            >
-                <Story />
-                <div
-                    style={{
-                        flex: 1,
-                        padding: '20px',
-                        backgroundColor: 'var(--background-main)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: 'var(--text-color-secondary)',
-                    }}
-                >
-                    <div style={{ textAlign: 'center' }}>
-                        <h3 style={{ margin: '0 0 10px 0' }}>
-                            Основная область
-                        </h3>
-                        <p style={{ margin: 0 }}>
-                            Эта область автоматически подстраивается под размер
-                            левой панели
-                        </p>
-                    </div>
-                </div>
-            </div>
-        ),
-    ],
 };
 
 export default meta;
@@ -241,6 +246,7 @@ export const Default: Story = {
             },
         },
     },
+    decorators: rightDecorators,
 };
 
 // Узкая панель
@@ -327,6 +333,7 @@ export const NarrowPanel: Story = {
             },
         },
     },
+    decorators: rightDecorators,
 };
 
 // Широкая панель
@@ -423,6 +430,7 @@ export const WidePanel: Story = {
             },
         },
     },
+    decorators: rightDecorators,
 };
 
 // Отключенная панель
@@ -471,6 +479,7 @@ export const DisabledPanel: Story = {
             },
         },
     },
+    decorators: rightDecorators,
 };
 
 // Панель с колбэками
@@ -487,6 +496,59 @@ export const WithCallbacks: Story = {
         docs: {
             description: {
                 story: 'Демонстрация всех колбэков компонента. В журнале отображаются события изменения размера в реальном времени.',
+            },
+        },
+    },
+    decorators: rightDecorators,
+};
+
+// Панель с левым ресайзером
+export const WithLeftResizer: Story = {
+    args: {
+        initialWidth: 35,
+        minWidth: 20,
+        maxWidth: 70,
+        keyboardStep: 1,
+        disabled: false,
+    },
+    render: (args) => <WithLeftResizerComponent {...args} />,
+    decorators: [
+        (Story) => (
+            <div
+                style={{
+                    height: '100vh',
+                    display: 'flex',
+                }}
+            >
+                <div
+                    style={{
+                        flex: 1,
+                        padding: '20px',
+                        backgroundColor: 'var(--background-main)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'var(--text-color-secondary)',
+                    }}
+                >
+                    <div style={{ textAlign: 'center' }}>
+                        <h3 style={{ margin: '0 0 10px 0' }}>
+                            Основная область
+                        </h3>
+                        <p style={{ margin: 0 }}>
+                            Эта область автоматически подстраивается под размер
+                            правой панели с левым ресайзером
+                        </p>
+                    </div>
+                </div>
+                <Story />
+            </div>
+        ),
+    ],
+    parameters: {
+        docs: {
+            description: {
+                story: 'Демонстрация компонента с левым ресайзером. Ресайзер располагается на левой границе панели, что позволяет изменять размер, перетаскивая левую границу.',
             },
         },
     },

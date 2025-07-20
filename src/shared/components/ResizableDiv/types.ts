@@ -45,6 +45,11 @@ export interface ResizeCallbacks {
 }
 
 /**
+ * Позиция ресайзера
+ */
+export type ResizerPosition = 'left' | 'right';
+
+/**
  * Расширенные пропсы для ResizableDiv компонента
  */
 export interface ResizableDivProps extends Omit<NativeDivProps, 'style'> {
@@ -68,4 +73,6 @@ export interface ResizableDivProps extends Omit<NativeDivProps, 'style'> {
     keyboardStep?: number;
     /** Ключ для сохранения ширины в localStorage (если не указан, сохранение отключено) */
     persistenceKey?: string;
+    /** Позиция ресайзера: 'left' или 'right' (по умолчанию 'right') */
+    resizerPosition?: ResizerPosition;
 }

@@ -267,7 +267,8 @@ export const useResizeState = (
  */
 export const useMouseEvents = (
     resizeState: ReturnType<typeof useResizeState>,
-    rootRef: React.RefObject<HTMLDivElement | null>
+    rootRef: React.RefObject<HTMLDivElement | null>,
+    resizerPosition: 'left' | 'right' = 'right'
 ) => {
     const { updateWidth, stopResize, startX, width } = resizeState;
 
@@ -305,7 +306,10 @@ export const useMouseEvents = (
                 const parentRect = parentElement.getBoundingClientRect();
                 const deltaX = event.clientX - startX;
                 const deltaPercent = (deltaX / parentRect.width) * 100;
-                const newWidthPercent = resizeState.startWidth + deltaPercent;
+                
+                // Для левого ресайзера инвертируем направление изменения
+                const adjustedDeltaPercent = resizerPosition === 'left' ? -deltaPercent : deltaPercent;
+                const newWidthPercent = resizeState.startWidth + adjustedDeltaPercent;
 
                 updateWidth(newWidthPercent);
             } catch (error) {
@@ -323,6 +327,7 @@ export const useMouseEvents = (
             startX,
             updateWidth,
             stopResize,
+            resizerPosition,
         ]
     );
 

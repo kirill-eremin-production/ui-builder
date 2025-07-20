@@ -1,11 +1,20 @@
 /* Основной контейнер для изменяемого по размеру элемента */
 .resizable {
     position: relative;
-    padding-right: 1rem;
     z-index: 1000;
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+/* Контейнер с правым ресайзером */
+.rightResizer {
+    padding-right: 1rem;
+}
+
+/* Контейнер с левым ресайзером */
+.leftResizer {
+    padding-left: 1rem;
 }
 
 /* Контентная область с возможностью скролла */
@@ -15,7 +24,7 @@
     min-height: 0; /* Важно для корректной работы flex и overflow */
 }
 
-/* Элемент управления изменением размера */
+/* Базовые стили для элемента управления изменением размера */
 .resizer {
     display: flex;
     align-items: center;
@@ -24,7 +33,6 @@
     height: 100%;
     background-color: transparent;
     position: absolute;
-    right: 0;
     top: 0;
     cursor: col-resize; /* Изменен курсор для лучшего UX */
     overflow: hidden;
@@ -37,6 +45,16 @@
         border-color 0.2s ease;
     /* Улучшаем доступность */
     outline: none;
+}
+
+/* Правый ресайзер */
+.resizerRight {
+    right: 0;
+}
+
+/* Левый ресайзер */
+.resizerLeft {
+    left: 0;
 }
 
 /* Состояние при фокусе (для клавиатурной навигации) */

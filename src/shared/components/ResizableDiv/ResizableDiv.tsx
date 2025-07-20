@@ -17,11 +17,12 @@ import { ResizableDivProps } from './types';
  * Компонент ResizableDiv - контейнер с возможностью изменения ширины
  *
  * Позволяет пользователю изменять ширину контейнера путем перетаскивания
- * специального элемента управления (resizer) на правой границе.
+ * специального элемента управления (resizer) на левой или правой границе.
  *
  * Основные возможности:
  * - Изменение размера мышью (drag & drop)
  * - Клавиатурное управление (стрелки влево/вправо)
+ * - Выбор позиции ресайзера (слева или справа)
  * - Настраиваемые ограничения размера
  * - Колбэки для отслеживания изменений
  * - Сохранение ширины в localStorage
@@ -30,21 +31,23 @@ import { ResizableDivProps } from './types';
  *
  * @example
  * ```tsx
- * // Базовое использование
+ * // Базовое использование с правым ресайзером
  * <ResizableDiv
  *   initialWidth={25}
  *   minWidth={15}
  *   maxWidth={85}
+ *   resizerPosition="right"
  *   onWidthChange={(width) => console.log('New width:', width)}
  * >
  *   <div>Содержимое панели</div>
  * </ResizableDiv>
  *
- * // С сохранением в localStorage
+ * // С левым ресайзером и сохранением в localStorage
  * <ResizableDiv
  *   initialWidth={30}
  *   minWidth={20}
  *   maxWidth={80}
+ *   resizerPosition="left"
  *   persistenceKey="sidebar-width"
  * >
  *   <div>Содержимое сайдбара</div>
@@ -71,6 +74,7 @@ const ResizableDiv: FC<ResizableDivProps> = forwardRef<
             disabled = false,
             keyboardStep = 1,
             persistenceKey,
+            resizerPosition = 'right',
             ...props
         },
         ref
@@ -92,7 +96,7 @@ const ResizableDiv: FC<ResizableDivProps> = forwardRef<
         );
 
         // Обработчики событий мыши
-        const mouseEvents = useMouseEvents(resizeState, root);
+        const mouseEvents = useMouseEvents(resizeState, root, resizerPosition);
 
         // Глобальные обработчики событий
         useGlobalEventListeners(mouseEvents);
@@ -130,14 +134,55 @@ const ResizableDiv: FC<ResizableDivProps> = forwardRef<
             maxWidth: `${resizeState.width}%`,
         };
 
+        // Определяем CSS классы в зависимости от позиции ресайзера
+        const containerClass = `${styles.resizable} ${
+            resizerPosition === 'left'
+                ? styles.leftResizer
+                : styles.rightResizer
+        }`;
+
+        const resizerClass = `${styles.resizer} ${
+            resizerPosition === 'left'
+                ? styles.resizerLeft
+                : styles.resizerRight
+        }`;
+
         return (
             <div
                 id={id}
                 ref={combinedRootRef}
-                className={styles.resizable}
+                className={containerClass}
                 style={containerStyle}
                 data-testid="resizable-container"
             >
+                {/* Левый ресайзер */}
+                {resizerPosition === 'left' && (
+                    <div
+                        className={resizerClass}
+                        onMouseDown={handleMouseDown}
+                        role="separator"
+                        aria-label="Изменить ширину панели"
+                        aria-valuemin={minWidth}
+                        aria-valuemax={maxWidth}
+                        aria-valuenow={resizeState.width}
+                        aria-orientation="vertical"
+                        tabIndex={disabled ? -1 : 0}
+                        onKeyDown={handleKeyDown}
+                        data-testid="resizer-left"
+                        data-disabled={disabled}
+                        style={{
+                            cursor: disabled ? 'not-allowed' : 'col-resize',
+                            opacity: disabled ? 0.5 : 1,
+                            pointerEvents: disabled ? 'none' : 'auto',
+                        }}
+                    >
+                        <EllipsisVertical
+                            className={styles.resizerIcon}
+                            aria-hidden="true"
+                        />
+                    </div>
+                )}
+
                 {/* Контент компонента */}
                 <div
                     className={`${styles.content} ${className || ''}`}
@@ -145,31 +190,33 @@ const ResizableDiv: FC<ResizableDivProps> = forwardRef<
                     data-testid="resizable-content"
                 />
 
-                {/* Элемент управления изменением размера */}
-                <div
-                    className={styles.resizer}
-                    onMouseDown={handleMouseDown}
-                    role="separator"
-                    aria-label="Изменить ширину панели"
-                    aria-valuemin={minWidth}
-                    aria-valuemax={maxWidth}
-                    aria-valuenow={resizeState.width}
-                    aria-orientation="vertical"
-                    tabIndex={disabled ? -1 : 0}
-                    onKeyDown={handleKeyDown}
-                    data-testid="resizer"
-                    data-disabled={disabled}
-                    style={{
-                        cursor: disabled ? 'not-allowed' : 'col-resize',
-                        opacity: disabled ? 0.5 : 1,
-                        pointerEvents: disabled ? 'none' : 'auto',
-                    }}
-                >
-                    <EllipsisVertical
-                        className={styles.resizerIcon}
-                        aria-hidden="true"
-                    />
-                </div>
+                {/* Правый ресайзер */}
+                {resizerPosition === 'right' && (
+                    <div
+                        className={resizerClass}
+                        onMouseDown={handleMouseDown}
+                        role="separator"
+                        aria-label="Изменить ширину панели"
+                        aria-valuemin={minWidth}
+                        aria-valuemax={maxWidth}
+                        aria-valuenow={resizeState.width}
+                        aria-orientation="vertical"
+                        tabIndex={disabled ? -1 : 0}
+                        onKeyDown={handleKeyDown}
+                        data-testid="resizer-right"
+                        data-disabled={disabled}
+                        style={{
+                            cursor: disabled ? 'not-allowed' : 'col-resize',
+                            opacity: disabled ? 0.5 : 1,
+                            pointerEvents: disabled ? 'none' : 'auto',
+                        }}
+                    >
+                        <EllipsisVertical
+                            className={styles.resizerIcon}
+                            aria-hidden="true"
+                        />
+                    </div>
+                )}
             </div>
         );
     }

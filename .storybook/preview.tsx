@@ -44,7 +44,6 @@ const preview: Preview = {
         (Story) => (
             <div
                 style={{
-                    padding: '1rem',
                     background: 'var(--background-main)',
                     color: 'var(--text-color-main)',
                 }}

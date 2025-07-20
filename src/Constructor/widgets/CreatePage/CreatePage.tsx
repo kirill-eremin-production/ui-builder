@@ -14,6 +14,7 @@ import { writePageServerAction } from '@/app/actions/pages/save';
 
 import { Button, Icon, Modal, Text, TextInput } from '@/shared/components';
 import { Navigation } from '@/shared/components/Navigation';
+import { Tree } from '@/shared/components/Tree';
 import {
     DefaultPageHeight,
     DefaultPageName,
@@ -78,6 +79,9 @@ export const CreatePage: FC<PropsWithChildren> = ({ children }) => {
                     imgUrl: 'https://storage.yandexcloud.net/k-ai-public/iam.jpg',
                 }}
             />
+
+            <Tree data={[]} />
+
             <div>
                 <Button view="action" onClick={() => setIsModalOpen(true)}>
                     <Icon size="s">

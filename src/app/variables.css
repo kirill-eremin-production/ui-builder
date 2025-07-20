@@ -12,7 +12,7 @@
     --border-radius-100: 1rem;
 
     /* Цвета, не зависящие от темы */
-    --color-brand: rgb(30, 144, 255);
+    --color-brand: rgb(247, 186, 89);
     --danger: rgb(229, 50, 93);
     --success: rgb(77, 176, 155);
 }

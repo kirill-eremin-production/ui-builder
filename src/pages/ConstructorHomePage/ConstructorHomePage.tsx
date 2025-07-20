@@ -29,7 +29,6 @@ export const ConstructorHomePage: FC<ConstructorHomePageProps> = ({
                             </Link>
                         </div>
 
-                        <hr />
                         {pages.map((page) => (
                             <div key={page} className={styles.row}>
                                 <Link target="_blank" href={`/r/${page}`}>

@@ -1,4 +1,5 @@
-import { FC, useState, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
+
 import cn from 'classnames';
 
 import styles from './Preview.module.css';

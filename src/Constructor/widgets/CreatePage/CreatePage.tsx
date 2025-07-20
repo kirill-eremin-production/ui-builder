@@ -14,8 +14,10 @@ import { writePageServerAction } from '@/app/actions/pages/save';
 
 import { Button, Icon, Modal, Text, TextInput } from '@/shared/components';
 import { Navigation } from '@/shared/components/Navigation';
+import Preview from '@/shared/components/Preview/Preview';
 import { ResizableDiv } from '@/shared/components/ResizableDiv';
 import { Tree } from '@/shared/components/Tree';
+import { TreeNode } from '@/shared/components/Tree/types';
 import {
     DefaultPageHeight,
     DefaultPageName,
@@ -24,13 +26,19 @@ import {
 } from '@/shared/constants/defaultPageParams';
 
 import { text } from './CreatePage.localization';
+import { pagesToTreeNodes } from './utils/pagesToTreeNodes';
 
-export const CreatePage: FC<PropsWithChildren> = ({ children }) => {
+export interface CreatePageProps extends PropsWithChildren {
+    pages?: string[];
+}
+
+export const CreatePage: FC<CreatePageProps> = ({ children, pages = [] }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [pageId, _setPageId] = useState('');
     const [pageRenderUrl, _setPageRenderUrl] = useState('');
+    const [selectedPage, setSelectedPage] = useState<string | null>(null);
 
     const setPageId = (value: string) => {
         const modifiedValue = value.trim();
@@ -74,6 +82,12 @@ export const CreatePage: FC<PropsWithChildren> = ({ children }) => {
         setError(text.failedToCreateNewPageErrorMessage.en);
     };
 
+    const treeData = pagesToTreeNodes(pages);
+
+    const handleNodeSelect = (node: TreeNode) => {
+        setSelectedPage(node.id);
+    };
+
     return (
         <div className={styles.root}>
             <Navigation
@@ -83,10 +97,27 @@ export const CreatePage: FC<PropsWithChildren> = ({ children }) => {
             />
 
             <ResizableDiv persistenceKey="constructor-main-page-resizable-div">
-                <Tree data={[]} />
+                <Tree
+                    data={treeData}
+                    onNodeSelect={handleNodeSelect}
+                    selectedNodeId={selectedPage || undefined}
+                />
             </ResizableDiv>
 
-            <div>
+            <div className={styles.content}>
+                {selectedPage ? (
+                    <Preview
+                        url={`/r/${selectedPage}`}
+                        className={styles.preview}
+                    />
+                ) : (
+                    <div className={styles.placeholder}>
+                        <Text variant="body">
+                            Выберите страницу из списка слева для предпросмотра
+                        </Text>
+                    </div>
+                )}
+
                 <Button view="action" onClick={() => setIsModalOpen(true)}>
                     <Icon size="s">
                         <Plus />

@@ -4,6 +4,31 @@
     height: 100%;
 }
 
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+}
+
+.preview {
+    flex: 1;
+    min-height: 400px;
+}
+
+.placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--g-color-base-generic);
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+}
+
 .form {
     padding: 16px;
     min-width: 500px;

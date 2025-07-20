@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 
-import Link from 'next/link';
+// import Link from 'next/link';
 
 import styles from './ConstructorHomePage.module.css';
 
@@ -18,8 +18,8 @@ export const ConstructorHomePage: FC<ConstructorHomePageProps> = ({
     return (
         <div className={styles.page}>
             <div className={styles.list}>
-                <CreatePage>
-                    <>
+                <CreatePage pages={pages}>
+                    {/* <>
                         <div className={styles.row}>
                             Authorized.
                             <Link prefetch={false} href="/api/auth/logout">
@@ -40,7 +40,7 @@ export const ConstructorHomePage: FC<ConstructorHomePageProps> = ({
                                 </Link>
                             </div>
                         ))}
-                    </>
+                    </> */}
                 </CreatePage>
             </div>
         </div>

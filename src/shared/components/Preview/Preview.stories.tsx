@@ -101,7 +101,14 @@ export const LightTheme: Story = {
     },
     decorators: [
         (Story) => (
-            <div className="theme_light" style={{ height: '600px', padding: '20px', background: '#f5f5f5' }}>
+            <div
+                className="theme_light"
+                style={{
+                    height: '600px',
+                    padding: '20px',
+                    background: '#f5f5f5',
+                }}
+            >
                 <Story />
             </div>
         ),
@@ -115,7 +122,14 @@ export const DarkTheme: Story = {
     },
     decorators: [
         (Story) => (
-            <div className="theme_dark" style={{ height: '600px', padding: '20px', background: '#1a1a1a' }}>
+            <div
+                className="theme_dark"
+                style={{
+                    height: '600px',
+                    padding: '20px',
+                    background: '#1a1a1a',
+                }}
+            >
                 <Story />
             </div>
         ),

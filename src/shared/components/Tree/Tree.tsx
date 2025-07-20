@@ -2,7 +2,6 @@ import React, { useCallback, useMemo, useRef } from 'react';
 
 import styles from './Tree.module.css';
 
-import { ContextMenu } from './ContextMenu';
 import { TreeNode as TreeNodeComponent } from './TreeNode';
 import { VirtualizedList } from './VirtualizedList';
 import {
@@ -15,6 +14,7 @@ import {
     useVisibleNodes,
 } from './hooks';
 import { TreeNode, TreeProps } from './types';
+import { ContextMenu } from './ui/ContextMenu';
 import { canDropNode, findNodeById, sortNodes } from './utils';
 
 export const Tree: React.FC<TreeProps> = ({

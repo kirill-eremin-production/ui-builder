@@ -3,7 +3,9 @@ import React, { useCallback, useState } from 'react';
 import styles from './Tree.module.css';
 
 import { TreeNodeProps } from './types';
-import { canDropNode, getFileIcon, highlightMatches } from './utils';
+import { Chevron } from './ui/Chevron';
+import { Icon } from './ui/Icon';
+import { canDropNode, highlightMatches } from './utils';
 
 export const TreeNode: React.FC<TreeNodeProps> = ({
     node,
@@ -129,29 +131,6 @@ export const TreeNode: React.FC<TreeNodeProps> = ({
         [node, enableDragDrop, onDrop]
     );
 
-    const getNodeIcon = useCallback(() => {
-        if (customIcons) {
-            if (node.type === 'folder') {
-                return isExpanded
-                    ? customIcons.folderOpen || customIcons.folder
-                    : customIcons.folder;
-            } else {
-                const extension = node.name.split('.').pop()?.toLowerCase();
-                return customIcons[extension || ''] || customIcons.file;
-            }
-        }
-
-        if (node.icon) {
-            return node.icon;
-        }
-
-        if (node.type === 'folder') {
-            return isExpanded ? '📂' : '📁';
-        } else {
-            return getFileIcon(node.name);
-        }
-    }, [node, isExpanded, customIcons]);
-
     const renderNodeName = useCallback(() => {
         if (searchQuery) {
             return (
@@ -195,15 +174,15 @@ export const TreeNode: React.FC<TreeNodeProps> = ({
                 <div className={styles.nodeIndent} style={indentStyle} />
 
                 {node.type === 'folder' && (
-                    <div
-                        className={`${styles.nodeToggle} ${isExpanded ? styles.expanded : ''}`}
-                        onClick={handleToggle}
-                    >
-                        <div className={styles.toggleIcon} />
-                    </div>
+                    <Chevron isExpanded={isExpanded} onClick={handleToggle} />
                 )}
 
-                <div className={styles.nodeIcon}>{getNodeIcon()}</div>
+                <Icon
+                    node={node}
+                    isExpanded={isExpanded}
+                    customIcons={customIcons}
+                    className={styles.nodeIcon}
+                />
 
                 <div className={styles.nodeName}>{renderNodeName()}</div>
             </div>

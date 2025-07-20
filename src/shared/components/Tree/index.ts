@@ -9,6 +9,7 @@ export type {
   TreeNodeProps,
   TreeContextMenuAction,
   TreeCustomIcons,
+  TreeIconType,
   ContextMenuProps,
   VirtualizedListProps,
   SearchResult
@@ -22,7 +23,6 @@ export {
   highlightMatches,
   isAncestor,
   getVisibleNodes,
-  getFileIcon,
   sortNodes,
   generateNodeId,
   canDropNode,

@@ -1,5 +1,4 @@
 import { CustomHtmlProps } from '@/Renderer/dist/components/CustomHtml';
-import { WidgetType } from '@/Renderer/dist/components/widgetType';
 
 export type UiComponentCommonProps = {
     id: string;

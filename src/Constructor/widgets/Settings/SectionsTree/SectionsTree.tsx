@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
 import { TrashBin } from '@gravity-ui/icons';
 
@@ -13,9 +13,9 @@ import { useUiComponents } from '@/Renderer/state/ui/hooks/use-ui-components';
 
 import { text } from './SectionsTree.localization';
 
-export type SectionsTreeProps = {};
+export type SectionsTreeProps = Record<string, never>;
 
-export const SectionsTree: FC<SectionsTreeProps> = (props) => {
+export const SectionsTree: FC<SectionsTreeProps> = () => {
     const { uiComponents, removeUiComponent } = useUiComponents();
     const [selectedWidgetIdToEdit, setSelectedWidgetIdToEdit] = useAtom(
         selectedWidgetIdToEditAtom

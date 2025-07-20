@@ -1,6 +1,6 @@
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { TreeNode, SearchResult } from './types';
-import { searchNodes, getVisibleNodes, findNodeById } from './utils';
+import { searchNodes, getVisibleNodes } from './utils';
 
 /**
  * Хук для управления развернутыми узлами
@@ -207,7 +207,7 @@ export const useContextMenu = () => {
  * Хук для виртуализации списка
  */
 export const useVirtualization = (
-  items: any[],
+  items: Array<TreeNode & { level: number }>,
   itemHeight: number,
   containerHeight: number
 ) => {

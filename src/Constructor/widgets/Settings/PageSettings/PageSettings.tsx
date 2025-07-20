@@ -17,9 +17,9 @@ import {
 
 import { text } from './PageSettings.localization';
 
-export type PageSettingsProps = {};
+export type PageSettingsProps = Record<string, never>;
 
-export const PageSettings: FC<PageSettingsProps> = (props) => {
+export const PageSettings: FC<PageSettingsProps> = () => {
     const [pageWidth, setPageWidth] = useAtom(pageWidthAtom);
     const [pageMinHeight, setPageMinHeight] = useAtom(pageMinHeightAtom);
     const [pageName, setPageName] = useAtom(pageNameAtom);

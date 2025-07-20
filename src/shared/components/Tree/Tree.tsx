@@ -45,43 +45,23 @@ export const Tree: React.FC<TreeProps> = ({
     const sortedData = useMemo(() => sortNodes(data), [data]);
 
     // Управление развернутыми узлами
-    const {
-        expandedIds,
-        toggleNode,
-        expandNode,
-        collapseNode,
-        expandAll,
-        collapseAll,
-        isExpanded,
-    } = useExpandedNodes(expandedNodeIds);
+    const { expandedIds, toggleNode, isExpanded } =
+        useExpandedNodes(expandedNodeIds);
 
     // Управление выбранным узлом
-    const { selectedId, selectNode, clearSelection, isSelected } =
+    const { selectedId, selectNode, isSelected } =
         useSelectedNode(selectedNodeId);
 
     // Поиск
-    const {
-        searchQuery,
-        searchResults,
-        performSearch,
-        clearSearch,
-        hasResults,
-    } = useTreeSearch(sortedData);
+    const { searchQuery, performSearch, clearSearch } =
+        useTreeSearch(sortedData);
 
     // Используем внешний поисковый запрос, если он передан
     const currentSearchQuery = externalSearchQuery || searchQuery;
 
     // Drag and Drop
-    const {
-        draggedNode,
-        dragOverNode,
-        handleDragStart,
-        handleDragEnd,
-        handleDragOver,
-        handleDragLeave,
-        isDragging,
-        isDragOver,
-    } = useDragAndDrop(sortedData, onDragEnd);
+    const { draggedNode, handleDragStart, handleDragEnd, handleDragOver } =
+        useDragAndDrop(sortedData, onDragEnd);
 
     // Контекстное меню
     const { contextMenu, showContextMenu, hideContextMenu } = useContextMenu();
@@ -149,12 +129,9 @@ export const Tree: React.FC<TreeProps> = ({
         [handleDragStart, onDragStart]
     );
 
-    const handleDragEndInternal = useCallback(
-        (event: React.DragEvent, node: TreeNode) => {
-            handleDragEnd();
-        },
-        [handleDragEnd]
-    );
+    const handleDragEndInternal = useCallback(() => {
+        handleDragEnd();
+    }, [handleDragEnd]);
 
     const handleDragOverInternal = useCallback(
         (event: React.DragEvent, node: TreeNode) => {
@@ -190,7 +167,7 @@ export const Tree: React.FC<TreeProps> = ({
 
     // Рендер узла для виртуализации
     const renderVirtualizedNode = useCallback(
-        (node: TreeNode & { level: number }, index: number) => {
+        (node: TreeNode & { level: number }) => {
             return (
                 <TreeNodeComponent
                     key={node.id}
@@ -255,7 +232,7 @@ export const Tree: React.FC<TreeProps> = ({
             <ul className={styles.treeList}>
                 {visibleNodes.map((node) => (
                     <li key={node.id}>
-                        {renderVirtualizedNode(node, 0)}
+                        {renderVirtualizedNode(node)}
                         {node.type === 'folder' &&
                             node.children &&
                             isExpanded(node.id) && (

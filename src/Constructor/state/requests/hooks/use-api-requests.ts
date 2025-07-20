@@ -11,7 +11,7 @@ export const useApiRequests = () => {
 
     const saveApiRequest = useCallback(
         (apiRequest: { id: string } & Partial<ApiRequest>) => {
-            // @ts-ignore
+            // @ts-expect-error - setApiRequests expects specific type structure
             setApiRequests((prevValue) => {
                 return {
                     ...prevValue,
@@ -19,7 +19,7 @@ export const useApiRequests = () => {
                 };
             });
         },
-        [apiRequests, setApiRequests]
+        [setApiRequests]
     );
 
     return { apiRequests, setApiRequests, saveApiRequest };

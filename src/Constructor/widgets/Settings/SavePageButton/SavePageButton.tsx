@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 import { ArrowUpRightFromSquare } from '@gravity-ui/icons';
 
@@ -24,9 +24,9 @@ import { uiComponentsAtom } from '@/Renderer/state/ui';
 
 import { text } from './SavePageButton.localization';
 
-export type SavePageButtonProps = {};
+export type SavePageButtonProps = Record<string, never>;
 
-export const SavePageButton: FC<SavePageButtonProps> = (props) => {
+export const SavePageButton: FC<SavePageButtonProps> = () => {
     const [isLoading, setIsLoading] = useState(false);
     const updateQueryParams = useUpdateSearchParams();
 
@@ -54,7 +54,7 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
         JSON.stringify(pageConfig)
     );
 
-    const onButtonClick = async () => {
+    const onButtonClick = useCallback(async () => {
         setIsLoading(true);
         console.log(pageConfig);
 
@@ -65,7 +65,7 @@ export const SavePageButton: FC<SavePageButtonProps> = (props) => {
         updateQueryParams({ pageId });
         setIsLoading(false);
         setPageConfigToDiffCheck(JSON.stringify(pageConfig));
-    };
+    }, [pageConfig, currentPageId, updateQueryParams]);
 
     useEffect(() => {
         const onKeyDownHandler = (event: KeyboardEvent) => {

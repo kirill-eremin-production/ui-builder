@@ -47,6 +47,7 @@ export const CustomHtmlSettings: FC<CustomHtmlSettingsProps> = ({
             />
 
             <TextArea
+                label="Content"
                 onChange={(event) =>
                     onSectionParamsChange({
                         content:
@@ -56,9 +57,6 @@ export const CustomHtmlSettings: FC<CustomHtmlSettingsProps> = ({
                 }
                 defaultValue={widgetData?.params?.content}
                 placeholder="content"
-                minRows={20}
-                maxRows={35}
-                note={text.textAreaNote.en}
             />
         </div>
     );

@@ -9,7 +9,7 @@ export const useUpdateSearchParams = () => {
 
     return useCallback(
         (queryParams: Record<string, string>) => {
-            const newQueryParams = new URLSearchParams(searchParams.toString());
+            const newQueryParams = new URLSearchParams(searchParams?.toString() || '');
 
             Object.entries(queryParams).forEach(([key, value]) => {
                 if (!value) {

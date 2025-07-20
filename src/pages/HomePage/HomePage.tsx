@@ -13,7 +13,7 @@ export type HomePageProps = {
     onLearnMore?: () => void;
 };
 
-export const HomePage: FC<HomePageProps> = ({ onGetStarted, onLearnMore }) => {
+export const HomePage: FC<HomePageProps> = ({ onGetStarted }) => {
     return (
         <div className={styles.page}>
             {/* Hero Section */}

@@ -5,7 +5,7 @@ import styles from './Tree.module.css';
 import { TreeNodeProps } from './types';
 import { Chevron } from './ui/Chevron';
 import { Icon } from './ui/Icon';
-import { canDropNode, highlightMatches } from './utils';
+import { highlightMatches } from './utils';
 
 export const TreeNode: React.FC<TreeNodeProps> = ({
     node,

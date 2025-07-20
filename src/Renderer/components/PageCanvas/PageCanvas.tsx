@@ -60,7 +60,7 @@ export const PageCanvas = forwardRef<
     );
 
     const widgetYEndPositions = Object.entries(uiComponents).map(
-        ([key, widget]) => {
+        ([, widget]) => {
             return widget.y + widget.height;
         }
     );

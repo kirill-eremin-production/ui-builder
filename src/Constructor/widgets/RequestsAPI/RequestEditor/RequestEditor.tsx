@@ -1,11 +1,7 @@
 import { FC } from 'react';
 
-import styles from './RequestEditor.module.css';
+export type RequestEditorProps = Record<string, never>;
 
-import { text } from './RequestEditor.localization';
-
-export type RequestEditorProps = {};
-
-export const RequestEditor: FC<RequestEditorProps> = (props) => {
+export const RequestEditor: FC<RequestEditorProps> = () => {
     return <div>RequestEditor</div>;
 };

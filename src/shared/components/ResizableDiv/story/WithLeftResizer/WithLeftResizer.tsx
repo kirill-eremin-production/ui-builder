@@ -5,7 +5,7 @@ import styles from './WithLeftResizer.module.css';
 import { ResizableDiv } from '../../ResizableDiv';
 import type { ResizableDivProps } from '../../types';
 
-interface WithLeftResizerProps extends ResizableDivProps {}
+type WithLeftResizerProps = ResizableDivProps;
 
 export const WithLeftResizerComponent = (args: WithLeftResizerProps) => {
     const [logs, setLogs] = useState<string[]>([]);

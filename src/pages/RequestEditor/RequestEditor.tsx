@@ -2,16 +2,12 @@
 
 import { FC, useState } from 'react';
 
-import { usePathname, useRouter } from 'next/navigation';
-
-import styles from './RequestEditor.module.css';
+import { useRouter } from 'next/navigation';
 
 import { Button, TextArea, TextInput } from '@/shared/components';
 
 import { ApiRequest } from '@/Constructor/state/requests/RequestAPI';
 import { useApiRequests } from '@/Constructor/state/requests/hooks/use-api-requests';
-
-import { text } from './RequestEditor.localization';
 
 export type RequestEditorProps = {
     pageId: string;

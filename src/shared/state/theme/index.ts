@@ -2,8 +2,9 @@
 export {
     themeAtom,
     resolvedThemeAtom,
-    type Theme,
 } from './theme';
+
+export type { Theme } from './types';
 
 // Единственный хук для работы с темой
 export { useTheme } from './hooks/useTheme';

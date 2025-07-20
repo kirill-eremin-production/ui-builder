@@ -13,14 +13,22 @@ import { uiComponentsAtom } from '@/Renderer/state/ui';
 
 import { text } from './WidgetSettings.localization';
 
-export type WidgetSettingsProps = {};
+export type WidgetSettingsProps = Record<string, never>;
 
-export const mapWidgetTypeToSettingsComponent: Record<WidgetType, any> = {
+export const mapWidgetTypeToSettingsComponent: Record<
+    WidgetType,
+    React.ComponentType<{
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        widgetData: any;
+        onSectionParamsChange: (params: Record<string, unknown>) => void;
+        onCommonParamsChange: (params: Record<string, unknown>) => void;
+    }> | null
+> = {
     Container: null,
     CustomHTML: CustomHtmlSettings,
 };
 
-export const WidgetSettings: FC<WidgetSettingsProps> = (props) => {
+export const WidgetSettings: FC<WidgetSettingsProps> = () => {
     const [selectedWidgetIdToEdit] = useAtom(selectedWidgetIdToEditAtom);
     const [uiComponents, setUiComponents] = useAtom(uiComponentsAtom);
 
@@ -30,14 +38,14 @@ export const WidgetSettings: FC<WidgetSettingsProps> = (props) => {
 
     const selectedWidgetToEdit = uiComponents[selectedWidgetIdToEdit];
 
-    const onSectionParamsChange = (params: any) => {
+    const onSectionParamsChange = (params: Record<string, unknown>) => {
         setUiComponents((prevState) => {
             return {
                 ...prevState,
                 [selectedWidgetIdToEdit]: {
                     ...prevState[selectedWidgetIdToEdit],
                     params: {
-                        // @ts-expect-error
+                        // @ts-expect-error - params structure may not match exactly but is handled at runtime
                         ...prevState[selectedWidgetIdToEdit].params,
                         ...params,
                     },
@@ -46,7 +54,7 @@ export const WidgetSettings: FC<WidgetSettingsProps> = (props) => {
         });
     };
 
-    const onCommonParamsChange = (params: any) => {
+    const onCommonParamsChange = (params: Record<string, unknown>) => {
         setUiComponents((prevState) => {
             return {
                 ...prevState,
@@ -61,13 +69,17 @@ export const WidgetSettings: FC<WidgetSettingsProps> = (props) => {
     return (
         <div className={styles.root} key={selectedWidgetIdToEdit}>
             <Text variant="title">{text.sectionParamsTitle.en}</Text>
-            {mapWidgetTypeToSettingsComponent[selectedWidgetToEdit.type]
-                ? mapWidgetTypeToSettingsComponent[selectedWidgetToEdit.type]({
-                      widgetData: selectedWidgetToEdit,
-                      onSectionParamsChange,
-                      onCommonParamsChange,
-                  })
-                : null}
+            {(() => {
+                const SettingsComponent =
+                    mapWidgetTypeToSettingsComponent[selectedWidgetToEdit.type];
+                return SettingsComponent ? (
+                    <SettingsComponent
+                        widgetData={selectedWidgetToEdit}
+                        onSectionParamsChange={onSectionParamsChange}
+                        onCommonParamsChange={onCommonParamsChange}
+                    />
+                ) : null;
+            })()}
         </div>
     );
 };

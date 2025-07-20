@@ -270,7 +270,7 @@ export const useMouseEvents = (
     rootRef: React.RefObject<HTMLDivElement | null>,
     resizerPosition: 'left' | 'right' = 'right'
 ) => {
-    const { updateWidth, stopResize, startX, width } = resizeState;
+    const { updateWidth, stopResize, startX } = resizeState;
 
     /**
      * Обрабатывает движение мыши во время изменения размера

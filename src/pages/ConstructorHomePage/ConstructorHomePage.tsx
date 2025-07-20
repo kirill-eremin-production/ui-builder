@@ -8,8 +8,6 @@ import styles from './ConstructorHomePage.module.css';
 
 import { CreatePage } from '@/Constructor/widgets/CreatePage';
 
-import { text } from './ConstructorHomePage.localization';
-
 export type ConstructorHomePageProps = {
     pages: string[];
 };

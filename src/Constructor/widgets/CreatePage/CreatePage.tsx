@@ -60,6 +60,7 @@ export const CreatePage: FC<PropsWithChildren> = ({ children }) => {
                 minHeight: DefaultPageHeight,
                 unitSize: DefaultPageUnitSize,
                 ui: {},
+                requests: {},
             },
             id: pageId,
         });

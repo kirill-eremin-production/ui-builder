@@ -5,7 +5,7 @@ import styles from './WithCallbacks.module.css';
 import { ResizableDiv } from '../../ResizableDiv';
 import type { ResizableDivProps } from '../../types';
 
-interface WithCallbacksProps extends ResizableDivProps {}
+type WithCallbacksProps = ResizableDivProps;
 
 export const WithCallbacksComponent = (args: WithCallbacksProps) => {
     const [logs, setLogs] = useState<string[]>([]);

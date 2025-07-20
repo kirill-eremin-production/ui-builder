@@ -64,14 +64,11 @@ export const PasswordForm: FC<PasswordFormProps> = ({ defaultCode = '' }) => {
     };
 
     // Если есть default-ный код, то сразу пытаемся авторизоваться
-    useEffect(
-        () => {
-            if (!defaultCode) return;
+    useEffect(() => {
+        if (!defaultCode) return;
 
-            auth(defaultCode);
-        },
-        [defaultCode] //eslint-disable-line react-hooks/exhaustive-deps
-    );
+        auth(defaultCode);
+    }, [defaultCode]);
 
     return (
         <form onSubmit={onSubmitButtonClick} className={styles.root}>

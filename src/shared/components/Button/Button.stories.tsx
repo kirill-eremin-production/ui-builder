@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import Button from './Button';
 
@@ -88,7 +88,7 @@ export const FullWidth: Story = {
         fullWidth: true,
     },
     decorators: [
-        (Story) => (
+        (Story: React.ComponentType) => (
             <div style={{ width: '300px' }}>
                 <Story />
             </div>

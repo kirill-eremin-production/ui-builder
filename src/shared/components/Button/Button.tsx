@@ -6,15 +6,15 @@ import {
 } from 'react';
 
 import cn from 'classnames';
+import { useRouter } from 'next/navigation';
 
 import styles from './Button.module.css';
 
 // Безопасный хук для использования router в Storybook
 const useSafeRouter = () => {
     try {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const { useRouter } = require('next/navigation');
-        return useRouter();
+        const router = useRouter();
+        return router;
     } catch {
         // Возвращаем mock router для Storybook
         return {

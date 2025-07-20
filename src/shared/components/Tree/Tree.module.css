@@ -1,0 +1,355 @@
+.tree {
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text-primary, #333);
+    background: var(--bg-primary, #fff);
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.treeContainer {
+    position: relative;
+    height: 100%;
+    overflow: auto;
+}
+
+.searchContainer {
+    padding: 8px;
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+    background: var(--bg-secondary, #f8f9fa);
+    position: relative;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 6px 12px;
+    padding-right: 32px;
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.searchInput:focus {
+    border-color: var(--primary-color, #007bff);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.searchClearButton {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 2px;
+    color: var(--text-secondary, #666);
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.searchClearButton:hover {
+    background-color: var(--hover-bg, #f0f0f0);
+    color: var(--text-primary, #333);
+}
+
+.treeList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.treeNode {
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.treeNode:hover {
+    background-color: var(--hover-bg, #f5f5f5);
+}
+
+.treeNode.selected {
+    background-color: var(--selected-bg, #e3f2fd);
+    color: var(--selected-text, #1976d2);
+}
+
+.treeNode.dragging {
+    opacity: 0.5;
+}
+
+.treeNode.dragOver {
+    background-color: var(--drag-over-bg, #e8f5e8);
+    border: 2px dashed var(--primary-color, #007bff);
+}
+
+.nodeContent {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    min-height: 24px;
+    position: relative;
+}
+
+.nodeIndent {
+    flex-shrink: 0;
+}
+
+.nodeToggle {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.nodeToggle:hover {
+    background-color: var(--hover-bg, #f0f0f0);
+}
+
+.nodeToggle.expanded {
+    transform: rotate(90deg);
+}
+
+.toggleIcon {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--text-secondary, #666);
+    border-bottom: 2px solid var(--text-secondary, #666);
+    transform: rotate(-45deg);
+    transition: transform 0.2s ease;
+}
+
+.nodeIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nodeIcon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.nodeName {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nodeNameHighlight {
+    background-color: var(--highlight-bg, #ffeb3b);
+    color: var(--highlight-text, #333);
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+.nodeChildren {
+    overflow: hidden;
+    transition:
+        max-height 0.3s ease,
+        opacity 0.2s ease;
+}
+
+.nodeChildren.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+.nodeChildren.expanded {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.contextMenu {
+    position: fixed;
+    background: var(--bg-primary, #fff);
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    min-width: 150px;
+    padding: 4px 0;
+}
+
+.contextMenuItem {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    font-size: 14px;
+}
+
+.contextMenuItem:hover {
+    background-color: var(--hover-bg, #f5f5f5);
+}
+
+.contextMenuItem.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.contextMenuItem.disabled:hover {
+    background-color: transparent;
+}
+
+.contextMenuIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.virtualizedContainer {
+    height: 100%;
+    overflow: auto;
+}
+
+.virtualizedItem {
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: var(--text-secondary, #666);
+    text-align: center;
+}
+
+.emptyStateIcon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.emptyStateText {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.emptyStateSubtext {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.loadingState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: var(--text-secondary, #666);
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color, #e0e0e0);
+    border-top: 2px solid var(--primary-color, #007bff);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Анимации для плавного разворачивания */
+@keyframes expandNode {
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 1000px;
+        opacity: 1;
+    }
+}
+
+@keyframes collapseNode {
+    from {
+        max-height: 1000px;
+        opacity: 1;
+    }
+    to {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+.nodeChildren.animating.expanded {
+    animation: expandNode 0.3s ease forwards;
+}
+
+.nodeChildren.animating.collapsed {
+    animation: collapseNode 0.3s ease forwards;
+}
+
+/* Темная тема */
+.tree.dark {
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --bg-primary: #1e1e1e;
+    --bg-secondary: #2d2d2d;
+    --border-color: #404040;
+    --hover-bg: #333;
+    --selected-bg: #264f78;
+    --selected-text: #ffffff;
+    --drag-over-bg: #2d4a2d;
+    --highlight-bg: #ffd54f;
+    --highlight-text: #333;
+    --primary-color: #0078d4;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .tree {
+        font-size: 16px;
+    }
+
+    .nodeContent {
+        padding: 6px 12px;
+        min-height: 32px;
+    }
+
+    .nodeIcon {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+    }
+
+    .nodeToggle {
+        width: 20px;
+        height: 20px;
+        margin-right: 6px;
+    }
+}

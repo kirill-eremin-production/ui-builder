@@ -32,15 +32,16 @@
 
 .action {
     background: var(--color-brand);
-    color: var(--text-color-contrast);
+    color: var(--text-color-brand-background);
 }
 
 .success {
     background: var(--success);
-    color: var(--text-color-contrast);
+    color: var(--text-color-success-background);
 }
 
 .outlined,
+.outlinedSuccess,
 .outlinedDanger {
     background: transparent;
     color: var(--color-brand);
@@ -60,6 +61,7 @@
 
 .outlinedSuccess path {
     color: var(--success);
+    border-color: var(--success);
 }
 
 .outlinedDanger {
@@ -73,10 +75,12 @@
 
 .flat {
     background: transparent;
+    color: var(--text-color-main);
 }
 
 .flatDanger {
     background: transparent;
+    color: var(--danger);
 }
 
 .flatDanger path {
@@ -85,6 +89,7 @@
 
 .flatSuccess {
     background: transparent;
+    color: var(--success);
 }
 
 .flatSuccess path {
@@ -93,6 +98,7 @@
 
 .flatAction {
     background: transparent;
+    color: var(--color-brand);
 }
 
 .flatAction path {
@@ -101,6 +107,7 @@
 
 .danger {
     background: var(--danger);
+    color: var(--text-color-danger-background);
 }
 
 .iconButton {

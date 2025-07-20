@@ -6,9 +6,24 @@ import {
 } from 'react';
 
 import cn from 'classnames';
-import { useRouter } from 'next/navigation';
 
 import styles from './Button.module.css';
+
+// Безопасный хук для использования router в Storybook
+const useSafeRouter = () => {
+    try {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const { useRouter } = require('next/navigation');
+        return useRouter();
+    } catch {
+        // Возвращаем mock router для Storybook
+        return {
+            push: (href: string) => {
+                window.location.href = href;
+            },
+        };
+    }
+};
 
 type NativeButtonProps = DetailedHTMLProps<
     ButtonHTMLAttributes<HTMLButtonElement>,
@@ -55,7 +70,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         },
         ref
     ) => {
-        const router = useRouter();
+        const router = useSafeRouter();
 
         const classNames = cn(styles.root, {
             [styles.action]: view === 'action',

@@ -50,3 +50,5 @@ node_modules/
 ui-builder.store
 certificates
 env
+*storybook.log
+storybook-static

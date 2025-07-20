@@ -14,6 +14,7 @@ import { writePageServerAction } from '@/app/actions/pages/save';
 
 import { Button, Icon, Modal, Text, TextInput } from '@/shared/components';
 import { Navigation } from '@/shared/components/Navigation';
+import { ResizableDiv } from '@/shared/components/ResizableDiv';
 import { Tree } from '@/shared/components/Tree';
 import {
     DefaultPageHeight,
@@ -81,7 +82,9 @@ export const CreatePage: FC<PropsWithChildren> = ({ children }) => {
                 }}
             />
 
-            <Tree data={[]} />
+            <ResizableDiv persistenceKey="constructor-main-page-resizable-div">
+                <Tree data={[]} />
+            </ResizableDiv>
 
             <div>
                 <Button view="action" onClick={() => setIsModalOpen(true)}>

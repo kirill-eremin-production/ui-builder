@@ -108,7 +108,7 @@ export const useResizeState = (
         : initialWidth;
 
     const [width, setWidth] = useState(effectiveInitialWidth);
-    const resizing = useRef(false);
+    const [resizing, setResizing] = useState(false);
     const startX = useRef(0);
     const startWidth = useRef(effectiveInitialWidth);
 
@@ -171,9 +171,10 @@ export const useResizeState = (
      */
     const startResize = useCallback(
         (clientX: number, currentWidth: number) => {
-            resizing.current = true;
+            setResizing(true);
             startX.current = clientX;
             startWidth.current = currentWidth;
+            console.log('>>> ping');
 
             document.body.classList.add('disable-user-select');
             onResizeStart?.(currentWidth);
@@ -193,8 +194,8 @@ export const useResizeState = (
      * что изменение размера действительно активно перед выполнением действий.
      */
     const stopResize = useCallback(() => {
-        if (resizing.current) {
-            resizing.current = false;
+        if (resizing) {
+            setResizing(false);
             document.body.classList.remove('disable-user-select');
             onResizeEnd?.(width);
         }
@@ -230,7 +231,7 @@ export const useResizeState = (
 
     return {
         width,
-        isResizing: resizing.current,
+        isResizing: resizing,
         startX: startX.current,
         startWidth: startWidth.current,
         updateWidth,
@@ -289,6 +290,11 @@ export const useMouseEvents = (
      */
     const handleMouseMove = useCallback(
         (event: MouseEvent) => {
+            // console.log('>>> ping', {
+            //     isResizing: resizeState.isResizing,
+            //     current: rootRef.current,
+            // });
+
             if (!resizeState.isResizing || !rootRef.current) {
                 return;
             }
@@ -306,10 +312,12 @@ export const useMouseEvents = (
                 const parentRect = parentElement.getBoundingClientRect();
                 const deltaX = event.clientX - startX;
                 const deltaPercent = (deltaX / parentRect.width) * 100;
-                
+
                 // Для левого ресайзера инвертируем направление изменения
-                const adjustedDeltaPercent = resizerPosition === 'left' ? -deltaPercent : deltaPercent;
-                const newWidthPercent = resizeState.startWidth + adjustedDeltaPercent;
+                const adjustedDeltaPercent =
+                    resizerPosition === 'left' ? -deltaPercent : deltaPercent;
+                const newWidthPercent =
+                    resizeState.startWidth + adjustedDeltaPercent;
 
                 updateWidth(newWidthPercent);
             } catch (error) {

@@ -93,14 +93,6 @@
     transition: color 0.2s ease;
 }
 
-/* Глобальный класс для отключения выделения текста */
-:global(.disable-user-select) {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
 /* Медиа-запросы для адаптивности */
 @media (max-width: 768px) {
     .resizer {

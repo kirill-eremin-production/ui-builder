@@ -8,7 +8,7 @@ import './variables.css';
 
 import '@fontsource/ubuntu';
 
-import { ThemeProvider } from '../shared/state/theme';
+import { ThemeProvider, getServerThemeClass } from '../shared/state/theme';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -30,14 +30,16 @@ export const viewport: Viewport = {
     initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const themeClass = await getServerThemeClass();
+
     return (
         <html lang="en">
-            <body className={cn()}>
+            <body className={themeClass}>
                 <Provider>
                     <ThemeProvider>{children}</ThemeProvider>
                 </Provider>

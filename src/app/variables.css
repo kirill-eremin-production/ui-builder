@@ -1,140 +1,111 @@
-.theme_light {
-    /** Colors */
-    --color-brand: rgb(255, 190, 92); /* Более светлый оттенок для бренда */
-
-    /* Backgrounds */
-    --background-darkest: rgb(240, 240, 240); /* Светлый фон */
-    --background-main: rgb(255, 255, 255); /* Белый фон */
-    --background-dark: rgb(230, 230, 230); /* Светло-серый фон */
-    --background-dark-transparent: rgba(
-        230,
-        230,
-        230,
-        0.5
-    ); /* Полупрозрачный светло-серый */
-    --background-secondary: rgb(
-        200,
-        200,
-        200
-    ); /* Светло-серый для второстепенных элементов */
-    --danger: rgb(229, 50, 93); /* Светлый красный для опасности */
-    --success: rgb(77, 176, 155); /* Светлый зеленый для успеха */
-
-    /** Borders */
-    --border-radius-50: 0.5rem;
-    --border-radius-100: 1rem;
-    --border-main-color: var(--background-secondary);
-    --border-active-color: var(--color-brand);
-    --shadow-color: rgba(0, 0, 0, 0.1); /* Легкая тень для светлой темы */
-
-    /** Input */
-    --input-background-color: rgb(255, 255, 255); /* Белый фон для инпутов */
-
-    /* chat */
-    --chat-incoming-message-content-color: rgb(
-        240,
-        240,
-        240
-    ); /* Светло-серый для входящих сообщений */
-    --chat-outgoing-message-content-color: rgb(
-        255,
-        220,
-        180
-    ); /* Светлый фон для исходящих сообщений */
-
-    /** Text */
-    --text-color-main: rgb(30, 30, 30); /* Темно-серый текст */
-    --text-color-accent: var(--color-brand);
-    --text-color-contrast: rgb(30, 30, 30); /* Белый текст для контраста */
-    --text-color-secondary: rgba(
-        30,
-        30,
-        30,
-        0.7
-    ); /* Полупрозрачный темно-серый для второстепенного текста */
-    --text-color-tiny: rgba(
-        30,
-        30,
-        30,
-        0.5
-    ); /* Полупрозрачный темно-серый для мелкого текста */
-    --text-color-link: var(--color-brand);
+/* Базовые переменные, не зависящие от темы */
+:root {
+    /* Размеры текста */
     --text-size-title: 2rem;
     --text-size-caption: 1.5rem;
     --text-size-body: 1rem;
     --text-size-secondary: 0.8rem;
     --text-size-tiny: 0.625rem;
+
+    /* Радиусы границ */
+    --border-radius-50: 0.5rem;
+    --border-radius-100: 1rem;
+
+    /* Цвета, не зависящие от темы */
+    --color-brand: rgb(255, 190, 92);
+    --danger: rgb(229, 50, 93);
+    --success: rgb(77, 176, 155);
 }
 
-.theme_dark {
-    /** Colors */
-    --color-brand: rgb(255, 190, 92); /* Сохраняем яркий бренд-цвет */
+/* Светлая тема */
+.theme_system,
+.theme_light {
+    /* Фоны */
+    --background-darkest: rgb(240, 240, 240);
+    --background-main: rgb(255, 255, 255);
+    --background-dark: rgb(230, 230, 230);
+    --background-dark-transparent: rgba(230, 230, 230, 0.5);
+    --background-secondary: rgb(200, 200, 200);
 
-    /* Backgrounds */
-    --background-darkest: rgb(15, 15, 15); /* Самый темный фон */
-    --background-main: rgb(25, 25, 25); /* Основной темный фон */
-    --background-dark: rgb(35, 35, 35); /* Темно-серый фон */
-    --background-dark-transparent: rgba(
-        35,
-        35,
-        35,
-        0.5
-    ); /* Полупрозрачный темно-серый */
-    --background-secondary: rgb(
-        55,
-        55,
-        55
-    ); /* Серый для второстепенных элементов */
-    --danger: rgb(229, 50, 93); /* Сохраняем красный для опасности */
-    --success: rgb(77, 176, 155); /* Сохраняем зеленый для успеха */
-
-    /** Borders */
-    --border-radius-50: 0.5rem;
-    --border-radius-100: 1rem;
+    /* Границы и тени */
     --border-main-color: var(--background-secondary);
     --border-active-color: var(--color-brand);
-    --shadow-color: rgba(
-        0,
-        0,
-        0,
-        0.3
-    ); /* Более выраженная тень для темной темы */
+    --shadow-color: rgba(0, 0, 0, 0.1);
 
-    /** Input */
-    --input-background-color: rgb(35, 35, 35); /* Темный фон для инпутов */
+    /* Инпуты */
+    --input-background-color: rgb(255, 255, 255);
 
-    /* chat */
-    --chat-incoming-message-content-color: rgb(
-        45,
-        45,
-        45
-    ); /* Темно-серый для входящих сообщений */
-    --chat-outgoing-message-content-color: rgb(
-        60,
-        45,
-        30
-    ); /* Темный фон с теплым оттенком для исходящих сообщений */
+    /* Чат */
+    --chat-incoming-message-content-color: rgb(240, 240, 240);
+    --chat-outgoing-message-content-color: rgb(255, 220, 180);
 
-    /** Text */
-    --text-color-main: rgb(225, 225, 225); /* Светло-серый текст */
+    /* Текст */
+    --text-color-main: rgb(30, 30, 30);
     --text-color-accent: var(--color-brand);
-    --text-color-contrast: rgb(255, 255, 255); /* Белый текст для контраста */
-    --text-color-secondary: rgba(
-        225,
-        225,
-        225,
-        0.7
-    ); /* Полупрозрачный светло-серый для второстепенного текста */
-    --text-color-tiny: rgba(
-        225,
-        225,
-        225,
-        0.5
-    ); /* Полупрозрачный светло-серый для мелкого текста */
+    --text-color-contrast: rgb(225, 225, 225);
+    --text-color-secondary: rgba(30, 30, 30, 0.7);
+    --text-color-tiny: rgba(30, 30, 30, 0.5);
     --text-color-link: var(--color-brand);
-    --text-size-title: 2rem;
-    --text-size-caption: 1.5rem;
-    --text-size-body: 1rem;
-    --text-size-secondary: 0.8rem;
-    --text-size-tiny: 0.625rem;
+}
+
+/* Темная тема */
+.theme_dark {
+    /* Фоны */
+    --background-darkest: rgb(15, 15, 15);
+    --background-main: rgb(25, 25, 25);
+    --background-dark: rgb(35, 35, 35);
+    --background-dark-transparent: rgba(35, 35, 35, 0.5);
+    --background-secondary: rgb(55, 55, 55);
+
+    /* Границы и тени */
+    --border-main-color: var(--background-secondary);
+    --border-active-color: var(--color-brand);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+
+    /* Инпуты */
+    --input-background-color: rgb(35, 35, 35);
+
+    /* Чат */
+    --chat-incoming-message-content-color: rgb(45, 45, 45);
+    --chat-outgoing-message-content-color: rgb(60, 45, 30);
+
+    /* Текст */
+    --text-color-main: rgb(225, 225, 225);
+    --text-color-accent: var(--color-brand);
+    --text-color-contrast: rgb(30, 30, 30);
+    --text-color-secondary: rgba(225, 225, 225, 0.7);
+    --text-color-tiny: rgba(225, 225, 225, 0.5);
+    --text-color-link: var(--color-brand);
+}
+
+/* Системная тема в темном режиме - переключается на темные цвета */
+@media (prefers-color-scheme: dark) {
+    .theme_system {
+        /* Фоны */
+        --background-darkest: rgb(15, 15, 15);
+        --background-main: rgb(25, 25, 25);
+        --background-dark: rgb(35, 35, 35);
+        --background-dark-transparent: rgba(35, 35, 35, 0.5);
+        --background-secondary: rgb(55, 55, 55);
+
+        /* Границы и тени */
+        --border-main-color: var(--background-secondary);
+        --border-active-color: var(--color-brand);
+        --shadow-color: rgba(0, 0, 0, 0.3);
+
+        /* Инпуты */
+        --input-background-color: rgb(35, 35, 35);
+
+        /* Чат */
+        --chat-incoming-message-content-color: rgb(45, 45, 45);
+        --chat-outgoing-message-content-color: rgb(60, 45, 30);
+
+        /* Текст */
+        --text-color-main: rgb(225, 225, 225);
+        --text-color-accent: var(--color-brand);
+        --text-color-contrast: rgb(30, 30, 30);
+        --text-color-secondary: rgba(225, 225, 225, 0.7);
+        --text-color-tiny: rgba(225, 225, 225, 0.5);
+        --text-color-link: var(--color-brand);
+    }
 }

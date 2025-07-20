@@ -1,18 +1,15 @@
+// Основные типы и атомы
 export {
     themeAtom,
     resolvedThemeAtom,
-    toggleThemeAtom,
-    isDarkThemeAtom,
     type Theme,
 } from './theme';
 
-export {
-    useTheme,
-    useThemeValue,
-    useResolvedTheme,
-    useIsDarkTheme,
-    useToggleTheme,
-} from './hooks/useTheme';
+// Единственный хук для работы с темой
+export { useTheme } from './hooks/useTheme';
 
-// Экспорт компонентов
+// Компонент провайдера
 export { ThemeProvider } from './components/ThemeProvider';
+
+// Серверные утилиты
+export { getServerTheme, getServerThemeClass } from './utils/server-theme';

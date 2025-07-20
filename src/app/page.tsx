@@ -1,11 +1,11 @@
 'use server';
 
-import Link from 'next/link';
-
+// import Link from 'next/link';
 import { getPagesListAction } from '@/app/actions/pages/list';
 import { preventUnauthorized } from '@/app/actions/shared/guards/auth-guard/utils';
 
 import { ConstructorHomePage } from '@/pages/ConstructorHomePage';
+import { HomePage } from '@/pages/HomePage';
 
 export default async function Home() {
     const authorizationCheck = await preventUnauthorized({
@@ -13,7 +13,8 @@ export default async function Home() {
     });
 
     if (authorizationCheck?.code) {
-        return <Link href="/auth">Login</Link>;
+        return <HomePage />;
+        // return <Link href="/auth">Login</Link>;
     }
 
     const pages = (await getPagesListAction()).map((page) =>

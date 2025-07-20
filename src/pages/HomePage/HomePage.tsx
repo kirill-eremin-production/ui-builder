@@ -32,12 +32,12 @@ export const HomePage: FC<HomePageProps> = ({ onGetStarted, onLearnMore }) => {
                     </div>
 
                     <div className={styles.actions}>
-                        <Button view="action" onClick={onGetStarted}>
+                        <Button
+                            href="/auth"
+                            view="action"
+                            onClick={onGetStarted}
+                        >
                             {text.getStarted.ru}
-                        </Button>
-
-                        <Button view="outlined" onClick={onLearnMore}>
-                            {text.learnMore.ru}
                         </Button>
                     </div>
                 </div>

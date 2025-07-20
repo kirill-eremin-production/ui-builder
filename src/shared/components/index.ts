@@ -17,3 +17,8 @@ export type { IconProps } from './Icon/Icon';
 
 export { Modal } from './Modal';
 export type { ModalProps } from './Modal';
+
+export { Logo } from './Logo';
+
+export { UserPic } from './UserPic';
+export type { UserPicProps } from './UserPic';

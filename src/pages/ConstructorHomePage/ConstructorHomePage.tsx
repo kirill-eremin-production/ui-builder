@@ -19,28 +19,32 @@ export const ConstructorHomePage: FC<ConstructorHomePageProps> = ({
 }) => {
     return (
         <div className={styles.page}>
-            <div className={styles.row}>
-                Authorized.
-                <Link prefetch={false} href="/api/auth/logout">
-                    Logout
-                </Link>
-            </div>
-
-            <hr />
-
             <div className={styles.list}>
-                <CreatePage />
+                <CreatePage>
+                    <>
+                        <div className={styles.row}>
+                            Authorized.
+                            <Link prefetch={false} href="/api/auth/logout">
+                                Logout
+                            </Link>
+                        </div>
 
-                {pages.map((page) => (
-                    <div key={page} className={styles.row}>
-                        <Link target="_blank" href={`/r/${page}`}>
-                            {page}
-                        </Link>
-                        <Link target="_blank" href={`/edit?pageId=${page}`}>
-                            Edit
-                        </Link>
-                    </div>
-                ))}
+                        <hr />
+                        {pages.map((page) => (
+                            <div key={page} className={styles.row}>
+                                <Link target="_blank" href={`/r/${page}`}>
+                                    {page}
+                                </Link>
+                                <Link
+                                    target="_blank"
+                                    href={`/edit?pageId=${page}`}
+                                >
+                                    Edit
+                                </Link>
+                            </div>
+                        ))}
+                    </>
+                </CreatePage>
             </div>
         </div>
     );

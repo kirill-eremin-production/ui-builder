@@ -2,12 +2,16 @@ import { FC } from 'react';
 
 import { TrashBin } from '@gravity-ui/icons';
 
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import styles from './SectionsTree.module.css';
 
 import { Button, Icon, Text } from '@/shared/components';
 
+import {
+    activeBreakpointIndexAtom,
+    breakpointsAtom,
+} from '@/Constructor/state/breakpoints';
 import { selectedWidgetIdToEditAtom } from '@/Constructor/state/selection';
 import { useUiComponents } from '@/Renderer/state/ui/hooks/use-ui-components';
 
@@ -20,11 +24,21 @@ export const SectionsTree: FC<SectionsTreeProps> = () => {
     const [selectedWidgetIdToEdit, setSelectedWidgetIdToEdit] = useAtom(
         selectedWidgetIdToEditAtom
     );
+    const activeBreakpointIndex = useAtomValue(activeBreakpointIndexAtom);
+    const breakpoints = useAtomValue(breakpointsAtom);
+
+    const activeBreakpointName =
+        activeBreakpointIndex === null
+            ? 'Базовая конфигурация'
+            : breakpoints[activeBreakpointIndex]?.name || 'Не выбран';
 
     return (
         <div>
             <div className={styles.header}>
                 <Text variant="title">{text.sectionTreeTitle.en}</Text>
+                <Text variant="caption" color="contrast">
+                    {activeBreakpointName}
+                </Text>
             </div>
 
             <div className={styles.sectionsList}>

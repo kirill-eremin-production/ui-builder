@@ -12,6 +12,7 @@ import { Button, Icon, Modal, Text } from '@/shared/components';
 import { PageConfig } from '@/shared/types/PageConfig';
 import { useUpdateSearchParams } from '@/shared/utils/update-query-params';
 
+import { breakpointsAtom } from '@/Constructor/state/breakpoints';
 import {
     pageIdAtom,
     pageMinHeightAtom,
@@ -20,7 +21,10 @@ import {
 } from '@/Constructor/state/page-config';
 import { useApiRequests } from '@/Constructor/state/requests/hooks/use-api-requests';
 import { pageUnitSizeAtom } from '@/Renderer/state/page';
-import { uiComponentsAtom } from '@/Renderer/state/ui';
+import {
+    breakpointUiComponentsAtom,
+    uiComponentsAtom,
+} from '@/Renderer/state/ui';
 
 import { text } from './SavePageButton.localization';
 
@@ -31,6 +35,7 @@ export const SavePageButton: FC<SavePageButtonProps> = () => {
     const updateQueryParams = useUpdateSearchParams();
 
     const uiComponents = useAtomValue(uiComponentsAtom);
+    const breakpointUiComponents = useAtomValue(breakpointUiComponentsAtom);
     const pageUnitSize = useAtomValue(pageUnitSizeAtom);
     const currentPageId = useAtomValue(pageIdAtom);
     const { apiRequests } = useApiRequests();
@@ -38,15 +43,34 @@ export const SavePageButton: FC<SavePageButtonProps> = () => {
     const pageWidth = useAtomValue(pageWidthAtom);
     const pageMinHeight = useAtomValue(pageMinHeightAtom);
     const pageName = useAtomValue(pageNameAtom);
+    const breakpoints = useAtomValue(breakpointsAtom);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // Обновляем брейкпоинты с UI компонентами для каждого
+    const breakpointsWithUi = breakpoints?.map((breakpoint, index) => {
+        const breakpointUi = breakpointUiComponents[index];
+        if (breakpointUi && Object.keys(breakpointUi).length > 0) {
+            return {
+                ...breakpoint,
+                config: {
+                    ...breakpoint.config,
+                    ui: breakpointUi,
+                },
+            };
+        }
+        return breakpoint;
+    });
+
     const pageConfig: PageConfig = {
-        width: pageWidth,
-        minHeight: pageMinHeight,
         name: pageName,
-        ui: uiComponents,
-        unitSize: pageUnitSize,
+        baseConfig: {
+            width: pageWidth,
+            minHeight: pageMinHeight,
+            unitSize: pageUnitSize,
+            ui: uiComponents,
+        },
+        breakpoints: breakpointsWithUi,
         requests: apiRequests,
     };
 

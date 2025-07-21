@@ -13,6 +13,7 @@ import { ComponentsMenu } from '@/Constructor/widgets/ComponentsMenu';
 import { SettingsMenu } from '@/Constructor/widgets/SettingsMenu';
 
 import { Layout } from '@/Constructor/components/Layout';
+import { breakpointsAtom } from '@/Constructor/state/breakpoints';
 import {
     pageIdAtom,
     pageMinHeightAtom,
@@ -23,21 +24,37 @@ import { requestsApiAtom } from '@/Constructor/state/requests';
 import { widgetTypeToAddOnCanvasAtom } from '@/Constructor/state/selection';
 import { PageCanvas } from '@/Renderer/components/PageCanvas';
 import { pageUnitSizeAtom } from '@/Renderer/state/page';
-import { uiComponentsAtom } from '@/Renderer/state/ui';
+import {
+    breakpointUiComponentsAtom,
+    uiComponentsAtom,
+} from '@/Renderer/state/ui';
 
 export type RootProps = {
     initialPageConfig?: PageConfig;
 };
 
 export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
+    // Используем baseConfig для инициализации атомов
+    const baseConfig = initialPageConfig?.baseConfig;
+
+    // Извлекаем UI компоненты из брейкпоинтов
+    const breakpointUiComponents: Record<number, any> = {};
+    initialPageConfig?.breakpoints?.forEach((breakpoint, index) => {
+        if (breakpoint.config.ui) {
+            breakpointUiComponents[index] = breakpoint.config.ui;
+        }
+    });
+
     useHydrateAtoms([
         [pageIdAtom, initialPageConfig?.id || ''],
-        [uiComponentsAtom, initialPageConfig?.ui || {}],
-        [pageUnitSizeAtom, initialPageConfig?.unitSize || 4],
-        [pageWidthAtom, initialPageConfig?.width || 1024],
-        [pageMinHeightAtom, initialPageConfig?.minHeight || 1024],
+        [uiComponentsAtom, baseConfig?.ui || {}],
+        [breakpointUiComponentsAtom, breakpointUiComponents],
+        [pageUnitSizeAtom, baseConfig?.unitSize || 4],
+        [pageWidthAtom, baseConfig?.width || 1024],
+        [pageMinHeightAtom, baseConfig?.minHeight || 1024],
         [pageNameAtom, initialPageConfig?.name || ''],
         [requestsApiAtom, initialPageConfig?.requests || {}],
+        [breakpointsAtom, initialPageConfig?.breakpoints || []],
     ]);
 
     const setWidgetTypeToAddOnCanvas = useSetAtom(widgetTypeToAddOnCanvasAtom);
@@ -47,6 +64,7 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
     const pageMinHeight = useAtomValue(pageMinHeightAtom);
     const pageName = useAtomValue(pageNameAtom);
     const requestsApi = useAtomValue(requestsApiAtom);
+    const breakpoints = useAtomValue(breakpointsAtom);
 
     useEffect(() => {
         const onMouseUpHandler = () => {
@@ -67,11 +85,15 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
                 <div className={styles.canvas}>
                     <PageCanvas
                         config={{
-                            width: pageWidth,
-                            minHeight: pageMinHeight,
+                            id: initialPageConfig?.id,
                             name: pageName,
-                            unitSize: pageUnitSize,
-                            ui: uiComponents,
+                            baseConfig: {
+                                width: pageWidth,
+                                minHeight: pageMinHeight,
+                                unitSize: pageUnitSize,
+                                ui: uiComponents,
+                            },
+                            breakpoints,
                             requests: requestsApi,
                         }}
                         width={pageWidth}

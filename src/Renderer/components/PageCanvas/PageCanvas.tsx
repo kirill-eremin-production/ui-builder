@@ -6,7 +6,7 @@ import { useAtomValue } from 'jotai';
 import styles from './PageCanvas.module.css';
 
 import { useTheme } from '@/shared/state/theme/hooks';
-import { PageConfig } from '@/shared/types/PageConfig';
+import { PageConfig, getConfigForWidth } from '@/shared/types/PageConfig';
 
 import { UiNode } from '@/Renderer/widgets/UiNode';
 
@@ -32,17 +32,30 @@ export const PageCanvas = forwardRef<
     const { isDark } = useTheme();
     const uiComponents = useAtomValue(uiComponentsAtom);
 
+    // Получаем конфиг для текущей ширины экрана
+    const currentConfig = getConfigForWidth(
+        config,
+        isRenderMode ? window.innerWidth : width
+    );
+
+    // В режиме конструктора используем переданные width и minHeight
+    // В режиме рендера используем значения из текущего конфига
+    const effectiveWidth = isRenderMode ? currentConfig.width : width;
+    const effectiveMinHeight = isRenderMode
+        ? currentConfig.minHeight
+        : minHeight;
+
     // Используем хук для вычисления высоты канваса
-    const canvasHeight = useCanvasHeight(uiComponents, minHeight);
+    const canvasHeight = useCanvasHeight(uiComponents, effectiveMinHeight);
 
     // Используем хук для обработчиков мыши
     const { onMouseMove, onMouseLeave, onMouseUp } = useMouseHandlers({
-        canvasWidth: width,
+        canvasWidth: effectiveWidth,
     });
 
     const rootStyle: CSSProperties = {
-        maxWidth: `${width}px`,
-        width: isRenderMode ? '100%' : `${width}px`,
+        maxWidth: `${effectiveWidth}px`,
+        width: isRenderMode ? '100%' : `${effectiveWidth}px`,
         height: canvasHeight ? `${canvasHeight}px` : undefined,
     };
 
@@ -57,7 +70,7 @@ export const PageCanvas = forwardRef<
                 className={styles.content}
                 style={rootStyle}
             >
-                <UiNode isRenderMode={isRenderMode} ui={config.ui} />
+                <UiNode isRenderMode={isRenderMode} ui={currentConfig.ui} />
             </div>
         );
     }
@@ -77,7 +90,7 @@ export const PageCanvas = forwardRef<
                 onMouseMove={onMouseMove}
                 onMouseLeave={onMouseLeave}
             >
-                <UiNode ui={config.ui} />
+                <UiNode ui={currentConfig.ui} />
             </div>
         </div>
     );

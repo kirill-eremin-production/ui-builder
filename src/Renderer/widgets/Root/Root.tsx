@@ -14,9 +14,9 @@ export const Root: FC<RootProps> = ({ config }) => {
     return (
         <PageCanvas
             isRenderMode
-            minHeight={config.minHeight}
+            minHeight={config.baseConfig.minHeight}
             config={config}
-            width={config.width}
+            width={config.baseConfig.width}
         />
     );
 };

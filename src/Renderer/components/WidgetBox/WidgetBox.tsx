@@ -26,10 +26,10 @@ import { ResizeButton } from '@/Renderer/components/ResizeButton';
 export type WidgetBoxProps = {
     id: string;
     isMoving: boolean;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
+    x: number; // процент от ширины канваса
+    y: number; // значение в rem
+    width: number; // процент от ширины канваса
+    height: number; // значение в rem
     isRenderMode?: boolean;
 };
 
@@ -38,10 +38,10 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
     HTMLAttributes<HTMLDivElement> & WidgetBoxProps
 >(({ id, children, x, y, width, height, isRenderMode }, ref) => {
     const css: CSSProperties = {
-        left: `${x}px`,
-        top: `${y}px`,
-        width: `${width}px`,
-        height: `${height}px`,
+        left: `${x}%`,
+        top: `${y}rem`,
+        width: `${width}%`,
+        height: `${height}rem`,
     };
     const setSelectedWidgetIds = useSetAtom(selectedWidgetIdsAtom);
     const setWidgetIdToResize = useSetAtom(widgetResizeDataAtom);
@@ -59,8 +59,8 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
 
         setWidgetDataToMove({
             initialMousePosition: { x: event.clientX, y: event.clientY },
-            initialX: x,
-            initialY: y,
+            initialX: x, // уже в процентах
+            initialY: y, // уже в rem
         });
 
         setIsCanvasWidgetEditing(true);
@@ -80,10 +80,10 @@ export const WidgetBox: FC<PropsWithChildren<WidgetBoxProps>> = forwardRef<
                 widgetId: id,
                 direction,
                 initialMousePosition: { x: event.clientX, y: event.clientY },
-                initialWidth: width,
-                initialHeight: height,
-                initialX: x,
-                initialY: y,
+                initialWidth: width, // уже в процентах
+                initialHeight: height, // уже в rem
+                initialX: x, // уже в процентах
+                initialY: y, // уже в rem
             });
         };
 

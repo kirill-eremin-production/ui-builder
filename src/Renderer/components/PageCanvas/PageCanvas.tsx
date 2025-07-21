@@ -41,8 +41,8 @@ export const PageCanvas = forwardRef<
     });
 
     const rootStyle: CSSProperties = {
-        minWidth: `${width}px`,
-        width: `${width}px`,
+        maxWidth: `${width}px`,
+        width: isRenderMode ? '100%' : `${width}px`,
         height: canvasHeight ? `${canvasHeight}px` : undefined,
     };
 

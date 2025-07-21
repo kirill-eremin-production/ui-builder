@@ -20,6 +20,7 @@ interface ResizeCalculationParams {
     pageUnitSize: number;
     minWidth: number;
     minHeight: number;
+    canvasWidth: number;
 }
 
 export const useWidgetResize = () => {
@@ -31,7 +32,8 @@ export const useWidgetResize = () => {
         currentMousePosition,
         pageUnitSize,
         minWidth,
-        minHeight
+        minHeight,
+        canvasWidth
     }: ResizeCalculationParams) => {
         let dx = currentMousePosition.x - widgetResizeData.initialMousePosition.x;
         let dy = currentMousePosition.y - widgetResizeData.initialMousePosition.y;
@@ -39,10 +41,20 @@ export const useWidgetResize = () => {
         dx = Math.round(dx / pageUnitSize) * pageUnitSize;
         dy = Math.round(dy / pageUnitSize) * pageUnitSize;
 
-        let newWidgetWidth = widgetResizeData.initialWidth;
-        let newWidgetX = widgetResizeData.initialX;
-        let newWidgetHeight = widgetResizeData.initialHeight;
-        let newWidgetY = widgetResizeData.initialY;
+        // Конвертируем начальные значения из процентов/rem в пиксели
+        const initialWidthPx = (widgetResizeData.initialWidth / 100) * canvasWidth;
+        const initialXPx = (widgetResizeData.initialX / 100) * canvasWidth;
+        const initialHeightPx = widgetResizeData.initialHeight * 16; // rem to px
+        const initialYPx = widgetResizeData.initialY * 16; // rem to px
+
+        let newWidgetWidthPx = initialWidthPx;
+        let newWidgetXPx = initialXPx;
+        let newWidgetHeightPx = initialHeightPx;
+        let newWidgetYPx = initialYPx;
+
+        // Минимальные размеры в пикселях
+        const minWidthPx = (minWidth / 100) * canvasWidth;
+        const minHeightPx = minHeight * 16; // rem to px
 
         // Обработка изменения размера сверху
         if (
@@ -50,10 +62,10 @@ export const useWidgetResize = () => {
             widgetResizeData.direction === 'top-right' ||
             widgetResizeData.direction === 'left-top'
         ) {
-            newWidgetHeight = newWidgetHeight - dy;
-            newWidgetY = newWidgetY + dy;
-            if (newWidgetHeight <= minHeight) {
-                newWidgetY = widgetResizeData.initialY + widgetResizeData.initialHeight - minHeight;
+            newWidgetHeightPx = initialHeightPx - dy;
+            newWidgetYPx = initialYPx + dy;
+            if (newWidgetHeightPx <= minHeightPx) {
+                newWidgetYPx = initialYPx + initialHeightPx - minHeightPx;
             }
         }
 
@@ -63,7 +75,7 @@ export const useWidgetResize = () => {
             widgetResizeData.direction === 'bottom-left' ||
             widgetResizeData.direction === 'right-bottom'
         ) {
-            newWidgetHeight = newWidgetHeight + dy;
+            newWidgetHeightPx = initialHeightPx + dy;
         }
 
         // Обработка изменения размера справа
@@ -72,7 +84,7 @@ export const useWidgetResize = () => {
             widgetResizeData.direction === 'right-bottom' ||
             widgetResizeData.direction === 'top-right'
         ) {
-            newWidgetWidth = newWidgetWidth + dx;
+            newWidgetWidthPx = initialWidthPx + dx;
         }
 
         // Обработка изменения размера слева
@@ -81,26 +93,28 @@ export const useWidgetResize = () => {
             widgetResizeData.direction === 'left-top' ||
             widgetResizeData.direction === 'bottom-left'
         ) {
-            newWidgetX = newWidgetX + dx;
-            newWidgetWidth = newWidgetWidth - dx;
-            if (newWidgetWidth <= minWidth) {
-                newWidgetX = widgetResizeData.initialX + widgetResizeData.initialWidth - minWidth;
+            newWidgetXPx = initialXPx + dx;
+            newWidgetWidthPx = initialWidthPx - dx;
+            if (newWidgetWidthPx <= minWidthPx) {
+                newWidgetXPx = initialXPx + initialWidthPx - minWidthPx;
             }
         }
 
+        // Конвертируем обратно в проценты и rem
         return {
-            width: newWidgetWidth <= minWidth ? minWidth : newWidgetWidth,
-            height: newWidgetHeight <= minHeight ? minHeight : newWidgetHeight,
-            x: newWidgetX < 0 ? 0 : newWidgetX,
-            y: newWidgetY < 0 ? 0 : newWidgetY,
+            width: ((newWidgetWidthPx <= minWidthPx ? minWidthPx : newWidgetWidthPx) / canvasWidth) * 100,
+            height: (newWidgetHeightPx <= minHeightPx ? minHeightPx : newWidgetHeightPx) / 16,
+            x: (newWidgetXPx < 0 ? 0 : newWidgetXPx) / canvasWidth * 100,
+            y: (newWidgetYPx < 0 ? 0 : newWidgetYPx) / 16,
         };
     }, []);
 
     const handleResize = useCallback((
         event: React.MouseEvent<HTMLDivElement>,
         pageUnitSize: number,
-        minWidth: number = 8,
-        minHeight: number = 8
+        canvasWidth: number,
+        minWidth: number = 5, // 5% минимальная ширина
+        minHeight: number = 0.5 // 0.5rem минимальная высота
     ) => {
         if (!widgetResizeData) return false;
 
@@ -110,7 +124,8 @@ export const useWidgetResize = () => {
             currentMousePosition,
             pageUnitSize,
             minWidth,
-            minHeight
+            minHeight,
+            canvasWidth
         });
 
         setUiComponents((prevState) => ({

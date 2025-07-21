@@ -8,13 +8,13 @@ export type UiComponentCommonProps = {
     // Перемещаем ли элемент по холсту
     isMoving: boolean;
 
-    // Положение элемента на холсте (px)
-    x: number;
-    y: number;
+    // Положение элемента на холсте
+    x: number; // процент от ширины канваса (0-100)
+    y: number; // значение в rem
 
-    // Размеры элемента на холсте (px)
-    width: number;
-    height: number;
+    // Размеры элемента на холсте
+    width: number; // процент от ширины канваса
+    height: number; // значение в rem
 };
 
 export type ContainerComponent = UiComponentCommonProps & {

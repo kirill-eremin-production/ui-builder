@@ -40,7 +40,7 @@ export const useMouseHandlers = ({ canvasWidth }: UseMouseHandlersProps) => {
         const canvasScroll = event.currentTarget.scrollTop;
 
         // Обработка изменения размера
-        if (handleResize(event, pageUnitSize)) {
+        if (handleResize(event, pageUnitSize, canvasWidth)) {
             return;
         }
 
@@ -51,7 +51,11 @@ export const useMouseHandlers = ({ canvasWidth }: UseMouseHandlersProps) => {
 
         // Добавление нового виджета при первом движении мыши
         if (widgetTypeToAddOnCanvas && !selectedWidgetIds.length) {
-            addNewWidget();
+            const position = {
+                x: event.clientX - canvasBox.left,
+                y: event.clientY - canvasBox.top + canvasScroll
+            };
+            addNewWidget(position, canvasWidth);
         }
     }, [
         pageUnitSize, 
@@ -94,7 +98,7 @@ export const useMouseHandlers = ({ canvasWidth }: UseMouseHandlersProps) => {
         // Финализация размещения виджета
         if (selectedWidgetIds.length) {
             const position = getNewWidgetPosition();
-            finalizeWidgetPlacement(selectedWidgetIds[0], position);
+            finalizeWidgetPlacement(selectedWidgetIds[0], position, canvasWidth);
             clearNewWidgetPosition();
         }
     }, [

@@ -6,10 +6,12 @@ import {
     useRef,
 } from 'react';
 
+import cn from 'classnames';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import styles from './PageCanvas.module.css';
 
+import { useTheme } from '@/shared/state/theme/hooks';
 import { PageConfig } from '@/shared/types/PageConfig';
 
 import { UiNode } from '@/Renderer/widgets/UiNode';
@@ -40,6 +42,8 @@ export const PageCanvas = forwardRef<
     HTMLDivElement,
     HTMLAttributes<HTMLDivElement> & PageCanvasProps
 >(({ width, minHeight, config, isRenderMode }, ref) => {
+    const { isDark } = useTheme();
+
     const [widgetTypeToAddOnCanvas, setWidgetTypeToAddOnCanvas] = useAtom(
         widgetTypeToAddOnCanvasAtom
     );
@@ -321,6 +325,10 @@ export const PageCanvas = forwardRef<
         setWidgetTypeToAddOnCanvas(null);
     };
 
+    if (typeof window === 'undefined') {
+        return null;
+    }
+
     if (isRenderMode) {
         return (
             <div
@@ -334,7 +342,12 @@ export const PageCanvas = forwardRef<
     }
 
     return (
-        <div ref={ref} className={styles.root}>
+        <div
+            ref={ref}
+            className={cn(styles.root, {
+                [styles.theme_dark]: isDark,
+            })}
+        >
             <div
                 data-testid="mainPageCanvas"
                 className={styles.content}

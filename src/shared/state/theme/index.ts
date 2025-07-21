@@ -1,12 +1,9 @@
 // Основные типы и атомы
-export {
-    themeAtom,
-    resolvedThemeAtom,
-} from './theme';
+export { themeAtom, resolvedThemeAtom } from './theme';
 
 export type { Theme } from './types';
 
-// Единственный хук для работы с темой
+// Хуки для работы с темой
 export { useTheme } from './hooks/useTheme';
 
 // Компонент провайдера

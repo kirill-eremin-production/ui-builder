@@ -2,6 +2,8 @@ import { FC, ReactNode } from 'react';
 
 import styles from './Layout.module.css';
 
+import { ResizableDiv } from '@/shared/components/ResizableDiv';
+
 export type LayoutProps = {
     firstColumn: ReactNode;
     secondColumn: ReactNode;
@@ -15,9 +17,24 @@ export const Layout: FC<LayoutProps> = ({
 }) => {
     return (
         <div className={styles.root}>
-            <div className={styles.item}>{firstColumn}</div>
-            <div className={styles.item}>{secondColumn}</div>
-            <div className={styles.item}>{thirdColumn}</div>
+            <ResizableDiv
+                minWidth={15}
+                initialWidth={25}
+                maxWidth={45}
+                className={styles.item}
+            >
+                {firstColumn}
+            </ResizableDiv>
+            <div className={styles.secondColumn}>{secondColumn}</div>
+            <ResizableDiv
+                minWidth={15}
+                initialWidth={25}
+                maxWidth={45}
+                resizerPosition="left"
+                className={styles.item}
+            >
+                {thirdColumn}
+            </ResizableDiv>
         </div>
     );
 };

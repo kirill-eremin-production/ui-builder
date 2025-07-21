@@ -26,6 +26,7 @@
     --background-dark: rgb(230, 230, 230);
     --background-dark-transparent: rgba(230, 230, 230, 0.5);
     --background-secondary: rgb(200, 200, 200);
+    --editor-page-background: linear-gradient(180deg, #919aba, #5c6b9c);
 
     /* Границы и тени */
     --border-main-color: var(--background-secondary);
@@ -59,6 +60,11 @@
     --background-dark: rgb(35, 35, 35);
     --background-dark-transparent: rgba(35, 35, 35, 0.5);
     --background-secondary: rgb(55, 55, 55);
+    --editor-page-background: linear-gradient(
+        180deg,
+        rgb(25, 25, 25),
+        rgb(55, 55, 55)
+    );
 
     /* Границы и тени */
     --border-main-color: var(--background-secondary);
@@ -93,6 +99,11 @@
         --background-dark: rgb(35, 35, 35);
         --background-dark-transparent: rgba(35, 35, 35, 0.5);
         --background-secondary: rgb(55, 55, 55);
+        --editor-page-background: linear-gradient(
+            180deg,
+            rgb(25, 25, 25),
+            rgb(55, 55, 55)
+        );
 
         /* Границы и тени */
         --border-main-color: var(--background-secondary);

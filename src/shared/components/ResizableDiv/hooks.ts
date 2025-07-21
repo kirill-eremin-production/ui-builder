@@ -13,24 +13,38 @@ const useLocalStorageWidth = (
     key: string,
     defaultValue: number
 ): [number, (value: number) => void] => {
-    const [storedValue, setStoredValue] = useState<number>(() => {
+    // Всегда начинаем с defaultValue для избежания hydration mismatch
+    const [storedValue, setStoredValue] = useState<number>(defaultValue);
+
+    // Загружаем значение из localStorage только после гидратации
+    useEffect(() => {
         try {
-            const item = window.localStorage.getItem(key);
-            return item ? parseFloat(item) : defaultValue;
+            if (typeof window !== 'undefined') {
+                const item = window.localStorage.getItem(key);
+                if (item) {
+                    const parsedValue = parseFloat(item);
+                    if (!isNaN(parsedValue)) {
+                        setStoredValue(parsedValue);
+                    }
+                }
+            }
         } catch (error) {
             console.warn(
                 `ResizableDiv: не удалось загрузить ширину из localStorage для ключа "${key}"`,
                 error
             );
-            return defaultValue;
         }
-    });
+    }, [key]);
 
     const setValue = useCallback(
         (value: number) => {
             try {
                 setStoredValue(value);
-                window.localStorage.setItem(key, value.toString());
+                
+                // Проверяем, что мы находимся в браузере (не на сервере)
+                if (typeof window !== 'undefined') {
+                    window.localStorage.setItem(key, value.toString());
+                }
             } catch (error) {
                 console.warn(
                     `ResizableDiv: не удалось сохранить ширину в localStorage для ключа "${key}"`,
@@ -102,15 +116,18 @@ export const useResizeState = (
         initialWidth
     );
 
-    // Определяем начальную ширину: из localStorage если есть ключ, иначе из пропса
-    const effectiveInitialWidth = persistenceKey
-        ? persistedWidth
-        : initialWidth;
+    // Используем persistedWidth только если есть persistenceKey, иначе initialWidth
+    const [width, setWidth] = useState(initialWidth);
 
-    const [width, setWidth] = useState(effectiveInitialWidth);
+    // Синхронизируем width с persistedWidth когда он загружается из localStorage
+    useEffect(() => {
+        if (persistenceKey && persistedWidth !== initialWidth) {
+            setWidth(persistedWidth);
+        }
+    }, [persistedWidth, persistenceKey, initialWidth]);
     const [resizing, setResizing] = useState(false);
     const startX = useRef(0);
-    const startWidth = useRef(effectiveInitialWidth);
+    const startWidth = useRef(initialWidth);
 
     const { onWidthChange, onResizeStart, onResizeEnd } = callbacks;
     const { minWidth, maxWidth } = constraints;
@@ -176,7 +193,9 @@ export const useResizeState = (
             startWidth.current = currentWidth;
             console.log('>>> ping');
 
-            document.body.classList.add('disable-user-select');
+            if (typeof document !== 'undefined') {
+                document.body.classList.add('disable-user-select');
+            }
             onResizeStart?.(currentWidth);
         },
         [onResizeStart]
@@ -196,7 +215,9 @@ export const useResizeState = (
     const stopResize = useCallback(() => {
         if (resizing) {
             setResizing(false);
-            document.body.classList.remove('disable-user-select');
+            if (typeof document !== 'undefined') {
+                document.body.classList.remove('disable-user-select');
+            }
             onResizeEnd?.(width);
         }
     }, [width, onResizeEnd]);
@@ -381,6 +402,11 @@ export const useGlobalEventListeners = (
     const { handleMouseMove, handleMouseUp } = mouseEvents;
 
     useEffect(() => {
+        // Проверяем, что мы находимся в браузере
+        if (typeof document === 'undefined') {
+            return;
+        }
+
         document.addEventListener('mousemove', handleMouseMove, {
             passive: false,
         });

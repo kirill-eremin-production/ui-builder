@@ -22,3 +22,6 @@ export { Logo } from './Logo';
 
 export { UserPic } from './UserPic';
 export type { UserPicProps } from './UserPic';
+
+export { Tabs, Tab } from './Tabs';
+export type { TabsProps, TabProps } from './Tabs';

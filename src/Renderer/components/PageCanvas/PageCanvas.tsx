@@ -23,19 +23,24 @@ export type PageCanvasProps = {
     config: PageConfig;
 
     isRenderMode?: boolean;
+
+    // Эффективная ширина экрана для режима конструктора (для getConfigForWidth)
+    constructorScreenWidth?: number;
 };
 
 export const PageCanvas = forwardRef<
     HTMLDivElement,
     HTMLAttributes<HTMLDivElement> & PageCanvasProps
->(({ width, minHeight, config, isRenderMode }, ref) => {
+>(({ width, minHeight, config, isRenderMode, constructorScreenWidth }, ref) => {
     const { isDark } = useTheme();
     const uiComponents = useAtomValue(uiComponentsAtom);
 
     // Получаем конфиг для текущей ширины экрана
+    // В режиме конструктора используем переданную ширину экрана для определения активного брейкпоинта
+    // В режиме рендера используем реальную ширину окна браузера
     const currentConfig = getConfigForWidth(
         config,
-        isRenderMode ? window.innerWidth : width
+        isRenderMode ? window.innerWidth : (constructorScreenWidth ?? width)
     );
 
     // В режиме конструктора используем переданные width и minHeight

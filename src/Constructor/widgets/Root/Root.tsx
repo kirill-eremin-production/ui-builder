@@ -13,7 +13,12 @@ import { ComponentsMenu } from '@/Constructor/widgets/ComponentsMenu';
 import { SettingsMenu } from '@/Constructor/widgets/SettingsMenu';
 
 import { Layout } from '@/Constructor/components/Layout';
-import { breakpointsAtom } from '@/Constructor/state/breakpoints';
+import {
+    breakpointsAtom,
+    effectivePageMinHeightAtom,
+    effectivePageWidthAtom,
+    effectiveScreenWidthAtom,
+} from '@/Constructor/state/breakpoints';
 import {
     pageIdAtom,
     pageMinHeightAtom,
@@ -60,11 +65,16 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
     const setWidgetTypeToAddOnCanvas = useSetAtom(widgetTypeToAddOnCanvasAtom);
     const uiComponents = useAtomValue(uiComponentsAtom);
     const pageUnitSize = useAtomValue(pageUnitSizeAtom);
-    const pageWidth = useAtomValue(pageWidthAtom);
-    const pageMinHeight = useAtomValue(pageMinHeightAtom);
+    const basePageWidth = useAtomValue(pageWidthAtom);
+    const basePageMinHeight = useAtomValue(pageMinHeightAtom);
+    const effectivePageWidth = useAtomValue(effectivePageWidthAtom);
+    const effectivePageMinHeight = useAtomValue(effectivePageMinHeightAtom);
+    const effectiveScreenWidth = useAtomValue(effectiveScreenWidthAtom);
     const pageName = useAtomValue(pageNameAtom);
     const requestsApi = useAtomValue(requestsApiAtom);
     const breakpoints = useAtomValue(breakpointsAtom);
+
+    console.log(effectivePageWidth);
 
     useEffect(() => {
         const onMouseUpHandler = () => {
@@ -88,16 +98,17 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
                             id: initialPageConfig?.id,
                             name: pageName,
                             baseConfig: {
-                                width: pageWidth,
-                                minHeight: pageMinHeight,
+                                width: basePageWidth,
+                                minHeight: basePageMinHeight,
                                 unitSize: pageUnitSize,
                                 ui: uiComponents,
                             },
                             breakpoints,
                             requests: requestsApi,
                         }}
-                        width={pageWidth}
-                        minHeight={pageMinHeight}
+                        width={effectivePageWidth}
+                        minHeight={effectivePageMinHeight}
+                        constructorScreenWidth={effectiveScreenWidth}
                     />
                 </div>
             }

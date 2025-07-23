@@ -47,10 +47,7 @@ export const BreakpointItem: FC<BreakpointItemProps> = ({
                             <Pencil />
                         </Icon>
                     </Button>
-                    <Button
-                        view="flat-danger"
-                        onClick={onDelete}
-                    >
+                    <Button view="flat-danger" onClick={onDelete}>
                         <Icon size="s">
                             <TrashBin />
                         </Icon>

@@ -9,7 +9,7 @@ import { Text } from '@/shared/components';
 import { CustomHtmlSettings } from '@/Constructor/dist/components/CustomHtml/CustomHtmlSettings';
 import { selectedWidgetIdToEditAtom } from '@/Constructor/state/selection';
 import { WidgetType } from '@/Renderer/dist/components/widgetType';
-import { uiComponentsAtom } from '@/Renderer/state/ui';
+import { useUiComponents } from '@/Renderer/state/ui/hooks/use-ui-components';
 
 import { text } from './WidgetSettings.localization';
 
@@ -30,7 +30,7 @@ export const mapWidgetTypeToSettingsComponent: Record<
 
 export const WidgetSettings: FC<WidgetSettingsProps> = () => {
     const [selectedWidgetIdToEdit] = useAtom(selectedWidgetIdToEditAtom);
-    const [uiComponents, setUiComponents] = useAtom(uiComponentsAtom);
+    const { uiComponents, setUiComponents } = useUiComponents();
 
     if (!selectedWidgetIdToEdit) {
         return null;

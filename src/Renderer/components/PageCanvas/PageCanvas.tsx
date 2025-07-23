@@ -1,7 +1,6 @@
-import { CSSProperties, HTMLAttributes, forwardRef } from 'react';
+import { CSSProperties, HTMLAttributes, forwardRef, useMemo } from 'react';
 
 import cn from 'classnames';
-import { useAtomValue } from 'jotai';
 
 import styles from './PageCanvas.module.css';
 
@@ -10,9 +9,9 @@ import { PageConfig, getConfigForWidth } from '@/shared/types/PageConfig';
 
 import { UiNode } from '@/Renderer/widgets/UiNode';
 
-import { uiComponentsAtom } from '@/Renderer/state/ui';
+import { useUiComponents } from '@/Renderer/state/ui/hooks/use-ui-components';
 
-import { useCanvasHeight, useMouseHandlers } from './hooks';
+import { useCanvasHeight, useMouseHandlers, useWindowSize } from './hooks';
 
 export type PageCanvasProps = {
     // Ширина страницы
@@ -33,15 +32,25 @@ export const PageCanvas = forwardRef<
     HTMLAttributes<HTMLDivElement> & PageCanvasProps
 >(({ width, minHeight, config, isRenderMode, constructorScreenWidth }, ref) => {
     const { isDark } = useTheme();
-    const uiComponents = useAtomValue(uiComponentsAtom);
+    const { uiComponents } = useUiComponents();
+    const { width: windowWidth } = useWindowSize();
 
     // Получаем конфиг для текущей ширины экрана
     // В режиме конструктора используем переданную ширину экрана для определения активного брейкпоинта
-    // В режиме рендера используем реальную ширину окна браузера
-    const currentConfig = getConfigForWidth(
+    // В режиме рендера используем реальную ширину окна браузера (отслеживаем изменения через хук)
+    const currentConfig = useMemo(() => {
+        const screenWidth = isRenderMode
+            ? windowWidth
+            : (constructorScreenWidth ?? width);
+        return getConfigForWidth(config, screenWidth);
+    }, [
         config,
-        isRenderMode ? window.innerWidth : (constructorScreenWidth ?? width)
-    );
+        isRenderMode,
+        windowWidth,
+        constructorScreenWidth,
+        width,
+        uiComponents,
+    ]);
 
     // В режиме конструктора используем переданные width и minHeight
     // В режиме рендера используем значения из текущего конфига
@@ -95,7 +104,7 @@ export const PageCanvas = forwardRef<
                 onMouseMove={onMouseMove}
                 onMouseLeave={onMouseLeave}
             >
-                <UiNode ui={currentConfig.ui} />
+                <UiNode ui={uiComponents} />
             </div>
         </div>
     );

@@ -34,11 +34,11 @@ export const SavePageButton: FC<SavePageButtonProps> = () => {
     const [isLoading, setIsLoading] = useState(false);
     const updateQueryParams = useUpdateSearchParams();
 
-    const uiComponents = useAtomValue(uiComponentsAtom);
     const breakpointUiComponents = useAtomValue(breakpointUiComponentsAtom);
     const pageUnitSize = useAtomValue(pageUnitSizeAtom);
     const currentPageId = useAtomValue(pageIdAtom);
     const { apiRequests } = useApiRequests();
+    const baseUiComponents = useAtomValue(uiComponentsAtom);
 
     const pageWidth = useAtomValue(pageWidthAtom);
     const pageMinHeight = useAtomValue(pageMinHeightAtom);
@@ -68,7 +68,7 @@ export const SavePageButton: FC<SavePageButtonProps> = () => {
             width: pageWidth,
             minHeight: pageMinHeight,
             unitSize: pageUnitSize,
-            ui: uiComponents,
+            ui: baseUiComponents,
         },
         breakpoints: breakpointsWithUi,
         requests: apiRequests,

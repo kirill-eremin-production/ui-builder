@@ -6,7 +6,7 @@ import {
     selectedWidgetIdsAtom,
     widgetDataToMoveAtom,
 } from '@/Constructor/state/selection';
-import { uiComponentsAtom } from '@/Renderer/state/ui';
+import { useUiComponents } from '@/Renderer/state/ui/hooks/use-ui-components';
 
 interface MoveCalculationParams {
     event: React.MouseEvent<HTMLDivElement>;
@@ -27,7 +27,7 @@ interface PositionInUnits {
 export const useWidgetMove = () => {
     const [selectedWidgetIds] = useAtom(selectedWidgetIdsAtom);
     const [widgetDataToMove] = useAtom(widgetDataToMoveAtom);
-    const [uiComponents, setUiComponents] = useAtom(uiComponentsAtom);
+    const { uiComponents, setUiComponents } = useUiComponents();
     const newWidgetPosition = useRef<{ x: number; y: number } | undefined>(
         undefined
     );

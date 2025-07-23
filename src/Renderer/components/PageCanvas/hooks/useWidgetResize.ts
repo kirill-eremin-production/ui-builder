@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useAtom } from 'jotai';
 import { widgetResizeDataAtom } from '@/Constructor/state/selection';
-import { uiComponentsAtom } from '@/Renderer/state/ui';
+import { useUiComponents } from '@/Renderer/state/ui/hooks/use-ui-components';
 import { Direction } from '@/shared/types/Direction';
 
 type WidgetResizeData = {
@@ -25,7 +25,7 @@ interface ResizeCalculationParams {
 
 export const useWidgetResize = () => {
     const [widgetResizeData] = useAtom(widgetResizeDataAtom);
-    const [, setUiComponents] = useAtom(uiComponentsAtom);
+    const { setUiComponents } = useUiComponents();
 
     const calculateNewDimensions = useCallback(({
         widgetResizeData,

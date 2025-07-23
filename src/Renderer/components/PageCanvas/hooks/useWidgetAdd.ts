@@ -1,15 +1,15 @@
 import { useCallback } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import {
     selectedWidgetIdsAtom,
     widgetTypeToAddOnCanvasAtom
 } from '@/Constructor/state/selection';
-import { uiComponentsAtom } from '@/Renderer/state/ui';
+import { useUiComponents } from '@/Renderer/state/ui/hooks/use-ui-components';
 
 export const useWidgetAdd = () => {
     const [widgetTypeToAddOnCanvas, setWidgetTypeToAddOnCanvas] = useAtom(widgetTypeToAddOnCanvasAtom);
     const [selectedWidgetIds, setSelectedWidgetIds] = useAtom(selectedWidgetIdsAtom);
-    const setUiComponents = useSetAtom(uiComponentsAtom);
+    const { setUiComponents } = useUiComponents();
 
     const addNewWidget = useCallback((position?: { x: number; y: number }, canvasWidth?: number) => {
         if (!widgetTypeToAddOnCanvas || selectedWidgetIds.length) {

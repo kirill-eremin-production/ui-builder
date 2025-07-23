@@ -15,6 +15,10 @@ export const UiNode: FC<UiNodeProps> = ({ ui, isRenderMode }) => {
     return (
         <div>
             {Object.entries(ui).map(([key, node]) => {
+                if (!node) {
+                    return null;
+                }
+
                 return (
                     <WidgetBox
                         id={node.id}

@@ -33,6 +33,7 @@ import {
     breakpointUiComponentsAtom,
     uiComponentsAtom,
 } from '@/Renderer/state/ui';
+import { useUiComponents } from '@/Renderer/state/ui/hooks/use-ui-components';
 
 export type RootProps = {
     initialPageConfig?: PageConfig;
@@ -63,7 +64,7 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
     ]);
 
     const setWidgetTypeToAddOnCanvas = useSetAtom(widgetTypeToAddOnCanvasAtom);
-    const uiComponents = useAtomValue(uiComponentsAtom);
+    const { uiComponents } = useUiComponents();
     const pageUnitSize = useAtomValue(pageUnitSizeAtom);
     const basePageWidth = useAtomValue(pageWidthAtom);
     const basePageMinHeight = useAtomValue(pageMinHeightAtom);
@@ -73,8 +74,6 @@ export const RootComponent: FC<RootProps> = ({ initialPageConfig }) => {
     const pageName = useAtomValue(pageNameAtom);
     const requestsApi = useAtomValue(requestsApiAtom);
     const breakpoints = useAtomValue(breakpointsAtom);
-
-    console.log(effectivePageWidth);
 
     useEffect(() => {
         const onMouseUpHandler = () => {

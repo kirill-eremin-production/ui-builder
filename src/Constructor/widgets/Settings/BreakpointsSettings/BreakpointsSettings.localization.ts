@@ -3,6 +3,22 @@ export const text = {
         en: 'Breakpoints',
         ru: 'Брейкпоинты',
     },
+    activeBreakpoint: {
+        en: 'Active breakpoint:',
+        ru: 'Активный брейкпоинт:',
+    },
+    baseConfiguration: {
+        en: 'Base configuration',
+        ru: 'Базовая конфигурация',
+    },
+    notSelected: {
+        en: 'Not selected',
+        ru: 'Не выбран',
+    },
+    default: {
+        en: 'Default',
+        ru: 'По умолчанию',
+    },
     noBreakpoints: {
         en: 'No breakpoints configured',
         ru: 'Брейкпоинты не настроены',

@@ -1,0 +1,24 @@
+.breakpointItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: var(--background-secondary);
+    border-radius: var(--border-radius-50);
+}
+
+.breakpointInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.breakpointActions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.maxWidth {
+    color: var(--g-color-text-secondary);
+}

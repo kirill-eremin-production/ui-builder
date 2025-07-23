@@ -1,15 +1,8 @@
 .root {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 16px;
-}
-
-.activeBreakpoint {
-    padding: 8px 12px;
-    background: var(--g-color-base-info-light);
-    border-radius: 8px;
-    text-align: center;
+    gap: 1rem;
+    padding: 1rem;
 }
 
 .breakpointsList {
@@ -24,40 +17,4 @@
     color: var(--g-color-text-secondary);
     text-align: center;
     padding: 16px 0;
-}
-
-.breakpointItem {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px;
-    background: var(--g-color-base-generic);
-    border-radius: 6px;
-}
-
-.breakpointInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.breakpointActions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.maxWidth {
-    color: var(--g-color-text-secondary);
-}
-
-.addBreakpoint {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.hint {
-    color: var(--g-color-text-secondary);
-    font-style: italic;
 }
